@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата — PhishDet</title>
+    <meta name="description" content="Оформление подписки PhishDet. Безопасная оплата через Tinkoff Касса.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    PhishDet
+                </a>
+                <a href="pricing.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Назад к тарифам
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout -->
+    <section class="checkout">
+        <div class="container">
+            <div class="checkout-grid">
+                <!-- Payment Form -->
+                <div class="checkout-form">
+                    <h2 class="form-title">Оформление подписки</h2>
+
+                    <form id="paymentForm">
+                        <!-- Personal Info -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-user"></i>
+                                Личная информация
+                            </h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="firstName">Имя</label>
+                                    <input
+                                        type="text"
+                                        id="firstName"
+                                        name="firstName"
+                                        class="form-input"
+                                        placeholder="Иван"
+                                        required
+                                        autocomplete="given-name"
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="lastName">Фамилия</label>
+                                    <input
+                                        type="text"
+                                        id="lastName"
+                                        name="lastName"
+                                        class="form-input"
+                                        placeholder="Иванов"
+                                        required
+                                        autocomplete="family-name"
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-input"
+                                    placeholder="ivan@example.com"
+                                    required
+                                    autocomplete="email"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Телефон</label>
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    class="form-input"
+                                    placeholder="+7 (999) 123-45-67"
+                                    autocomplete="tel"
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-credit-card"></i>
+                                Способ оплаты
+                            </h3>
+
+                            <div class="payment-methods">
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="card" checked>
+                                    <div class="payment-method-content">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>Банковская карта</span>
+                                    </div>
+                                </label>
+
+                                <label class="payment-method">
+                                    <input type="radio" name="paymentMethod" value="sbp">
+                                    <div class="payment-method-content">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <span>СБП (Система быстрых платежей)</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="security-notice">
+                                <i class="fas fa-shield-alt"></i>
+                                <div>
+                                    <strong>Безопасная оплата</strong>
+                                    <p>Платежи обрабатываются через Tinkoff Касса. Данные вашей карты защищены SSL-шифрованием и соответствуют стандарту PCI DSS.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">
+                                Я согласен с <a href="#">условиями использования</a> и
+                                <a href="#">политикой конфиденциальности</a>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+                            <i class="fas fa-lock"></i>
+                            Перейти к оплате
+                        </button>
+
+                        <p class="form-status" id="formStatus"></p>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3 class="summary-title">Ваш заказ</h3>
+
+                    <div class="summary-plan">
+                        <div class="summary-plan-icon" id="planIcon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="summary-plan-info">
+                            <h4 id="planName">Тариф Про</h4>
+                            <p id="planDescription">Месячная подписка</p>
+                        </div>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row">
+                        <span>Подписка</span>
+                        <span id="planPrice">299 ₽</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>НДС</span>
+                        <span>Включен</span>
+                    </div>
+
+                    <div class="summary-total">
+                        <span>Итого</span>
+                        <span class="price" id="totalPrice">299 ₽</span>
+                    </div>
+
+                    <div class="summary-features">
+                        <h5>Что входит в тариф:</h5>
+                        <ul id="planFeatures">
+                            <li><i class="fas fa-check"></i> Безлимитные проверки</li>
+                            <li><i class="fas fa-check"></i> API доступ</li>
+                            <li><i class="fas fa-check"></i> История проверок</li>
+                            <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Безопасная оплата. Ваши данные защищены SSL-шифрованием.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Платеж создан!</h2>
+            <p>Сейчас вы будете перенаправлены на страницу оплаты Tinkoff. После успешной оплаты подписка активируется автоматически.</p>
+            <a href="#" class="btn btn-primary" id="redirectToPayment">
+                <i class="fas fa-external-link-alt"></i>
+                Перейти к оплате
+            </a>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="modal-icon error">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2>Ошибка</h2>
+            <p id="errorMessage">Не удалось создать платеж. Попробуйте позже.</p>
+            <button class="btn btn-primary" onclick="document.getElementById('errorModal').classList.remove('active')">
+                Понятно
+            </button>
+        </div>
+    </div>
+
+    <script src="js/checkout.js"></script>
+</body>
+</html>

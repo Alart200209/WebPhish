@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishDet — Защита от фишинговых ссылок с помощью ИИ</title>
+    <meta name="description" content="Проверяйте ссылки на фишинг за секунды. ML-алгоритмы защитят ваши данные и деньги.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    PhishDet
+                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="#features" class="nav-link">Возможности</a>
+                    <a href="#how-it-works" class="nav-link">Как работает</a>
+                    <a href="#pricing" class="nav-link">Тарифы</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="#checker" class="btn btn-primary">Проверить ссылку</a>
+                </nav>
+
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="grid-bg"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Защита на основе ИИ
+                </div>
+
+                <h1 class="hero-title">
+                    Проверяйте ссылки на <span class="gradient-text">фишинг</span> за секунды
+                </h1>
+
+                <p class="hero-subtitle">
+                    Наш ML-алгоритм анализирует URL и определяет фишинговые ссылки с точностью 99%.
+                    Защитите свои данные и деньги от мошенников.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#checker" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                        Проверить ссылку
+                    </a>
+                    <a href="#how-it-works" class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        Как это работает
+                    </a>
+                </div>
+
+                <!-- Checker -->
+                <div class="checker" id="checker">
+                    <form class="checker-form" id="checkerForm">
+                        <input
+                            type="url"
+                            class="checker-input"
+                            id="urlInput"
+                            placeholder="Вставьте ссылку для проверки..."
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary checker-btn">
+                            <i class="fas fa-shield-alt"></i>
+                            Проверить
+                        </button>
+                    </form>
+
+                    <div class="checker-result" id="checkerResult"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <div class="stat-value" data-target="200">0</div>
+                    <div class="stat-label">млрд ₽ ущерба от фишинга в 2024</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-value" data-target="99">0</div>
+                    <div class="stat-label">% точность определения</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-value" data-target="3">0</div>
+                    <div class="stat-label">секунды на проверку</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-value" data-target="50000">0</div>
+                    <div class="stat-label">проверенных ссылок</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-badge">
+                    <i class="fas fa-star"></i>
+                    Возможности
+                </div>
+                <h2 class="section-title">Почему выбирают PhishDet</h2>
+                <p class="section-subtitle">
+                    Современные технологии машинного обучения для вашей безопасности
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">Мгновенная проверка</h3>
+                    <p class="feature-text">
+                        Получите результат за 3 секунды. Наш алгоритм анализирует URL в реальном времени.
+                    </p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="feature-title">ИИ-анализ</h3>
+                    <p class="feature-text">
+                        Machine Learning модель обучена на миллионах фишинговых ссылок.
+                    </p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Полная конфиденциальность</h3>
+                    <p class="feature-text">
+                        Мы не сохраняем проверяемые ссылки. Ваши данные в безопасности.
+                    </p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Работает везде</h3>
+                    <p class="feature-text">
+                        Проверяйте ссылки с любого устройства: компьютера, планшета или смартфона.
+                    </p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="feature-title">API для разработчиков</h3>
+                    <p class="feature-text">
+                        Интегрируйте проверку ссылок в свои приложения через наш REST API.
+                    </p>
+                </div>
+
+                <div class="feature-card reveal">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruble-sign"></i>
+                    </div>
+                    <h3 class="feature-title">Доступные цены</h3>
+                    <p class="feature-text">
+                        Бесплатная проверка для всех. Премиум-тарифы для бизнеса.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-badge">
+                    <i class="fas fa-cog"></i>
+                    Как это работает
+                </div>
+                <h2 class="section-title">Три простых шага</h2>
+                <p class="section-subtitle">
+                    Проверка ссылки занимает всего несколько секунд
+                </p>
+            </div>
+
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Вставьте ссылку</h3>
+                    <p class="step-text">
+                        Скопируйте подозрительную ссылку из письма, SMS или мессенджера
+                    </p>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Нажмите "Проверить"</h3>
+                    <p class="step-text">
+                        Наш ИИ проанализирует URL по сотням параметров
+                    </p>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Получите результат</h3>
+                    <p class="step-text">
+                        Узнайте, безопасна ли ссылка, и получите рекомендации
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-badge">
+                    <i class="fas fa-tag"></i>
+                    Тарифы
+                </div>
+                <h2 class="section-title">Выберите свой план</h2>
+                <p class="section-subtitle">
+                    Начните бесплатно, масштабируйтесь по мере роста
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <h3 class="pricing-name">Бесплатный</h3>
+                    <div class="pricing-price">
+                        0 ₽ <span>/ месяц</span>
+                    </div>
+                    <p class="pricing-desc">Для личного использования</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 10 проверок в день</li>
+                        <li><i class="fas fa-check"></i> Базовый анализ</li>
+                        <li><i class="fas fa-check"></i> Веб-интерфейс</li>
+                        <li><i class="fas fa-check"></i> Email-поддержка</li>
+                    </ul>
+                    <a href="pricing.html?plan=free" class="btn btn-secondary pricing-btn">Начать бесплатно</a>
+                </div>
+
+                <div class="pricing-card featured reveal">
+                    <div class="pricing-badge">Популярный</div>
+                    <h3 class="pricing-name">Про</h3>
+                    <div class="pricing-price">
+                        299 ₽ <span>/ месяц</span>
+                    </div>
+                    <p class="pricing-desc">Для активных пользователей</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Безлимитные проверки</li>
+                        <li><i class="fas fa-check"></i> Расширенный анализ</li>
+                        <li><i class="fas fa-check"></i> API доступ</li>
+                        <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
+                        <li><i class="fas fa-check"></i> История проверок</li>
+                    </ul>
+                    <a href="pricing.html?plan=pro" class="btn btn-primary pricing-btn">Выбрать план</a>
+                </div>
+
+                <div class="pricing-card reveal">
+                    <h3 class="pricing-name">Бизнес</h3>
+                    <div class="pricing-price">
+                        1 990 ₽ <span>/ месяц</span>
+                    </div>
+                    <p class="pricing-desc">Для компаний и команд</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Всё из тарифа Про</li>
+                        <li><i class="fas fa-check"></i> Командный доступ</li>
+                        <li><i class="fas fa-check"></i> White-label решение</li>
+                        <li><i class="fas fa-check"></i> Персональный менеджер</li>
+                        <li><i class="fas fa-check"></i> SLA 99.9%</li>
+                    </ul>
+                    <a href="pricing.html?plan=business" class="btn btn-secondary pricing-btn">Связаться с нами</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-badge">
+                    <i class="fas fa-quote-left"></i>
+                    Отзывы
+                </div>
+                <h2 class="section-title">Что говорят наши пользователи</h2>
+                <p class="section-subtitle">
+                    Тысячи людей уже защитили себя с помощью PhishDet
+                </p>
+            </div>
+
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Отличный сервис! Получил подозрительное письмо от 'банка', проверил ссылку — оказался фишинг. Спасли мои деньги!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">АК</div>
+                        <div>
+                            <div class="testimonial-name">Алексей К.</div>
+                            <div class="testimonial-role">Предприниматель</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Использую API в нашем сервисе. Интеграция заняла 10 минут, работает быстро и точно. Рекомендую!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">МС</div>
+                        <div>
+                            <div class="testimonial-name">Мария С.</div>
+                            <div class="testimonial-role">CTO, TechStart</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Простой и понятный интерфейс. Теперь проверяю все подозрительные ссылки перед тем, как открыть. Очень удобно!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ДВ</div>
+                        <div>
+                            <div class="testimonial-name">Дмитрий В.</div>
+                            <div class="testimonial-role">Фрилансер</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Внедрили в компании для проверки ссылок в корпоративной почте. Количество инцидентов снизилось на 90%!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ОП</div>
+                        <div>
+                            <div class="testimonial-name">Ольга П.</div>
+                            <div class="testimonial-role">IT-директор</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-badge">
+                    <i class="fas fa-question-circle"></i>
+                    FAQ
+                </div>
+                <h2 class="section-title">Частые вопросы</h2>
+                <p class="section-subtitle">
+                    Ответы на самые популярные вопросы о PhishDet
+                </p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как работает проверка ссылок?</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Наш ML-алгоритм анализирует URL по более чем 100 параметрам: структура домена, наличие подозрительных ключевых слов, возраст домена, SSL-сертификат и многое другое. На основе этих данных модель определяет вероятность фишинга.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Насколько точна проверка?</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Точность нашей модели составляет 99%. Мы постоянно обучаем модель на новых фишинговых ссылках и улучшаем алгоритм. Однако ни одна система не может гарантировать 100% защиту, поэтому рекомендуем сохранять бдительность.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Безопасно ли проверять ссылки?</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Абсолютно безопасно. Мы анализируем только сам URL-адрес, не переходя по ссылке. Мы не сохраняем проверяемые ссылки и не передаем их третьим лицам. Ваша конфиденциальность гарантирована.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Могу ли я использовать API в своих проектах?</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Да! API доступен на тарифах Про и Бизнес. Вы можете интегрировать проверку ссылок в свои приложения, сайты, боты или любые другие сервисы. Документация API доступна после регистрации.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Что делать, если ссылка оказалась фишинговой?</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Если наша система определила ссылку как фишинговую, не переходите по ней! Удалите сообщение с этой ссылкой. Если вы уже ввели свои данные на подозрительном сайте, немедленно смените пароли и свяжитесь с вашим банком.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div class="cta-content">
+                    <h2 class="cta-title">Готовы защититься от фишинга?</h2>
+                    <p class="cta-text">
+                        Проверьте свою первую ссылку прямо сейчас. Это бесплатно и займет всего 3 секунды.
+                    </p>
+                    <a href="#checker" class="btn btn-primary">
+                        <i class="fas fa-shield-alt"></i>
+                        Проверить ссылку
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        PhishDet
+                    </a>
+                    <p>
+                        Защита от фишинговых ссылок на основе искусственного интеллекта.
+                        Делаем интернет безопаснее.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Продукт</h4>
+                    <ul class="footer-links">
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#pricing">Тарифы</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Документация</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Компания</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Поддержка</h4>
+                    <ul class="footer-links">
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#">Помощь</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                        <li><a href="#">Условия использования</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 PhishDet. Все права защищены.</p>
+                <p>Сделано с <i class="fas fa-heart" style="color: var(--accent-tertiary);"></i> в России</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

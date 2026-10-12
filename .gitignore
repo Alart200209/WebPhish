@@ -1,0 +1,28 @@
+# Виртуальное окружение Python
+.venv/
+venv/
+env/
+
+# Секретные ключи и переменные окружения
+.env
+.env.local
+
+# Скомпилированные файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Тесты и отчеты
+.pytest_cache/
+htmlcov/
+.coverage
+
+# OS файлы
+.DS_Store
+Thumbs.db
