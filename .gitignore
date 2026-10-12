@@ -1,6 +1,6 @@
 # Виртуальное окружение Python
 .venv/
-venv/
+.venv/
 env/
 
 # Секретные ключи и переменные окружения
@@ -26,3 +26,6 @@ htmlcov/
 # OS файлы
 .DS_Store
 Thumbs.db
+
+# База данных SQLite
+phishdet.db
