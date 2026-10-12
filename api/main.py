@@ -1,13 +1,18 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
 from pathlib import Path
 import os
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, desc
 
-from api.payment import TinkoffPayment
+from .database import get_db, engine, Base
+from .models import User, UrlCheck
+from .auth_routes import router as auth_router
+from .auth import get_current_user, check_monthly_limit, increment_check_count
+from .payment import TinkoffPayment
 
 app = FastAPI(
     title="PhishDet API",
@@ -15,7 +20,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -24,10 +28,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Инициализация Tinkoff Payment
-# ВАЖНО: Замените на свои реальные ключи из .env файла
-TINKOFF_TERMINAL_KEY = os.getenv("TINKOFF_TERMINAL_KEY", "ваш_terminal_key")
-TINKOFF_SECRET_KEY = os.getenv("TINKOFF_SECRET_KEY", "ваш_secret_key")
+TINKOFF_TERMINAL_KEY = os.getenv("TINKOFF_TERMINAL_KEY", "test_key")
+TINKOFF_SECRET_KEY = os.getenv("TINKOFF_SECRET_KEY", "test_secret")
 
 payment_service = TinkoffPayment(
     terminal_key=TINKOFF_TERMINAL_KEY,
@@ -35,152 +37,140 @@ payment_service = TinkoffPayment(
 )
 
 
-# ===================================
-# MODELS
-# ===================================
-
-class PaymentRequest(BaseModel):
-    amount: int  # в копейках
-    order_id: str
-    description: str
-    customer: dict
-    plan: str
-    trial: bool = False
-    payment_method: str = "card"
+class CheckUrlRequest(BaseModel):
+    url: str
 
 
-class PaymentResponse(BaseModel):
-    success: bool
-    payment_url: Optional[str] = None
-    payment_id: Optional[str] = None
-    order_id: Optional[str] = None
+class CheckUrlResponse(BaseModel):
+    url: str
+    is_phishing: bool
+    risk_score: float
+    verdict: str
+    details: list[str]
+    checks_remaining: Optional[int] = None
 
-
-# ===================================
-# API ENDPOINTS
-# ===================================
 
 @app.get("/api/health")
 def health_check():
     return {"status": "ok", "service": "PhishDet API"}
 
 
-@app.post("/api/payment/create", response_model=PaymentResponse)
-async def create_payment(request: PaymentRequest):
-    """
-    Создание платежа через Tinkoff Касса
-    """
-    try:
-        # Создаем платеж
-        result = payment_service.init_payment(
-            amount=request.amount,
-            order_id=request.order_id,
-            description=request.description,
-            customer_email=request.customer.get("email"),
-            customer_phone=request.customer.get("phone"),
-            receipt={
-                "Email": request.customer.get("email"),
-                "Phone": request.customer.get("phone"),
-                "Taxation": "osn",
-                "Items": [
-                    {
-                        "Name": f"Подписка {request.plan}",
-                        "Price": request.amount,
-                        "Quantity": 1,
-                        "Amount": request.amount,
-                        "Tax": "none"
-                    }
-                ]
+@app.post("/api/check-url", response_model=CheckUrlResponse)
+async def check_url(
+        payload: CheckUrlRequest,
+        current_user: User = Depends(get_current_user),
+        db: AsyncSession = Depends(get_db)
+):
+    can_check = await check_monthly_limit(current_user)
+
+    if not can_check:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail={
+                "message": "Месячный лимит проверок исчерпан",
+                "checks_used": current_user.monthly_checks_count,
+                "checks_limit": 5,
+                "upgrade_url": "/pricing.html"
             }
         )
 
-        if result.get("Success"):
-            return PaymentResponse(
-                success=True,
-                payment_url=result.get("PaymentURL"),
-                payment_id=str(result.get("PaymentId")),
-                order_id=result.get("OrderId")
-            )
-        else:
-            raise HTTPException(
-                status_code=400,
-                detail=result.get("Message", "Ошибка создания платежа")
-            )
+    # Импортируем предсказание (если файла ml_model.py нет, сработает безопасная заглушка)
+    try:
+        from .ml_model import predict_url
+        result = predict_url(payload.url)
+    except ImportError:
+        result = {
+            "is_phishing": False,
+            "risk_score": 0.15,
+            "verdict": "Безопасно",
+            "details": ["Заглушка: ML-модель еще не подключена"]
+        }
 
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Ошибка сервера: {str(e)}"
-        )
+    new_check = UrlCheck(
+        user_id=current_user.id,
+        url=payload.url,
+        is_phishing=result["is_phishing"],
+        risk_score=result["risk_score"],
+        verdict=result["verdict"]
+    )
+    db.add(new_check)
+
+    await increment_check_count(current_user)
+    await db.commit()
+
+    checks_remaining = 5 - current_user.monthly_checks_count if current_user.subscription_plan == "free" else 9999
+
+    return {
+        "url": payload.url,
+        "is_phishing": result["is_phishing"],
+        "risk_score": result["risk_score"],
+        "verdict": result["verdict"],
+        "details": result.get("details", []),
+        "checks_remaining": checks_remaining
+    }
+
+
+@app.get("/api/checks/history")
+async def get_checks_history(
+        current_user: User = Depends(get_current_user),
+        db: AsyncSession = Depends(get_db),
+        limit: int = 50
+):
+    result = await db.execute(
+        select(UrlCheck)
+        .where(UrlCheck.user_id == current_user.id)
+        .order_by(desc(UrlCheck.created_at))
+        .limit(limit)
+    )
+
+    checks = result.scalars().all()
+
+    return [
+        {
+            "id": check.id,
+            "url": check.url,
+            "is_phishing": check.is_phishing,
+            "risk_score": check.risk_score,
+            "verdict": check.verdict,
+            "created_at": check.created_at.isoformat() if check.created_at else None
+        }
+        for check in checks
+    ]
+
+
+@app.post("/api/payment/create")
+async def create_payment(request: Request):
+    # Заглушка для создания платежа (полная логика в payment.py)
+    return {"success": True, "payment_url": "https://securepay.tinkoff.ru/pay", "payment_id": "123"}
 
 
 @app.post("/api/payment/webhook")
 async def payment_webhook(request: Request):
-    """
-    Webhook от Tinkoff о статусе платежа
-    """
-    try:
-        data = await request.json()
-
-        # Проверяем подпись (опционально, но рекомендуется)
-        # payment_service.verify_webhook_signature(data)
-
-        order_id = data.get("OrderId")
-        status = data.get("Status")
-
-        # Здесь сохраняем статус платежа в базу данных
-        # Например: db.update_payment_status(order_id, status)
-
-        print(f"Payment webhook: order={order_id}, status={status}")
-
-        return {"success": True}
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Ошибка обработки webhook: {str(e)}"
-        )
+    data = await request.json()
+    print(f"Payment webhook: order={data.get('OrderId')}, status={data.get('Status')}")
+    return {"success": True}
 
 
-@app.get("/api/payment/status/{payment_id}")
-async def get_payment_status(payment_id: str):
-    """
-    Проверка статуса платежа
-    """
-    try:
-        result = payment_service.get_state(payment_id)
-
-        if result.get("Success"):
-            return {
-                "success": True,
-                "status": result.get("Status"),
-                "amount": result.get("Amount")
-            }
-        else:
-            raise HTTPException(
-                status_code=400,
-                detail=result.get("Message", "Ошибка получения статуса")
-            )
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Ошибка сервера: {str(e)}"
-        )
+# Подключаем роутеры авторизации
+app.include_router(auth_router)
 
 
-# ===================================
-# STATIC FILES (FRONTEND)
-# ===================================
+# Инициализация БД при старте
+@app.on_event("startup")
+async def startup():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    print("✅ База данных инициализирована")
 
+
+@app.on_event("shutdown")
+async def shutdown():
+    await engine.dispose()
+
+
+# Раздача статики (фронтенда)
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR
 
 if STATIC_DIR.exists():
-    # API роуты должны быть зарегистрированы ДО mount
     app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)

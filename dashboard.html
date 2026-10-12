@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет — PhishDet</title>
+    <meta name="description" content="Ваш личный кабинет PhishDet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    PhishDet
+                </a>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Проверка</a>
+                    <a href="dashboard.html" class="nav-link active">Кабинет</a>
+                    <button class="logout-btn" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Выйти
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div>
+                    <h1 class="dashboard-welcome">Привет, <span id="userEmail"></span>!</h1>
+                    <p class="dashboard-email">Ваш тариф: <strong id="userPlan"></strong></p>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-label">Проверок в этом месяце</div>
+                    <div class="stat-card-value"><span id="checksUsed">0</span> / <span id="checksLimit">5</span></div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-label">Обнаружено угроз</div>
+                    <div class="stat-card-value" id="threatsDetected">0</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-label">Последняя проверка</div>
+                    <div class="stat-card-value" id="lastCheck">Никогда</div>
+                </div>
+            </div>
+
+            <!-- Checks History -->
+            <div class="dashboard-section">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    История проверок
+                </h2>
+
+                <div class="checks-list" id="checksList">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>У вас пока нет проверок</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top: 16px;">
+                            <i class="fas fa-search"></i>
+                            Проверить первую ссылку
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — PhishDet</title>
+    <meta name="description" content="Войдите в свой аккаунт PhishDet для проверки ссылок">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    PhishDet
+                </a>
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    На главную
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <div class="auth-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="grid-bg"></div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1 class="auth-title">Добро пожаловать</h1>
+                <p class="auth-subtitle">Войдите или создайте аккаунт для проверки ссылок</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Вход</button>
+                <button class="auth-tab" data-tab="register">Регистрация</button>
+            </div>
+
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm">
+                <div class="auth-input-group">
+                    <label class="auth-label" for="loginEmail">Email</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        class="auth-input"
+                        placeholder="your@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="auth-input-group">
+                    <label class="auth-label" for="loginPassword">Пароль</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        class="auth-input"
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary auth-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Войти
+                </button>
+
+                <div class="auth-status" id="loginStatus"></div>
+            </form>
+
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm">
+                <div class="auth-input-group">
+                    <label class="auth-label" for="registerEmail">Email</label>
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        class="auth-input"
+                        placeholder="your@email.com"
+                        required
+                    >
+                </div>
+
+                <div class="auth-input-group">
+                    <label class="auth-label" for="registerPassword">Пароль</label>
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        class="auth-input"
+                        placeholder="Минимум 6 символов"
+                        minlength="6"
+                        required
+                    >
+                </div>
+
+                <div class="auth-input-group">
+                    <label class="auth-label" for="registerPasswordConfirm">Подтвердите пароль</label>
+                    <input
+                        type="password"
+                        id="registerPasswordConfirm"
+                        class="auth-input"
+                        placeholder="••••••••"
+                        minlength="6"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary auth-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Создать аккаунт
+                </button>
+
+                <div class="auth-status" id="registerStatus"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

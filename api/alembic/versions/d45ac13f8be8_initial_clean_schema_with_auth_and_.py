@@ -1,8 +1,8 @@
-"""create users and url_checks tables
+"""initial clean schema with auth and limits
 
-Revision ID: 3892b09c3e28
+Revision ID: d45ac13f8be8
 Revises: 
-Create Date: 2026-10-12 15:15:18.140876
+Create Date: 2026-10-12 16:34:30.793533
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '3892b09c3e28'
+revision: str = 'd45ac13f8be8'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,13 +26,15 @@ def upgrade() -> None:
     sa.Column('hashed_password', sa.String(), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
     sa.Column('subscription_plan', sa.String(), nullable=True),
+    sa.Column('monthly_checks_count', sa.Integer(), nullable=True),
+    sa.Column('last_check_reset', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
     op.create_table('url_checks',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(), nullable=False),
     sa.Column('is_phishing', sa.Boolean(), nullable=False),
     sa.Column('risk_score', sa.Float(), nullable=False),
