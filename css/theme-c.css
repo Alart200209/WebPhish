@@ -1,0 +1,68 @@
+/* =====================================================================
+   ВАРИАНТ ДИЗАЙНА C — «Сейтай-ваби» (светлый васи-минимализм)
+   ---------------------------------------------------------------------
+   ВКЛЮЧЕНИЕ: в index.html (и других страницах) закомментируйте
+     <link rel="stylesheet" href="css/theme-b.css">   (если включён B)
+   и раскомментируйте строку:
+     <link rel="stylesheet" href="css/theme-c.css">
+
+   Светлая бумажная база (#f6f2e9 — цвет васи), суми-чернила для текста,
+   один акцент — киноварь (#c2452d), второй — индиго айзуме (#33517e).
+   Палитра подобрана как muted-набор colormind.io:
+   [ #f6f2e9, #2b2620, #c2452d, #33517e, #8a9a7b ].
+   Стиль: mid-century + японский минимализм, много воздуха, тонкие линии.
+   ===================================================================== */
+
+:root {
+    /* Бумажные поверхности */
+    --bg-primary: #f6f2e9;              /* васи — фон страницы */
+    --bg-secondary: #efe9dd;            /* на тон темнее, «ступень» */
+    --bg-tertiary: #e7dfcf;
+    --bg-elevated: #fffdf7;             /* карточка — белее бумаги */
+    --ink-block: #2b2620;               /* суми-блок (footer) */
+    --ink-block-soft: #4a4238;
+
+    /* Суми-чернила */
+    --text-primary: #2b2620;
+    --text-secondary: #6f6656;
+    --text-muted: #9a9080;
+    --text-on-ink: #f2ecdf;
+    --text-on-ink-soft: rgba(242, 236, 223, 0.65);
+
+    /* Акценты: киноварь + айзуме-индиго */
+    --accent-primary: #c2452d;          /* киноварь — печать, главный акцент */
+    --accent-primary-strong: #a93a24;
+    --accent-bright: #33517e;           /* айзуме — второй акцент/ссылки */
+    --accent-on-primary: #fdf8ef;
+    --accent-vermilion: #c2452d;
+    --accent-success: #5f7d5a;          /* моми-зелень, приглушённая */
+    --accent-warning: #b98a2f;
+    --accent-danger: #b03620;
+    --accent-info: #33517e;
+
+    --border-color: rgba(43, 38, 32, 0.14);
+    --border-strong: rgba(43, 38, 32, 0.3);
+    --border-glow: rgba(194, 69, 45, 0.4);
+
+    --shadow-sm: 0 1px 2px rgba(43, 38, 32, 0.08);
+    --shadow-md: 0 14px 30px -14px rgba(43, 38, 32, 0.25);
+    --shadow-lg: 0 32px 60px -24px rgba(43, 38, 32, 0.3);
+
+    /* Ваби: почти прямые углы */
+    --radius-sm: 3px;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --radius-xl: 10px;
+}
+
+/* Деталь светлой темы: кнопки-«печати» с лёгким негативом при hover */
+.btn-outline:hover {
+    color: var(--accent-on-primary);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+/* Деталь: ссылки в тексте — тонкое киноварное подчёркивание */
+.footer a:hover {
+    color: var(--accent-bright);
+}

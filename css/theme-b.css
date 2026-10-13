@@ -1,0 +1,68 @@
+/* =====================================================================
+   ВАРИАНТ ДИЗАЙНА B — «Индиго-ночь» (Material 3 dynamic color)
+   ---------------------------------------------------------------------
+   ВКЛЮЧЕНИЕ: в index.html (и других страницах) закомментируйте
+     <link rel="stylesheet" href="css/theme-c.css">   (если включён C)
+   и раскомментируйте строку:
+     <link rel="stylesheet" href="css/theme-b.css">
+
+   Палитра сгенерирована по принципам colormind.io (muted, 5-tone)
+   и построена по логике Material 3: surface-контейнеры, primary-тон
+   для filled-кнопок, elevated-уровни через тон, а не тень.
+   Тёмная ночная база #12172B + индиго #4F81EA + янтарь #E6B450.
+   ===================================================================== */
+
+:root {
+    /* M3 surfaces — тёмная тема */
+    --bg-primary: #12172b;              /* surface dim */
+    --bg-secondary: #171d34;            /* surface */
+    --bg-tertiary: #1d2440;             /* surface container lowest */
+    --bg-elevated: #232b4a;             /* surface container */
+    --ink-block: #0c101f;
+    --ink-block-soft: #1a2138;
+
+    /* M3 on-surface */
+    --text-primary: #e4e9f7;
+    --text-secondary: #9aa5c4;
+    --text-muted: #6b769a;
+    --text-on-ink: #e4e9f7;
+    --text-on-ink-soft: rgba(228, 233, 247, 0.62);
+
+    /* M3 primary / tertiary */
+    --accent-primary: #4f81ea;          /* primary40 -> на тёмном brighter */
+    --accent-primary-strong: #6d97f2;
+    --accent-bright: #e6b450;           /* tertiary — тёплый янтарь-акцент */
+    --accent-on-primary: #0e1322;
+    --accent-vermilion: #e05a4a;        /* error-тон — угроза */
+    --accent-success: #6fbf8e;
+    --accent-warning: #e6b450;
+    --accent-danger: #e05a4a;
+    --accent-info: #7fc4d8;
+
+    --border-color: rgba(228, 233, 247, 0.1);
+    --border-strong: rgba(228, 233, 247, 0.2);
+    --border-glow: rgba(79, 129, 234, 0.45);
+
+    --shadow-sm: 0 1px 3px rgba(6, 9, 20, 0.5);
+    --shadow-md: 0 14px 34px -14px rgba(6, 9, 20, 0.7);
+    --shadow-lg: 0 34px 66px -26px rgba(6, 9, 20, 0.8);
+
+    /* M3: более мягкие, «скруглённые» углы компонентов */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+}
+
+/* M3 detail: filled-кнопки без «кожаного» ощущения — чистый primary */
+.btn-primary:hover {
+    box-shadow: 0 2px 8px rgba(79, 129, 234, 0.35);
+}
+
+/* M3 detail: карточки-контейнеры чуть светлее фона (surface-container) */
+.auth-card,
+.checkout-form,
+.pricing-card,
+.dashboard-card {
+    background: var(--bg-tertiary);
+}

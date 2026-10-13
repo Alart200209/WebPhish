@@ -14,6 +14,14 @@
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/index.css">
+
+    <!-- ===== ВАРИАНТЫ ДИЗАЙНА (переключатель тем) =====================
+         A — текущий: тёмный mid-century (орех + охра), идёт по умолчанию.
+         B — «Индиго-ночь» (Material 3 surface-логика): раскомментируйте строку ниже.
+         C — «Сейтай-ваби» (светлая васи-бумага + киноварь): раскомментируйте строку ниже.
+         Включать только ОДНУ тему B или C одновременно. ================= -->
+    <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
+    <!-- <link rel="stylesheet" href="css/theme-c.css"> -->
 </head>
 <body>
     <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
@@ -23,7 +31,23 @@
         <div class="container">
             <div class="header-inner">
                 <a href="index.html" class="logo" aria-label="PhishDet — на главную">
-                    <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
+                    <!-- ===== ВАРИАНТЫ ЛОГОТИПА =========================
+                         LOGO A (активен): «д-щуп» — крючок с наживкой-точкой.
+                         LOGO B: «энсо-щит» — незавершённый круг дзен-кисти,
+                                 прерванный киноварной засечкой (угроза снаружи).
+                         LOGO C: «линза-фильтр» — буква O-сканер: кольцо +
+                                 диагональный луч, отсекающий подозрительное.
+                         Чтобы сменить: закомментируйте активный <svg>,
+                         раскомментируйте нужный. ======================== -->
+                    <span class="logo-icon"><!-- LOGO A -->
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
+                        <!-- LOGO B — раскомментируйте и закомментируйте LOGO A
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M46 14a24 24 0 1 0 6 22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M46 14l9-5" stroke="#E8442F" stroke-width="7" stroke-linecap="round"/></svg>
+                        -->
+                        <!-- LOGO C — раскомментируйте и закомментируйте LOGO A
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width="7"/><path d="M43 43 56 56" stroke="#E8442F" stroke-width="8" stroke-linecap="round"/><circle cx="30" cy="30" r="5" fill="currentColor"/></svg>
+                        -->
+                    </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
 
@@ -507,6 +531,7 @@
         <div class="container">
             <div class="footer-brand-row">
                 <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
+                    <!-- LOGO A (активен). Варианты B и C — в шапке страницы, строга та же -->
                     <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
