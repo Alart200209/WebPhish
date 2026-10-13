@@ -1,41 +1,42 @@
 /* ===================================
-   CSS VARIABLES — тёмная «терминальная» тема
-   Один акцент (янтарь), без градиентов и неона
+   CSS VARIABLES — тёмная тема в духе суми-э (墨絵)
+   Суми-чёрный фон · васи-текст · один янтарный акцент · киноварь — только для угрозы
 =================================== */
 :root {
-    --bg-primary: #0c0d10;
-    --bg-secondary: #101216;
-    --bg-tertiary: #15171d;
-    --bg-elevated: #191c22;
-    --bg-card: rgba(255, 255, 255, 0.025);
-    --bg-card-hover: rgba(255, 255, 255, 0.05);
+    --bg-primary: #0c0d10;              /* 墨 sumi — чернила */
+    --bg-secondary: #0f1013;
+    --bg-tertiary: #14161a;
+    --bg-elevated: #191b20;
+    --bg-card: rgba(244, 241, 234, 0.028);
+    --bg-card-hover: rgba(244, 241, 234, 0.055);
 
-    --text-primary: #e8eaed;
-    --text-secondary: #9aa1ac;
-    --text-muted: #626873;
+    --text-primary: #ece8de;            /* 和紙 washi — тёплая бумага */
+    --text-secondary: #9b978c;
+    --text-muted: #615e57;
 
-    --accent-primary: #f5a524;          /* янтарный — единственный акцент */
+    --accent-primary: #f5a524;          /* 琥珀 янтарь — единственный акцент бренда */
     --accent-primary-strong: #ffb43a;
     --accent-on-primary: #14110a;       /* текст на янтарном */
-    --accent-success: #3fb950;
+    --accent-vermilion: #e8442f;        /* 朱色 киноварь — печать / сигнал угрозы */
+    --accent-success: #7d9c6a;          /* 若竹 молодой бамбук */
     --accent-warning: #d29922;
-    --accent-danger: #f85149;
-    --accent-info: #58a6ff;
+    --accent-danger: #e8442f;
+    --accent-info: #8a9bb0;             /* 藍灰 серо-синий */
 
     --gradient-primary: linear-gradient(135deg, #f5a524 0%, #e0870e 100%);
 
-    --border-color: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.16);
+    --border-color: rgba(236, 232, 222, 0.10);
+    --border-strong: rgba(236, 232, 222, 0.20);
     --border-glow: rgba(245, 165, 36, 0.35);
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
     --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.55);
 
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 14px;
-    --radius-xl: 18px;
+    --radius-sm: 4px;                   /* японский минимализм: острые грани */
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 10px;
 
     --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
@@ -62,13 +63,24 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* тонкая «бумажная» текстура васи поверх всего — не ИИ-глянец, а живая поверхность */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.91 0 0 0 0 0.86 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .container {
@@ -84,8 +96,8 @@ section {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
 }
 
 h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
@@ -94,7 +106,12 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 
 p {
     color: var(--text-secondary);
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
+}
+
+::selection {
+    background: var(--accent-primary);
+    color: var(--accent-on-primary);
 }
 
 a {
@@ -113,7 +130,7 @@ a {
     gap: 10px;
     padding: 15px 28px;
     min-height: 48px;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);   /* японский минимализм: почти прямые углы */
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.2;
@@ -149,24 +166,24 @@ a {
     background: var(--accent-primary);
     color: var(--accent-on-primary);
     border-color: var(--accent-primary);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .btn-primary:hover {
     background: var(--accent-primary-strong);
     border-color: var(--accent-primary-strong);
-    box-shadow: 0 4px 16px rgba(245, 165, 36, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: none;
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(236, 232, 222, 0.05);
     color: var(--text-primary);
-    border-color: rgba(255, 255, 255, 0.16);
+    border-color: rgba(236, 232, 222, 0.18);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(236, 232, 222, 0.1);
+    border-color: rgba(236, 232, 222, 0.34);
 }
 
 .btn[disabled],
@@ -201,8 +218,8 @@ a {
 }
 
 .header.scrolled {
-    background: rgba(10, 10, 15, 0.8);
-    backdrop-filter: blur(20px);
+    background: rgba(12, 13, 16, 0.85);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -213,29 +230,40 @@ a {
     height: 100%;
 }
 
+/* ===================================
+   ЛОГОТИП — знак «д»-крюк + словесная часть
+=================================== */
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
 }
 
 .logo-icon {
-    width: 36px;
-    height: 36px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-strong);
-    border-radius: 9px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    color: var(--accent-primary);
+    flex: none;
 }
 
-.logo .logo-text-accent {
-    color: var(--accent-primary);
+.logo-mark {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform var(--transition-base);
+}
+
+.logo:hover .logo-mark {
+    transform: rotate(-6deg);
+}
+
+.logo-word-accent {
+    color: var(--accent-vermilion);
 }
 
 .nav {
@@ -386,8 +414,9 @@ a {
 }
 
 /* ===================================
-   КУРСОР-ПРОЖЕКТОР (spotlight)
-   Тёплый свет следует за мышью по секциям и карточкам
+   КУРСОР-ПРОЖЕКТОР (spotlight) — обычный системный курсор,
+   рядом с ним только мягкое тёплое свечение. Никаких кастомных
+   курсоров, колец и «линий» за мышью.
 =================================== */
 body.has-spotlight {
     position: relative;

@@ -20,7 +20,7 @@
     z-index: -1;
 }
 
-/* Тонкая «сканлайновая» сетка — отсылка к терминалу, без блобов и неона */
+/* Сетка сюги (椘) — тонкие «бамбуковые» линии васи, без свечения и блобов */
 .grid-bg {
     position: absolute;
     top: 0;
@@ -28,9 +28,9 @@
     right: 0;
     bottom: 0;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 48px 48px;
+        linear-gradient(rgba(236, 232, 222, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(236, 232, 222, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
     mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 75%);
 }
@@ -50,7 +50,7 @@
     padding: 8px 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 100px;
+    border-radius: var(--radius-sm);
     font-size: 0.875rem;
     color: var(--text-secondary);
     margin-bottom: 32px;
@@ -257,10 +257,12 @@
 }
 
 .stat-value {
+    font-family: var(--font-mono);
     font-size: 2.75rem;
-    font-weight: 800;
+    font-weight: 500;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
 }
 
 .stat-value::after {
@@ -294,7 +296,7 @@
     padding: 6px 14px;
     background: transparent;
     border: 1px solid var(--border-strong);
-    border-radius: 100px;
+    border-radius: var(--radius-sm);
     font-size: 0.8125rem;
     font-family: var(--font-mono);
     text-transform: lowercase;
@@ -337,10 +339,27 @@
     overflow: hidden;
 }
 
+.feature-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--accent-primary);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--transition-base);
+}
+
 .feature-card:hover {
     background: var(--bg-card-hover);
-    border-color: rgba(245, 165, 36, 0.35);
-    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    transform: none;
+}
+
+.feature-card:hover::before {
+    transform: scaleY(1);
 }
 
 .feature-icon {
@@ -396,9 +415,10 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: 500;
     font-family: var(--font-mono);
     color: var(--accent-primary);
+    border-radius: var(--radius-sm);
     margin: 0 auto 24px;
     position: relative;
     z-index: 1;
@@ -451,8 +471,8 @@
 
 .pricing-card:hover {
     border-color: rgba(245, 165, 36, 0.45);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
+    transform: none;
+    box-shadow: none;
 }
 
 .pricing-badge {
@@ -461,9 +481,9 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 6px 16px;
-    background: var(--accent-primary);
-    color: var(--accent-on-primary);
-    border-radius: 100px;
+    background: var(--accent-vermilion);
+    color: #fdf6f3;
+    border-radius: var(--radius-sm);
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -476,8 +496,9 @@
 }
 
 .pricing-price {
-    font-size: 3rem;
-    font-weight: 800;
+    font-family: var(--font-mono);
+    font-size: 2.75rem;
+    font-weight: 500;
     margin-bottom: 8px;
     font-variant-numeric: tabular-nums;
 }
@@ -526,7 +547,7 @@
 }
 
 .pricing-grid .pricing-card:hover .pricing-btn.btn-primary {
-    box-shadow: 0 6px 20px rgba(245, 165, 36, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: none;
 }
 
 /* Карточка Про всегда чуть выделена рамкой */
@@ -594,7 +615,7 @@
     height: 48px;
     background: var(--bg-elevated);
     border: 1px solid var(--border-strong);
-    border-radius: 50%;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -654,7 +675,7 @@
     width: 32px;
     height: 32px;
     background: var(--bg-card);
-    border-radius: 50%;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;

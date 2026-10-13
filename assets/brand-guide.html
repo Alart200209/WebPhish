@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishDet — фирменный знак</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C0D10; --ink-soft:#15171d; --washi:#F4F1EA;
+    --vermilion:#E8442F; --amber:#F5A524;
+    --line:rgba(12,13,16,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Zen Kaku Gothic New',sans-serif;background:var(--washi);color:var(--ink)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  h1,h2{font-weight:900;letter-spacing:-.02em}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(12,13,16,.55)}
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+
+  /* cover */
+  .cover{min-height:88vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .cover-mark svg{width:min(220px,40vw);height:auto}
+  .cover h1{font-size:clamp(3rem,9vw,6.5rem);margin-top:24px}
+  .cover h1 em{font-style:normal;color:var(--vermilion)}
+  .cover .vert{position:absolute;right:28px;top:80px;writing-mode:vertical-rl;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.3em;color:rgba(12,13,16,.4)}
+
+  /* grid & clearspace */
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:32px}
+  .tile{border:1px solid var(--line);padding:28px;display:flex;align-items:center;justify-content:center;min-height:180px}
+  .tile.dark{background:var(--ink)}
+  .tile.amber{background:var(--amber)}
+  .tile.verm{background:var(--vermilion)}
+  .clear{display:inline-block;border:1px dashed rgba(12,13,16,.35);padding:26px}
+  .clear svg{width:96px;height:96px}
+
+  /* sizes */
+  .sizes{display:flex;align-items:flex-end;gap:28px;margin-top:32px;flex-wrap:wrap}
+  .size-item{text-align:center}
+  .size-item .mono{display:block;margin-top:8px}
+
+  /* palette */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:32px}
+  .swatch{border:1px solid var(--line)}
+  .swatch .chip{height:120px}
+  .swatch .meta{padding:14px 16px}
+  .swatch .name{font-weight:700}
+
+  /* lockups */
+  .lockup{display:flex;align-items:center;gap:14px}
+  .lockup svg{width:44px;height:44px;flex:none}
+  .wordmark{font-weight:900;font-size:1.9rem;letter-spacing:-.02em}
+  .wordmark i{font-style:normal;color:var(--vermilion)}
+  .on-dark .wordmark{color:var(--washi)}
+
+  /* applications */
+  .apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:36px}
+  .app-card{border:1px solid var(--line);overflow:hidden}
+  .app-scene{min-height:260px;display:flex;align-items:center;justify-content:center;padding:32px}
+
+  /* avatar */
+  .avatar{width:120px;height:120px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(12,13,16,.25)}
+  .avatar svg{width:64px;height:64px}
+
+  /* business card */
+  .bizcard{width:340px;aspect-ratio:1.75;background:var(--ink);color:var(--washi);padding:26px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+  .bizcard::after{content:'';position:absolute;left:0;top:0;width:6px;height:100%;background:var(--amber)}
+  .bizcard .top{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.2rem}
+  .bizcard .top svg{width:28px;height:28px}
+  .bizcard .who{font-weight:700}
+  .bizcard .role{font-size:.8rem;color:rgba(244,241,234,.55)}
+  .bizcard .contact{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(244,241,234,.75);line-height:1.8}
+
+  /* packaging seal */
+  .package{width:230px;height:250px;background:#fff;border:1px solid var(--line);position:relative;display:flex;align-items:center;justify-content:center}
+  .package .band{position:absolute;top:0;left:0;right:0;height:52px;background:var(--amber);display:flex;align-items:center;justify-content:center;font-weight:900;letter-spacing:.02em}
+  .seal{width:110px;height:110px;border-radius:50%;border:3px solid var(--vermilion);color:var(--vermilion);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.05rem;transform:rotate(-8deg);text-align:center;line-height:1.2}
+  .package .foot{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:rgba(12,13,16,.45)}
+
+  footer{padding:48px 0}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="mark">
+      <circle cx="49" cy="15" r="4.5" fill="#E8442F"/>
+      <path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/>
+    </g>
+    <g id="mark-mono-ink">
+      <circle cx="49" cy="15" r="4.5" fill="#0C0D10"/>
+      <path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#0C0D10" stroke-width="6.5" stroke-linecap="round"/>
+    </g>
+    <g id="mark-mono-light">
+      <circle cx="49" cy="15" r="4.5" fill="#F4F1EA"/>
+      <path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F4F1EA" stroke-width="6.5" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <section class="cover">
+    <div class="vert">PHISHDET · BRAND MARK · 2026</div>
+    <div class="cover-mark"><svg viewBox="0 0 64 64"><use href="#mark"/></svg></div>
+    <h1>Phish<em>Det</em></h1>
+    <p class="mono" style="margin-top:16px">Фирменный знак · буква «д» + крюк + наживка</p>
+  </section>
+
+  <!-- CONCEPT -->
+  <section>
+    <p class="mono">01 · Концепция</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Одна буква — два смысла</h2>
+    <div class="row">
+      <div style="grid-column:1/-1;max-width:720px">
+        <p style="line-height:1.9;color:rgba(12,13,16,.75)">
+          Знак построен на строчной букве <b>«д»</b> — первая буква слова «детектор», начертание в духе каллиграфии минчёт: две линии, ни одной лишней.
+          Хвостовая засечка буквы разворачивается в <b>крючок удочки</b>, а красная точка рядом — <b>наживка</b>: так читается «фишинг».
+          Одновременно замкнутая чаша буквы работает как <b>щит</b> — защита. Три элемента: линия, крюк, точка.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLEARSPACE + BACKGROUNDS -->
+  <section>
+    <p class="mono">02 · Охранное поле и фоны</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Работает на любом фоне</h2>
+    <div class="row">
+      <div class="tile"><span class="clear"><svg viewBox="0 0 64 64"><use href="#mark"/></svg></span></div>
+      <div class="tile dark"><svg viewBox="0 0 64 64" width="72" height="72"><use href="#mark"/></svg></div>
+      <div class="tile amber"><svg viewBox="0 0 64 64" width="72" height="72"><use href="#mark-mono-ink"/></svg></div>
+      <div class="tile verm"><svg viewBox="0 0 64 64" width="72" height="72"><use href="#mark-mono-light"/></svg></div>
+    </div>
+  </section>
+
+  <!-- SIZES -->
+  <section>
+    <p class="mono">03 · Масштабируемость</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Читается с 12 пикселей</h2>
+    <div class="sizes">
+      <div class="size-item"><svg viewBox="0 0 64 64" width="96" height="96"><use href="#mark"/></svg><span class="mono">96 px</span></div>
+      <div class="size-item"><svg viewBox="0 0 64 64" width="48" height="48"><use href="#mark"/></svg><span class="mono">48 px</span></div>
+      <div class="size-item"><svg viewBox="0 0 64 64" width="24" height="24"><use href="#mark"/></svg><span class="mono">24 px</span></div>
+      <div class="size-item"><svg viewBox="0 0 64 64" width="16" height="16"><use href="#mark"/></svg><span class="mono">16 px · favicon</span></div>
+      <div class="size-item"><svg viewBox="0 0 64 64" width="12" height="12"><use href="#mark"/></svg><span class="mono">12 px</span></div>
+    </div>
+  </section>
+
+  <!-- PALETTE -->
+  <section>
+    <p class="mono">04 · Палитра</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Чернила · киноварь · янтарь · васи</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0C0D10"></div><div class="meta"><div class="name">Суми · чернила</div><div class="mono">#0C0D10 · основной</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#E8442F"></div><div class="meta"><div class="name">Киноварь · наживка</div><div class="mono">#E8442F · акцент угрозы</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F5A524"></div><div class="meta"><div class="name">Янтарь · буква</div><div class="mono">#F5A524 · акцент бренда</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F4F1EA;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="name">Васи · бумага</div><div class="mono">#F4F1EA · фон</div></div></div>
+    </div>
+  </section>
+
+  <!-- LOCKUPS -->
+  <section>
+    <p class="mono">05 · Логотип: знак + название</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Горизонтальная связка</h2>
+    <div class="row">
+      <div class="tile"><div class="lockup"><svg viewBox="0 0 64 64"><use href="#mark"/></svg><span class="wordmark">Phish<i>Det</i></span></div></div>
+      <div class="tile dark on-dark"><div class="lockup"><svg viewBox="0 0 64 64"><use href="#mark"/></svg><span class="wordmark">Phish<i>Det</i></span></div></div>
+      <div class="tile"><div class="lockup"><svg viewBox="0 0 64 64"><use href="#mark-mono-ink"/></svg><span class="wordmark">Phish<span style="color:rgba(12,13,16,.4)">Det</span></span></div></div>
+    </div>
+    <p style="margin-top:20px;color:rgba(12,13,16,.6);max-width:640px;line-height:1.8">
+      Шрифтовая часть — Zen Kaku Gothic New (Heavy): геометричная гротеск-антиква с широкой базовой линией,
+      близкая к японскому ориентальному гротеску. «Phish» — плотным начертанием, «Det» — тоньше или киноварью:
+    </p>
+    <p class="mono" style="margin-top:8px">высота знака = cap-height × 1.6 · межбуквенный интервал −2% · отступ между знаком и текстом = ширине стебелька буквы</p>
+  </section>
+
+  <!-- APPLICATIONS -->
+  <section style="border-bottom:none">
+    <p class="mono">06 · Применения</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);margin-top:12px">Аватар · визитка · упаковка</h2>
+    <div class="apps">
+      <div class="app-card">
+        <div class="app-scene" style="background:var(--washi)">
+          <div class="avatar"><svg viewBox="0 0 64 64"><use href="#mark"/></svg></div>
+        </div>
+        <div style="padding:16px 20px"><b>Аватар</b><div class="mono" style="margin-top:4px">Telegram · GitHub · подставка = круг</div></div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-scene" style="background:#e9e5db">
+          <div class="bizcard">
+            <div class="top"><svg viewBox="0 0 64 64"><use href="#mark"/></svg> PhishDet</div>
+            <div>
+              <div class="who">Анна Ковалёва</div>
+              <div class="role">Основатель</div>
+            </div>
+            <div class="contact">hello@phishdet.ru<br>+7 900 000-00-00 · phishdet.ru</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px"><b>Визитка</b><div class="mono" style="margin-top:4px">90×50 · суми-фон, янтарный корешок</div></div>
+      </div>
+
+      <div class="app-card">
+        <div class="app-scene" style="background:#f0ece2">
+          <div class="package">
+            <div class="band">PhishDet</div>
+            <div class="seal">проверено<br>✓</div>
+            <div class="foot">SECURITY REPORT · №0417</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px"><b>Упаковка / документ</b><div class="mono" style="margin-top:4px">печать-ханко киноварью на отчётах</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="mono">PhishDet Brand Mark v1 · все файлы: assets/brand-guide.html · assets/logo-mark.svg · favicon.svg</p>
+  </footer>
+</div>
+</body>
+</html>

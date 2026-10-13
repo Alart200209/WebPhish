@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>PhishDet — проверка ссылок на фишинг перед открытием</title>
     <meta name="description" content="PhishDet проверяет подозрительные ссылки из писем, SMS и мессенджеров за пару секунд и показывает, стоит ли переходить по ним. Первые 10 проверок — бесплатно.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <link rel="stylesheet" href="css/main.css">
@@ -20,10 +21,8 @@
         <div class="container">
             <div class="header-inner">
                 <a href="index.html" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    PhishDet
+                    <div class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                    <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
 
                 <nav class="nav" id="nav">
@@ -56,34 +55,33 @@
         </div>
 
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="hero-badge-dot"></span>
-                    Работает прямо в браузере
+            <div class="hero-content hero-editorial">
+                <div class="hero-side">
+                    <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg>
+                    <span class="hero-tate">リンクケンサ &middot; ссылка · проверка</span>
                 </div>
+                <div class="hero-main">
+                <div class="hero-kicker mono-label">PhishDet — детектор фишинговых ссылок</div>
 
                 <h1 class="hero-title">
-                    Проверяйте ссылки на <span class="highlight">фишинг</span> за секунды
+                    Не открывай,<br>пока не <span class="highlight">проверил</span>
                 </h1>
 
                 <p class="hero-subtitle">
-                    Прислали ссылку «от банка» или «со службы доставки»? Вставьте её в поле ниже —
-                    покажем, насколько она похожа на фишинговую, и объясним почему.
-                    Саму ссылку при этом не открываем.
+                    Прислали ссылку «от банка»? Вставьте её в поле — покажем, насколько она похожа
+                    на фишинговую, и объясним почему. Саму ссылку не открываем.
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#checker" class="btn btn-primary btn-arrow">
-                        <i class="fas fa-search"></i>
-                        Проверить ссылку
+                    <a href="#checker" class="btn btn-primary">
+                        Проверить ссылку <span aria-hidden="true">&darr;</span>
                     </a>
-                    <a href="#how-it-works" class="btn btn-secondary">
-                        <i class="fas fa-list-check"></i>
-                        Как это работает
-                    </a>
+                    <a href="#how-it-works" class="btn btn-secondary">Как это работает</a>
                 </div>
+                </div>
+            </div>
 
-                <!-- Checker -->
+            <!-- Checker -->
                 <div class="checker" id="checker">
                     <form class="checker-form" id="checkerForm">
                         <input
@@ -94,7 +92,6 @@
                             required
                         >
                         <button type="submit" class="btn btn-primary checker-btn">
-                            <i class="fas fa-shield-alt"></i>
                             Проверить
                         </button>
                     </form>
@@ -102,7 +99,6 @@
                     <p class="form-status" id="check-status" style="margin-top: 16px; text-align: center; display: none;"></p>
                     <div id="checker-result" class="result-card" hidden></div>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -135,7 +131,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-badge">
-                    <i class="fas fa-star"></i>
+                    <span class="badge-num">01</span>
                     Возможности
                 </div>
                 <h2 class="section-title">Почему выбирают PhishDet</h2>
@@ -146,32 +142,32 @@
 
             <div class="features-grid">
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">速</span><span class="feature-kanji-meaning">скорость</span></div>
                     <h3 class="feature-title">Быстрая проверка</h3>
                     <p class="feature-text">Результат за пару секунд. Анализ идёт по тексту адреса, страница мошенника не загружается.</p>
                 </div>
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-list-check"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">解</span><span class="feature-kanji-meaning">разбор</span></div>
                     <h3 class="feature-title">Объясняет, а не пугает</h3>
                     <p class="feature-text">Не просто «опасно/безопасно», а конкретные признаки: подменённый домен, чужие ключевые слова, странные редиректы.</p>
                 </div>
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">静</span><span class="feature-kanji-meaning">тишина</span></div>
                     <h3 class="feature-title">Конфиденциальность</h3>
                     <p class="feature-text">На бесплатном тарифе ссылки не сохраняются. Аккаунт нужен только для счётчика проверок.</p>
                 </div>
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">機</span><span class="feature-kanji-meaning">устройство</span></div>
                     <h3 class="feature-title">Работает везде</h3>
                     <p class="feature-text">С телефона удобно проверять ссылки из SMS и мессенджеров прямо перед тем, как в них что-то вводить.</p>
                 </div>
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">型</span><span class="feature-kanji-meaning">форма · API</span></div>
                     <h3 class="feature-title">API для разработчиков</h3>
                     <p class="feature-text">Интегрируйте проверку ссылок в свои приложения, ботов или корпоративную почту через REST API.</p>
                 </div>
                 <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="feature-icon"><span class="feature-kanji">歴</span><span class="feature-kanji-meaning">история</span></div>
                     <h3 class="feature-title">История и лимиты</h3>
                     <p class="feature-text">В кабинете видно, сколько проверок осталось и что вы уже проверяли, — ничего не потеряется.</p>
                 </div>
@@ -184,7 +180,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-badge">
-                    <i class="fas fa-cog"></i>
+                    <span class="badge-num">02</span>
                     Как это работает
                 </div>
                 <h2 class="section-title">Три простых шага</h2>
@@ -216,7 +212,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-badge">
-                    <i class="fas fa-tag"></i>
+                    <span class="badge-num">03</span>
                     Тарифы
                 </div>
                 <h2 class="section-title">Выберите свой план</h2>
@@ -277,7 +273,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-badge">
-                    <i class="fas fa-quote-left"></i>
+                    <span class="badge-num">04</span>
                     Отзывы
                 </div>
                 <h2 class="section-title">Что говорят наши пользователи</h2>
@@ -349,7 +345,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-badge">
-                    <i class="fas fa-question-circle"></i>
+                    <span class="badge-num">05</span>
                     FAQ
                 </div>
                 <h2 class="section-title">Частые вопросы</h2>
@@ -438,7 +434,6 @@
                     <h2 class="cta-title">Проверьте ссылку, которая вас насторожила</h2>
                     <p class="cta-text">Первые 10 проверок в месяц — бесплатно и без карты. Регистрация занимает меньше минуты.</p>
                     <a href="#checker" class="btn btn-primary btn-arrow">
-                        <i class="fas fa-shield-alt"></i>
                         Проверить ссылку
                     </a>
                 </div>
@@ -452,8 +447,8 @@
             <div class="footer-grid">
                 <div class="footer-brand">
                     <a href="index.html" class="logo">
-                        <div class="logo-icon"><i class="fas fa-shield-alt"></i></div>
-                        PhishDet
+                        <div class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                    <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                     </a>
                     <p>Показываем, насколько ссылка похожа на фишинговую, прежде чем вы по ней перейдёте.</p>
                     <div class="footer-social">
