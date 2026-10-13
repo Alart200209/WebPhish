@@ -151,14 +151,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const els = document.querySelectorAll('[data-scramble]');
     if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const chars = '!<>-_\/[]{}—=+*^?#·:';
-    const glyphs = Array.from('абвгдежзиклмнопрстуфхцчшщъыьэюя');
+    // Шифр — только латиница/цифры/символы, без иероглифов (философия бренда)
+    const cipherChars = Array.from('01!<>-_\\/[]{}=+*^?#ABCDEFXYZKMNPRST');
 
     function scrambleTo(el, finalText) {
+        const isHeading = el.classList.contains('section-title') || el.classList.contains('hero-title');
         const frame = [];
         const len = finalText.length;
+        // Заголовки «раскодируются» слева направо волной; мелкие подписи — хаотично
+        const wave = isHeading ? 3 : 0;
         for (let i = 0; i < len; i++) {
-            const start = Math.floor(Math.random() * 16);
+            const start = wave ? i * wave + Math.floor(Math.random() * 4) : Math.floor(Math.random() * 16);
             const end = start + 8 + Math.floor(Math.random() * 16);
             frame.push({ from: null, to: finalText[i], start, end, char: null });
         }
@@ -170,7 +173,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 if (tick >= f.end) { out += f.to; done++; }
                 else if (tick >= f.start) {
                     if (!f.char || Math.random() < 0.28) {
-                        f.char = f.to === ' ' ? ' ' : (Math.random() < 0.5 ? chars[Math.floor(Math.random() * chars.length)] : glyphs[Math.floor(Math.random() * glyphs.length)]);
+                        f.char = f.to === ' ' ? ' ' : cipherChars[Math.floor(Math.random() * cipherChars.length)];
                     }
                     out += `<span style="opacity:.45">${f.char}</span>`;
                 } else { out += '&nbsp;'; }

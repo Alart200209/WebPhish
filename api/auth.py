@@ -76,10 +76,16 @@ async def get_current_user(
 # Единственный источник правды: синхронизирован с лендингом и ценами.
 # «free» — только стартовый пакет из 3 проверок на аккаунт (не подписка):
 # лимит считается не по месяцам, а по общему счётчику monthly_checks_count.
-# personal — пользовательская подписка для личных целей: 20 проверок в месяц.
+# basic — базовая подписка для личных целей: 20 проверок в месяц.
+# pro — расширенная персональная подписка: 200 проверок в месяц.
 # corporate — корпоративная подписка: команды, API, SLA; проверки без лимита.
 STARTER_CHECKS = 3
-PLAN_LIMITS = {"free": STARTER_CHECKS, "personal": 20, "corporate": None}
+PLAN_LIMITS = {
+    "free": STARTER_CHECKS,
+    "basic": 20,
+    "pro": 200,
+    "corporate": None,
+}
 
 
 async def check_monthly_limit(user: User) -> bool:
