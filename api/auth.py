@@ -73,19 +73,33 @@ async def get_current_user(
 
 
 # Лимиты проверок по тарифам. None — без ограничений.
-# Единственный источник правды: синхронизирован с лендингом и ценой (10/мес на free).
-PLAN_LIMITS = {"free": 10, "pro": None, "business": None}
+# Единственный источник правды: синхронизирован с лендингом и ценами.
+# «free» — только стартовый пакет из 3 проверок на аккаунт (не подписка):
+# лимит считается не по месяцам, а по общему счётчику monthly_checks_count.
+# personal — пользовательская подписка для личных целей: 20 проверок в месяц.
+# corporate — корпоративная подписка: команды, API, SLA; проверки без лимита.
+STARTER_CHECKS = 3
+PLAN_LIMITS = {"free": STARTER_CHECKS, "personal": 20, "corporate": None}
 
 
 async def check_monthly_limit(user: User) -> bool:
-    now = datetime.utcnow()
-    if user.last_check_reset:
-        days_since_reset = (now - user.last_check_reset.replace(tzinfo=None)).days
-        if days_since_reset >= 30:
-            user.monthly_checks_count = 0
-            user.last_check_reset = now
+    """Один честный источник лимита.
 
-    limit = PLAN_LIMITS.get(user.subscription_plan, PLAN_LIMITS["free"])
+    free — стартовый пакет из 3 проверок на весь аккаунт: счётчик НЕ обнуляется
+    каждый месяц, иначе «бесплатная подписка» вернулась бы бы по кругу.
+    personal/corporate — месячный цикл: сброс раз в 30 дней.
+    """
+    plan = user.subscription_plan or "free"
+
+    if plan != "free":
+        now = datetime.utcnow()
+        if user.last_check_reset:
+            days_since_reset = (now - user.last_check_reset.replace(tzinfo=None)).days
+            if days_since_reset >= 30:
+                user.monthly_checks_count = 0
+                user.last_check_reset = now
+
+    limit = PLAN_LIMITS.get(plan, STARTER_CHECKS)
     if limit is not None and user.monthly_checks_count >= limit:
         return False
 
@@ -97,7 +111,7 @@ async def increment_check_count(user: User):
 
 
 def apply_trial_expiry(user: User) -> bool:
-    """Ленивый автооткат истёкшей подписки/триала на free.
+    """Ленивый автооткат истёкшей подписки/триала на стартовый пакет («free»).
 
     Миграции не требуются: колонка subscription_expires_at создаётся через
     Base.metadata.create_all для новых БД; для существующей SQLite-БД
@@ -115,5 +129,7 @@ def apply_trial_expiry(user: User) -> bool:
     if datetime.utcnow() >= expires:
         user.subscription_plan = "free"
         user.subscription_expires_at = None
+        # Откат на стартовый пакет: счётчик проверок НЕ обнуляем —
+        # 3 бесплатные проверки даются один раз на аккаунт, а не каждый месяц.
         return True
     return False

@@ -17,6 +17,7 @@ from .auth import (
     check_monthly_limit,
     increment_check_count,
     PLAN_LIMITS,
+    STARTER_CHECKS,
     apply_trial_expiry,
 )
 from .payment import TinkoffPayment
@@ -71,11 +72,15 @@ async def check_url(
     can_check = await check_monthly_limit(current_user)
 
     if not can_check:
-        limit = PLAN_LIMITS.get(current_user.subscription_plan) or PLAN_LIMITS["free"]
+        plan = current_user.subscription_plan or "free"
+        limit = PLAN_LIMITS.get(plan, STARTER_CHECKS)
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail={
-                "message": "Месячный лимит бесплатных проверок исчерпан",
+                "message": (
+                    "Стартовые бесплатные проверки исчерпаны"
+                    if plan == "free" else "Месячный лимит проверок исчерпан"
+                ),
                 "checks_used": current_user.monthly_checks_count,
                 "checks_limit": limit,
                 "upgrade_url": "/pricing.html"
@@ -106,8 +111,8 @@ async def check_url(
     await increment_check_count(current_user)
     await db.commit()
 
-    free_limit = PLAN_LIMITS["free"]
-    plan_limit = PLAN_LIMITS.get(current_user.subscription_plan, free_limit)
+    plan = current_user.subscription_plan or "free"
+    plan_limit = PLAN_LIMITS.get(plan, STARTER_CHECKS)
     checks_remaining = None if plan_limit is None else max(plan_limit - current_user.monthly_checks_count, 0)
 
     return {
@@ -162,7 +167,9 @@ class PaymentCreateRequest(BaseModel):
         return self.customer_email or (self.customer or {}).get("email")
 
 
-PLANS_RUB = {"pro": 29900, "business": 199000}  # копейки, должно совпадать с js/checkout.js
+PLANS_RUB = {"personal": 29900, "corporate": 199000}  # копейки, должно совпадать с js/checkout.js
+# Ключи URL-параметров из старых ссылок (pro/business) — маппим на новые тарифы
+PLAN_ALIASES = {"pro": "personal", "business": "corporate"}
 TRIAL_DAYS = 7
 
 
@@ -173,13 +180,14 @@ async def create_payment(
         db: AsyncSession = Depends(get_db),
 ):
     """Создаёт платёж в Tinkoff и возвращает ссылку для оплаты."""
-    if payload.plan not in PLANS_RUB:
+    plan = PLAN_ALIASES.get(payload.plan, payload.plan)
+    if plan not in PLANS_RUB:
         raise HTTPException(status_code=400, detail="Неизвестный тариф")
 
-    expected_price = PLANS_RUB[payload.plan]
-    is_trial = bool(payload.trial) and payload.amount == 0
+    expected_price = PLANS_RUB[plan]
+    is_trial = bool(payload.trial) and payload.amount == 0 and plan == "personal"
 
-    # Триал — один раз на аккаунт, иначе кнопка «7 дней бесплатно» превращается в вечный бесплатный Pro
+    # Триал — один раз на аккаунт, иначе кнопка «7 дней бесплатно» превращается в вечный бесплатный доступ
     if is_trial and current_user.trial_used:
         raise HTTPException(
             status_code=400,
@@ -189,7 +197,7 @@ async def create_payment(
     if not is_trial and payload.amount != expected_price:
         raise HTTPException(status_code=400, detail="Несовпадение суммы с тарифом")
 
-    order_id = f"{payload.order_id}_trial" if is_trial else payload.order_id
+    order_id = f"{payload.order_id}_{plan}" + ("_trial" if is_trial else "")
 
     try:
         result = payment_service.init_payment(
@@ -237,14 +245,16 @@ async def payment_webhook(
 
         if user:
             now = datetime.utcnow()
-            plan = "business" if "business" in order_id.lower() else "pro"
+            plan = "corporate" if "corporate" in order_id.lower() else "personal"
             user.subscription_plan = plan
+            # Сброс месячного цикла: при входе на платный тариф счётчик обнуляется
             user.monthly_checks_count = 0
+            user.last_check_reset = now
 
             if is_trial:
                 user.trial_used = True
-                # После триала — сразу переход на платную базу: через TRIAL_DAYS дней откатим на free,
-                # если оплата не пришла. Это честная модель «попробуй, потом реши».
+                # После триала — сразу переход на платную базу: через TRIAL_DAYS дней откатим
+                # на стартовый пакет, если оплата не пришла. Это честная модель «попробуй, потом реши».
                 user.subscription_expires_at = now + timedelta(days=TRIAL_DAYS)
             else:
                 # Продление: прибавляем месяц к оставшемуся сроку, а не перезаписываем
