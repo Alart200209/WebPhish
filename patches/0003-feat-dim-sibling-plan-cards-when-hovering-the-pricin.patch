@@ -1,0 +1,33 @@
+From 1161dbee4ba2e8a134f534726c9f66522a320ed3 Mon Sep 17 00:00:00 2001
+From: "qwen.ai[bot]" <qwenlm-intl@service.alibaba.com>
+Date: Tue, 13 Oct 2026 08:00:14 +0000
+Subject: [PATCH 3/3] feat: dim sibling plan cards when hovering the pricing
+ grid
+
+---
+ js/index.js | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/js/index.js b/js/index.js
+index 6dbd222..4e546e2 100644
+--- a/js/index.js
++++ b/js/index.js
+@@ -312,3 +312,15 @@ document.addEventListener("DOMContentLoaded", () => {
+         });
+     } catch (e) { /* невалидный селектор — игнорируем */ }
+ })();
++
++// ===================================
++// ЭФФЕКТ «СЦЕНЫ» В СЕТКЕ ТАРИФОВ
++// Когда мышь входит в сетку — карточки под ней «загораются»,
++// остальные приглушаются (CSS-правило .pricing-grid.has-hover)
++// ===================================
++(function pricingGridScene() {
++    const grid = document.getElementById('pricingGrid');
++    if (!grid || !window.matchMedia('(pointer: fine)').matches) return;
++    grid.addEventListener('mouseenter', () => grid.classList.add('has-hover'));
++    grid.addEventListener('mouseleave', () => grid.classList.remove('has-hover'));
++})();
+-- 
+2.39.5
+

@@ -9,11 +9,12 @@
 }
 
 .pricing-hero h1 {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
     margin-bottom: 16px;
+}
+
+.pricing-hero h1 .accent {
+    color: var(--accent-primary);
 }
 
 .hero-subtitle {
@@ -58,15 +59,36 @@
     position: relative;
 }
 
-.plan-card:hover {
-    border-color: var(--border-glow);
-    transform: translateY(-4px);
+.plan-card.is-lit {
+    border-color: rgba(245, 165, 36, 0.5);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Подсветка изнутри в точке курсора */
+.plan-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        320px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(245, 165, 36, 0.14),
+        transparent 70%
+    );
+    transition: opacity 0.35s ease;
+}
+
+.plan-card.is-lit::after {
+    opacity: 1;
 }
 
 .plan-card.featured {
     background: var(--bg-card-hover);
-    border-color: var(--accent-primary);
-    box-shadow: 0 0 60px rgba(99, 102, 241, 0.15);
+    border-color: rgba(245, 165, 36, 0.4);
 }
 
 .plan-popular-badge {
@@ -74,12 +96,12 @@
     top: -14px;
     right: 40px;
     padding: 8px 20px;
-    background: var(--gradient-primary);
+    background: var(--accent-primary);
     border-radius: 100px;
     font-size: 0.875rem;
     font-weight: 600;
-    color: white;
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    color: var(--accent-on-primary);
+    box-shadow: 0 8px 24px rgba(245, 165, 36, 0.25);
 }
 
 .plan-header {
@@ -98,16 +120,22 @@
 }
 
 .plan-icon {
-    width: 64px;
-    height: 64px;
-    background: var(--gradient-primary);
+    width: 56px;
+    height: 56px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: white;
+    font-size: 1.35rem;
+    color: var(--accent-primary);
     flex-shrink: 0;
+    transition: border-color var(--transition-base);
+}
+
+.plan-card.is-lit .plan-icon {
+    border-color: var(--accent-primary);
 }
 
 .plan-info h2 {
@@ -127,10 +155,8 @@
 .plan-price {
     font-size: 3rem;
     font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
     line-height: 1;
 }
 
@@ -173,15 +199,17 @@
 }
 
 .feature-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: white;
+    color: var(--accent-success);
+    font-size: 0.9rem;
 }
 
 .feature-content h4 {

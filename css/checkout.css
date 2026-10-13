@@ -78,7 +78,7 @@
 .form-input:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(245, 165, 36, 0.12);
 }
 
 .form-input::placeholder {
@@ -116,7 +116,7 @@
 
 .payment-method input:checked + .payment-method-content {
     border-color: var(--accent-primary);
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(245, 165, 36, 0.12);
 }
 
 .payment-method-content i {
@@ -305,10 +305,7 @@
 }
 
 .summary-total .price {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-primary);
 }
 
 .summary-features {

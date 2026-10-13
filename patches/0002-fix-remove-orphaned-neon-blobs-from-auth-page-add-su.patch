@@ -1,0 +1,50 @@
+From 3725ed0e392df16b52e53a44c19654faf3e6cc31 Mon Sep 17 00:00:00 2001
+From: "qwen.ai[bot]" <qwenlm-intl@service.alibaba.com>
+Date: Tue, 13 Oct 2026 08:00:01 +0000
+Subject: [PATCH 2/3] fix: remove orphaned neon blobs from auth page, add
+ subtle grid background
+
+---
+ auth.html    |  3 ---
+ css/auth.css | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/auth.html b/auth.html
+index 7028c88..94f4a80 100644
+--- a/auth.html
++++ b/auth.html
+@@ -36,9 +36,6 @@
+     <!-- Auth Container -->
+     <div class="auth-container">
+         <div class="auth-bg">
+-            <div class="blob blob-1"></div>
+-            <div class="blob blob-2"></div>
+-            <div class="blob blob-3"></div>
+             <div class="grid-bg"></div>
+         </div>
+ 
+diff --git a/css/auth.css b/css/auth.css
+index 29f88bb..f66d70d 100644
+--- a/css/auth.css
++++ b/css/auth.css
+@@ -21,6 +21,17 @@
+     z-index: -1;
+ }
+ 
++.auth-bg .grid-bg {
++    position: absolute;
++    inset: 0;
++    background-image:
++        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
++        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
++    background-size: 48px 48px;
++    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
++    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
++}
++
+ .auth-card {
+     max-width: 480px;
+     width: 100%;
+-- 
+2.39.5
+

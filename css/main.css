@@ -1,47 +1,50 @@
 /* ===================================
-   CSS VARIABLES
+   CSS VARIABLES — тёмная «терминальная» тема
+   Один акцент (янтарь), без градиентов и неона
 =================================== */
 :root {
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-tertiary: #1a1a25;
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --bg-primary: #0c0d10;
+    --bg-secondary: #101216;
+    --bg-tertiary: #15171d;
+    --bg-elevated: #191c22;
+    --bg-card: rgba(255, 255, 255, 0.025);
+    --bg-card-hover: rgba(255, 255, 255, 0.05);
 
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0b0;
-    --text-muted: #6b6b7b;
+    --text-primary: #e8eaed;
+    --text-secondary: #9aa1ac;
+    --text-muted: #626873;
 
-    --accent-primary: #6366f1;
-    --accent-secondary: #8b5cf6;
-    --accent-tertiary: #ec4899;
-    --accent-success: #10b981;
-    --accent-warning: #f59e0b;
-    --accent-danger: #ef4444;
+    --accent-primary: #f5a524;          /* янтарный — единственный акцент */
+    --accent-primary-strong: #ffb43a;
+    --accent-on-primary: #14110a;       /* текст на янтарном */
+    --accent-success: #3fb950;
+    --accent-warning: #d29922;
+    --accent-danger: #f85149;
+    --accent-info: #58a6ff;
 
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-    --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
-    --gradient-success: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    --gradient-primary: linear-gradient(135deg, #f5a524 0%, #e0870e 100%);
 
     --border-color: rgba(255, 255, 255, 0.08);
-    --border-glow: rgba(99, 102, 241, 0.3);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --border-glow: rgba(245, 165, 36, 0.35);
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.55);
 
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
-    --radius-xl: 32px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 18px;
 
-    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --container-max: 1280px;
-    --header-height: 80px;
+    --container-max: 1200px;
+    --header-height: 72px;
 }
 
 /* ===================================
@@ -143,16 +146,16 @@ a {
 }
 
 .btn-primary {
-    background: #4f46e5;
-    color: white;
-    border-color: #4f46e5;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: var(--accent-primary);
+    color: var(--accent-on-primary);
+    border-color: var(--accent-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn-primary:hover {
-    background: #4338ca;
-    border-color: #4338ca;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: var(--accent-primary-strong);
+    border-color: var(--accent-primary-strong);
+    box-shadow: 0 4px 16px rgba(245, 165, 36, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn-secondary {
@@ -219,14 +222,20 @@ a {
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-primary);
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    color: var(--accent-primary);
+}
+
+.logo .logo-text-accent {
+    color: var(--accent-primary);
 }
 
 .nav {
@@ -249,7 +258,7 @@ a {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--gradient-primary);
+    background: var(--accent-primary);
     transition: width var(--transition-base);
 }
 
@@ -355,8 +364,9 @@ a {
 }
 
 .footer-social a:hover {
-    background: var(--gradient-primary);
-    border-color: transparent;
+    background: var(--bg-elevated);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
     transform: translateY(-2px);
 }
 
@@ -373,6 +383,67 @@ a {
 .footer-bottom p {
     color: var(--text-muted);
     font-size: 0.875rem;
+}
+
+/* ===================================
+   КУРСОР-ПРОЖЕКТОР (spotlight)
+   Тёплый свет следует за мышью по секциям и карточкам
+=================================== */
+body.has-spotlight {
+    position: relative;
+}
+
+body.has-spotlight::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        420px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+        rgba(245, 165, 36, 0.06),
+        transparent 65%
+    );
+    transition: opacity 0.4s ease;
+}
+
+/* Прожектор внутри карточек — подсвечивает ту, на которой мышь */
+.card-spotlight {
+    position: relative;
+    isolation: isolate;
+}
+
+.card-spotlight::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(
+        260px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(245, 165, 36, 0.18),
+        transparent 70%
+    );
+    transition: opacity 0.35s ease;
+}
+
+.card-spotlight:hover::after,
+.card-spotlight.is-lit::after {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.has-spotlight::before,
+    .card-spotlight::after {
+        display: none;
+    }
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* ===================================

@@ -183,8 +183,8 @@ document.addEventListener("DOMContentLoaded", () => {
         checkStatus.style.padding = "12px";
         checkStatus.style.borderRadius = "12px";
         checkStatus.style.fontSize = "0.95rem";
-        checkStatus.style.background = "rgba(99, 102, 241, 0.1)";
-        checkStatus.style.border = "1px solid rgba(99, 102, 241, 0.3)";
+        checkStatus.style.background = "rgba(245, 165, 36, 0.1)";
+        checkStatus.style.border = "1px solid rgba(245, 165, 36, 0.35)";
         checkStatus.style.color = "var(--text-primary)";
     }
 
@@ -232,9 +232,9 @@ document.addEventListener("DOMContentLoaded", () => {
             checkStatus.style.border = "1px solid rgba(16, 185, 129, 0.3)";
             checkStatus.style.color = "var(--accent-success, #10b981)";
         } else {
-            checkStatus.style.background = "rgba(99, 102, 241, 0.1)";
-            checkStatus.style.border = "1px solid rgba(99, 102, 241, 0.3)";
-            checkStatus.style.color = "var(--accent-primary, #6366f1)";
+            checkStatus.style.background = "rgba(245, 165, 36, 0.1)";
+            checkStatus.style.border = "1px solid rgba(245, 165, 36, 0.35)";
+            checkStatus.style.color = "var(--accent-primary, #f5a524)";
         }
     }
 
@@ -295,3 +295,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+// ===================================
+// ПЛАВНЫЙ ПЕРЕХОД К СЕКЦИИ ПРИ КЛИКЕ ПО ЯКОРЮ (межстраничный)
+// Если ссылка ведёт на другую страницу с #якорем — после загрузки
+// докручиваем до нужной секции мягко, а не «прыгаем»
+// ===================================
+(function smoothCrossPageAnchor() {
+    const hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+    try {
+        const target = document.querySelector(hash);
+        if (!target) return;
+        // мгновенно ставим в начало, затем подстраховка плавным скроллом
+        requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    } catch (e) { /* невалидный селектор — игнорируем */ }
+})();
+
+// ===================================
+// ЭФФЕКТ «СЦЕНЫ» В СЕТКЕ ТАРИФОВ
+// Когда мышь входит в сетку — карточки под ней «загораются»,
+// остальные приглушаются (CSS-правило .pricing-grid.has-hover)
+// ===================================
+(function pricingGridScene() {
+    const grid = document.getElementById('pricingGrid');
+    if (!grid || !window.matchMedia('(pointer: fine)').matches) return;
+    grid.addEventListener('mouseenter', () => grid.classList.add('has-hover'));
+    grid.addEventListener('mouseleave', () => grid.classList.remove('has-hover'));
+})();

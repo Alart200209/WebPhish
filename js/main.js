@@ -50,6 +50,40 @@ const revealObserver = new IntersectionObserver((entries) => {
 revealElements.forEach(el => revealObserver.observe(el));
 
 // ===================================
+// КУРСОР-ПРОЖЕКТОР
+// Тёплый свет следует за мышью; карточки с классом
+// .card-spotlight подсвечиваются изнутри в точке курсора
+// ===================================
+(function initSpotlight() {
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!finePointer || reducedMotion) return;
+
+    document.body.classList.add('has-spotlight');
+
+    let rafId = null;
+    let lastX = 0, lastY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+            rafId = null;
+            document.documentElement.style.setProperty('--mouse-x', lastX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', lastY + 'px');
+
+            const card = document.elementFromPoint(lastX, lastY)?.closest('.card-spotlight');
+            if (card) {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--card-mouse-x', (lastX - rect.left) + 'px');
+                card.style.setProperty('--card-mouse-y', (lastY - rect.top) + 'px');
+            }
+        });
+    }, { passive: true });
+})();
+
+// ===================================
 // SMOOTH SCROLL
 // ===================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
