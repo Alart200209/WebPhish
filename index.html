@@ -53,14 +53,8 @@
         </div>
 
         <div class="container">
-            <div class="hero-content hero-editorial">
-                <div class="hero-side" aria-hidden="true">
-                    <span class="hero-side-num">№ 001</span>
-                    <span class="hero-side-line"></span>
-                    <span class="hero-side-label">ссылка · проверка</span>
-                </div>
-                <div class="hero-main">
-                <p class="mono-label hero-kicker reveal">PhishDet — детектор фишинговых ссылок</p>
+            <div class="hero-content hero-centered">
+                <p class="mono-label hero-kicker reveal">PhishDet &mdash; детектор фишинговых ссылок</p>
 
                 <h1 class="hero-title mask-reveal">
                     Не открывай,<br>пока не <span class="highlight">проверил</span>
@@ -77,11 +71,10 @@
                     </a>
                     <a href="#how-it-works" class="btn btn-ghost">Как это работает <span aria-hidden="true">&rarr;</span></a>
                 </div>
-                </div>
             </div>
 
             <!-- Checker -->
-                <div class="checker" id="checker">
+                <div class="checker checker-centered" id="checker">
                     <form class="checker-form" id="checkerForm">
                         <input
                             type="url"
@@ -106,20 +99,20 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item reveal">
-                    <div class="stat-value" data-target="10">0</div>
-                    <div class="stat-label">проверок в месяц бесплатно</div>
+                    <div class="stat-value" data-target="3">0</div>
+                    <div class="stat-label">бесплатные проверки после регистрации</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-value" data-target="2">0</div>
+                    <div class="stat-value stat-symbol">&lt;1&thinsp;с</div>
                     <div class="stat-label">секунды на одну проверку</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-value" data-target="40">0</div>
-                    <div class="stat-label">признаков фишинга в анализе</div>
+                    <div class="stat-value stat-symbol">&gt;1&thinsp;000&thinsp;000</div>
+                    <div class="stat-label">проверенных ссылок</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-value" data-target="3">0</div>
-                    <div class="stat-label">бесплатные проверки после регистрации</div>
+                    <div class="stat-value" data-target="98" data-suffix="%">0</div>
+                    <div class="stat-label">точность анализа</div>
                 </div>
             </div>
         </div>
@@ -209,30 +202,50 @@
                 <p class="section-subtitle">Проверка ссылки занимает всего несколько секунд</p>
             </div>
 
-            <div class="steps steps-v2">
-                <div class="step-row reveal card-spotlight">
-                    <div class="step-index mono-label" data-scramble="01">01</div>
-                    <div class="step-body">
-                        <h3 class="step-title">Скопируйте ссылку</h3>
-                        <p class="step-text">Из письма, SMS или мессенджера &mdash; куда бы она ни пришла.</p>
+            <div class="steps steps-v3">
+                <div class="step-card reveal card-spotlight">
+                    <div class="step-top">
+                        <span class="step-index mono-label" data-scramble="01">01</span>
+                        <span class="step-line" aria-hidden="true"></span>
                     </div>
-                    <div class="step-code mono-label" aria-hidden="true">aHR0cHM6Ly8mZGVhbDsm</div>
+                    <h3 class="step-title">Скопируйте ссылку</h3>
+                    <p class="step-text">Из письма, SMS или мессенджера &mdash; куда бы она ни пришла.</p>
+                    <div class="step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="14" y="10" width="20" height="28" rx="2"/>
+                            <path d="M20 10V6h8v4"/>
+                            <path d="M20 22h8M20 29h5"/>
+                        </svg>
+                    </div>
                 </div>
-                <div class="step-row reveal card-spotlight">
-                    <div class="step-index mono-label" data-scramble="02">02</div>
-                    <div class="step-body">
-                        <h3 class="step-title">Вставьте в поле PhishDet</h3>
-                        <p class="step-text">Страница мошенника не открывается &mdash; мы читаем только адрес.</p>
+                <div class="step-card reveal card-spotlight">
+                    <div class="step-top">
+                        <span class="step-index mono-label" data-scramble="02">02</span>
+                        <span class="step-line" aria-hidden="true"></span>
                     </div>
-                    <div class="step-code mono-label" aria-hidden="true">01000011 01010010 01001100</div>
+                    <h3 class="step-title">Вставьте в поле PhishDet</h3>
+                    <p class="step-text">Страница мошенника не открывается &mdash; мы читаем только адрес.</p>
+                    <div class="step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="6" y="18" width="36" height="14" rx="2"/>
+                            <path d="M12 25h4M20 25h2"/>
+                            <path d="M30 22v6l4-3z" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </div>
                 </div>
-                <div class="step-row reveal card-spotlight">
-                    <div class="step-index mono-label" data-scramble="03">03</div>
-                    <div class="step-body">
-                        <h3 class="step-title">Прочитайте разбор</h3>
-                        <p class="step-text">Вердикт, процент риска и список признаков простыми словами.</p>
+                <div class="step-card reveal card-spotlight">
+                    <div class="step-top">
+                        <span class="step-index mono-label" data-scramble="03">03</span>
+                        <span class="step-line" aria-hidden="true"></span>
                     </div>
-                    <div class="step-code mono-label step-code-ok" aria-hidden="true">verdict: safe &#10003;</div>
+                    <h3 class="step-title">Прочитайте разбор</h3>
+                    <p class="step-text">Вердикт, процент риска и список признаков простыми словами.</p>
+                    <div class="step-icon" aria-hidden="true">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="24" cy="24" r="16"/>
+                            <path d="M17 24l5 5 9-11"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
@@ -248,36 +261,21 @@
             </div>
 
             <div class="pricing-grid tilt-grid" id="pricingGrid">
-                <div class="pricing-card reveal card-spotlight">
-                    <div class="pricing-head">
-                        <h3 class="pricing-name">Старт</h3>
-                        <span class="pricing-seal" aria-hidden="true"></span>
-                    </div>
-                    <div class="pricing-price">0 ₽ <span>/ навсегда</span></div>
-                    <p class="pricing-desc">Регистрация &mdash; и 3 проверки в подарок</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 3 бесплатные проверки на аккаунт</li>
-                        <li><i class="fas fa-check"></i> Полный разбор признаков фишинга</li>
-                        <li><i class="fas fa-check"></i> Веб-интерфейс и кабинет</li>
-                    </ul>
-                    <a href="auth.html?mode=register" class="btn btn-secondary pricing-btn">Зарегистрироваться</a>
-                </div>
-
                 <div class="pricing-card featured reveal card-spotlight">
-                    <div class="pricing-badge">Популярный</div>
+                    <div class="pricing-badge">Начните бесплатно</div>
                     <div class="pricing-head">
                         <h3 class="pricing-name">Базовая</h3>
                         <span class="pricing-seal pricing-seal-active" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">299 ₽ <span>/ месяц</span></div>
-                    <p class="pricing-desc">Для тех, кто проверяет регулярно</p>
+                    <div class="pricing-price">99 &#8381; <span>/ месяц</span></div>
+                    <p class="pricing-desc">Попробуйте бесплатно &mdash; после 3 проверок 99&nbsp;&#8381; за подписку</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 20 проверок в месяц</li>
                         <li><i class="fas fa-check"></i> История проверок</li>
                         <li><i class="fas fa-check"></i> Приоритетная поддержка</li>
                         <li><i class="fas fa-check"></i> Отмена в один клик</li>
                     </ul>
-                    <a href="checkout.html?plan=basic" class="btn btn-primary btn-arrow pricing-btn">Перейти к оплате</a>
+                    <a href="auth.html?mode=register" class="btn btn-primary btn-arrow pricing-btn">Попробуйте бесплатно</a>
                 </div>
 
                 <div class="pricing-card reveal card-spotlight">
@@ -285,7 +283,7 @@
                         <h3 class="pricing-name">Про</h3>
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">999 ₽ <span>/ месяц</span></div>
+                    <div class="pricing-price">3&thinsp;990 &#8381; <span>/ месяц</span></div>
                     <p class="pricing-desc">Для профи и небольших команд</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 200 проверок в месяц</li>
@@ -301,7 +299,7 @@
                         <h3 class="pricing-name">Корпоративная</h3>
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">1 990 ₽ <span>/ мес за место</span></div>
+                    <div class="pricing-price">3&thinsp;990 &#8381; <span>/ мес за место</span></div>
                     <p class="pricing-desc">От 5 рабочих мест, договор и счёт</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Проверки без лимита</li>
@@ -314,7 +312,7 @@
             </div>
 
             <p style="text-align:center; margin-top: 24px; color: var(--text-secondary); font-size: 0.9rem;">
-                Все платные тарифы можно примерить: первые 7 дней &mdash; 0 ₽, один раз на аккаунт.
+                Регистрация &mdash; и первые 3 проверки бесплатно, без карты.
                 Нужна демонстрация для команды или закупка по счёту?
                 <a href="mailto:sales@phishdet.ru" style="color: var(--accent-primary); text-decoration: underline;">Напишите нам</a>
             </p>
@@ -330,8 +328,7 @@
                 <p class="section-subtitle">Отзывы пользователей, которые проверили хотя бы одну ссылку</p>
             </div>
 
-            <div class="testimonials-track-wrap reveal">
-                <div class="testimonials-track" id="testimonialsTrack">
+            <div class="testimonials-grid" id="testimonialsTrack">
                 <div class="testimonial-card">
                     <p class="testimonial-text">Пришло «письмо из банка» про блокировку карты. Проверил ссылку — сервис нашёл подмену домена. Открыл настоящую страницу банка через приложение, всё в порядке.</p>
                     <div class="testimonial-author">
@@ -365,17 +362,44 @@
                     </div>
                 </div>
 
-                <div class="testimonial-card">
-                    <p class="testimonial-text">Используем Бизнес-тариф для корпоративной почты. Сотрудники стали в два раза реже пересылать подозрительные письма в техподдержку — проверяют сами.</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">ОП</div>
-                        <div>
-                            <div class="testimonial-name">Ольга П.</div>
-                            <div class="testimonial-role">IT-директор</div>
+                <template id="moreTestimonials">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Используем корпоративный тариф для рабочей почты. Сотрудники стали в два раза реже пересылать подозрительные письма в техподдержку — проверяют сами.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ОП</div>
+                            <div>
+                                <div class="testimonial-name">Ольга П.</div>
+                                <div class="testimonial-role">IT-директор</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Проверяю каждую ссылку, прежде чем открыть на телефоне. Три бесплатных проверки убедили — оформил базовую подписку за 99 рублей, спокойнее стало.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ИН</div>
+                            <div>
+                                <div class="testimonial-name">Игорь Н.</div>
+                                <div class="testimonial-role">Бухгалтер</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">Много фишинга идёт от имени маркетплейсов. PhishDet подсказывает про поддельные поддомены — показываю скриншот разбора клиентам, когда они сомневаются.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">ЕЛ</div>
+                            <div>
+                                <div class="testimonial-name">Елена Л.</div>
+                                <div class="testimonial-role">Менеджер поддержки</div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
+
+            <div class="testimonials-more">
+                <button type="button" class="btn btn-ghost" id="loadMoreReviews">
+                    Показать ещё отзывы <span aria-hidden="true">&darr;</span>
+                </button>
             </div>
         </div>
     </section>

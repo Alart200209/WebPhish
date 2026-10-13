@@ -4,7 +4,7 @@
 const plans = {
     basic: {
         name: 'Базовая подписка',
-        price: 299,
+        price: 99,
         description: 'Месяц · 20 проверок',
         icon: 'fa-leaf',
         features: [
@@ -16,7 +16,7 @@ const plans = {
     },
     pro: {
         name: 'Подписка Про',
-        price: 999,
+        price: 3990,
         description: 'Месяц · 200 проверок',
         icon: 'fa-crown',
         features: [
@@ -28,7 +28,7 @@ const plans = {
     },
     corporate: {
         name: 'Корпоративная подписка',
-        price: 1990,
+        price: 3990,
         description: 'Месяц · без лимита проверок',
         icon: 'fa-building',
         features: [
@@ -48,7 +48,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const PLAN_ALIASES = { personal: 'basic', business: 'corporate' };
 const rawPlanKey = urlParams.get('plan') || 'basic';
 const planKey = PLAN_ALIASES[rawPlanKey] || rawPlanKey;
-const trial = urlParams.get('trial') === 'true' || urlParams.get('trial') === '1';
+const trial = false; // триалов нет: бесплатно — только 3 стартовые проверки после регистрации
 
 // ===================================
 // АВТОРИЗАЦИЯ: оплата доступна только вошедшим пользователям.
