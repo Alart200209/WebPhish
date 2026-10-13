@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Крючок» — рыболовный крючок, изогнутый как буква D. Наживка = точка угрозы -->
+  <path d="M40 6v20a14 14 0 0 1-28 0" stroke="#C2452D" stroke-width="6" stroke-linecap="round"/>
+  <path d="M12 26V10" stroke="#2B2620" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="40" cy="46" r="6" fill="#E6B450"/>
+</svg>

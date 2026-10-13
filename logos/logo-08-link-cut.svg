@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Разорванная ссылка» — два звена цепи, рассечённые диагональю: фишинг остановлен -->
+  <path d="M20 34a10 10 0 1 1 0 .01M14 20a10 10 0 1 0 0-.01" stroke="#E6B450" stroke-width="6"/>
+  <rect x="10" y="14" width="26" height="12" rx="6" stroke="#E6B450" stroke-width="5"/>
+  <rect x="28" y="38" width="26" height="12" rx="6" stroke="#E6B450" stroke-width="5"/>
+  <path d="M8 52L56 8" stroke="#C2452D" stroke-width="6" stroke-linecap="round"/>
+</svg>

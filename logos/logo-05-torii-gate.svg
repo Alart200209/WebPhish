@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Тории» — врата как фильтр: внутрь проходит только чистое -->
+  <path d="M8 14c16 4 32 4 48 0" stroke="#C2452D" stroke-width="6" stroke-linecap="round"/>
+  <path d="M14 24h36" stroke="#C2452D" stroke-width="5" stroke-linecap="round"/>
+  <path d="M18 24v32M46 24v32" stroke="#2B2620" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="32" cy="40" r="5" fill="#4F81EA"/>
+</svg>

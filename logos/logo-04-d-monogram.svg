@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Печать P×D» — монограмма: вертикальный стержень P и чаша D в one-stroke -->
+  <rect x="6" y="6" width="52" height="52" rx="10" fill="#C2452D"/>
+  <path d="M22 46V18h8a10 10 0 0 1 0 20h-8" stroke="#F6F2E9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M42 18v10" stroke="#F6F2E9" stroke-width="6" stroke-linecap="round"/>
+</svg>
