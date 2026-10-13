@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-04 «Тории-око»: ворота тории (индиго) + киноварное око между стойками -->
+  <path d="M8 16h48M12 16v34M52 16v34M12 26h40" stroke="#33517e" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="7" fill="#c2452d"/>
+</svg>

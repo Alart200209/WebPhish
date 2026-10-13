@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhishDet — логотипы, тема C «Сейтай-ваби»</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --wasi:#f6f2e9; --ink:#2b2620; --verm:#c2452d; --ai:#33517e; --muted:#9a9080; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--wasi);color:var(--ink);font-family:'Jost',sans-serif;padding:48px 24px}
+  h1{font-weight:500;font-size:28px;letter-spacing:.02em;margin-bottom:6px}
+  .sub{color:var(--muted);margin-bottom:40px;font-size:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;max-width:1280px}
+  .card{background:#fffdf7;border:1px solid #e7dfcf;border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:18px}
+  .card:hover{border-color:var(--verm)}
+  .num{font-size:12px;color:var(--ai);letter-spacing:.14em;text-transform:uppercase}
+  .name{font-size:17px;font-weight:500}
+  .idea{font-size:13px;color:var(--muted);line-height:1.5}
+  .lockup{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px dashed #e7dfcf;border-bottom:1px dashed #e7dfcf}
+  .lockup img{width:40px;height:40px}
+  .wordmark{font-size:22px;letter-spacing:.01em}
+  .wordmark b{font-weight:600;color:var(--ink)}
+  .wordmark span{font-weight:300;color:var(--verm)}
+  .sizes{display:flex;align-items:flex-end;gap:16px}
+  .sizes figure{text-align:center}
+  .sizes img{display:block;margin:0 auto 6px}
+  .sizes figcaption{font-size:10px;color:var(--muted)}
+  .dark{background:var(--ink);padding:14px;border-radius:4px;display:flex;justify-content:center}
+  .dark img{width:44px;height:44px;filter:brightness(0) invert(1) sepia(0) hue-rotate(0deg) saturate(0);}
+  footer{margin-top:48px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<h1>PhishDet · 10 знаков — тема C «Сейтай-ваби»</h1>
+<p class="sub">Палитра: васи #f6f2e9 · суми #2b2620 · киноварь #c2452d · айзуме #33517E. Wordmark: Jost SemiBold «Phish» + Light киноварь «Det». Проверка читаемости: 64 / 32 / 16 px и на тёмном суми-фоне (инверсия).</p>
+<div class="grid" id="grid"></div>
+<footer>Файлы: logos/theme-c/c-XX-*.svg. Чтобы сменить знак на сайте — скопируйте содержимое выбранного SVG в блок <code>.logo-icon</code> в index.html или подключите &lt;img src="../theme-c/c-XX....svg"&gt;.</footer>
+<script>
+const items=[
+ ["c-01-enso-break.svg","Энсо с разрывом","Дзен-круг, оборванный мазком кисти; в разрыве — киноварная точка угрозы, которую «замкнули»"],
+ ["c-02-hook-fish.svg","Крючок","Рыболовный крючок: ушко индиго, жало киноварь — приманка распознана"],
+ ["c-03-hanko-shield.svg","Печать ханко","Квадратная печать суми с киноварным щитом внутри — «проверено, защищено»"],
+ ["c-04-torii-eye.svg","Тории-око","Ворота тории пропускают только чистое; между стойками — внимательное око"],
+ ["c-05-wave-filter.svg","Волна-фильтр","Сейкай-волны, верхняя превращается в галочку — поток прочесан"],
+ ["c-06-lens-dot.svg","Линза","Лупа-сканер: кольцо суми, ручка индиго, киноварная цель в фокусе"],
+ ["c-07-brush-d.svg","Кистевая D","Буква D одним мазком фудэ-кисти + малая киноварная печать в углу"],
+ ["c-08-link-cut.svg","Разрезанное звено","Звенья цепи ссылки рассечены киноварной линией — связь разорвана"],
+ ["c-09-fan-safe.svg","Веер санку","Раскрытый веер: рёбра суми, дуга индиго, киноварная ось — всё под контролем"],
+ ["c-10-badge-check.svg","Бейдж","Восьмиугольный жетон суми с киноварной галочкой — штамп безопасности"],
+];
+document.getElementById('grid').innerHTML = items.map(([f,n,i],k)=>`
+ <div class="card">
+   <div class="num">${String(k+1).padStart(2,'0')} · ${f}</div>
+   <div class="name">${n}</div>
+   <div class="lockup"><img src="${f}" alt=""><div class="wordmark"><b>Phish</b><span>Det</span></div></div>
+   <div class="sizes">
+     <figure><img src="${f}" width="64" height="64"><figcaption>64</figcaption></figure>
+     <figure><img src="${f}" width="32" height="32"><figcaption>32</figcaption></figure>
+     <figure><img src="${f}" width="16" height="16"><figcaption>16</figcaption></figure>
+     <figure class="dark" style="margin-left:auto"><img src="${f}"></figure>
+   </div>
+   <div class="idea">${i}</div>
+ </div>`).join('');
+</script>
+</body>
+</html>

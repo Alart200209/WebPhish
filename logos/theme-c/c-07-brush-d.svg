@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-07 «Кистевая D»: вертикальный мазок фудэ + дуга, рядом малая киноварная печать -->
+  <path d="M18 8v48" stroke="#2b2620" stroke-width="8" stroke-linecap="round"/>
+  <path d="M18 12h10c12 0 20 9 20 20s-8 20-20 20H18" stroke="#2b2620" stroke-width="7" stroke-linecap="round"/>
+  <rect x="44" y="44" width="12" height="12" rx="2" fill="#c2452d"/>
+</svg>

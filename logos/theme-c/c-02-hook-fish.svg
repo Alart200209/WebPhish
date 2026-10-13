@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-02 «Крючок»: J-образный рыболовный крючок, жало — киноварь, ушко — индиго -->
+  <circle cx="32" cy="10" r="5" stroke="#33517e" stroke-width="4"/>
+  <path d="M32 15v23a12 12 0 0 1-24 0v-6" stroke="#2b2620" stroke-width="5" stroke-linecap="round"/>
+  <path d="M8 32l6-7" stroke="#c2452d" stroke-width="5" stroke-linecap="round"/>
+</svg>
