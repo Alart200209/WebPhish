@@ -2,41 +2,40 @@
 // ПЛАН ДАННЫЕ
 // ===================================
 const plans = {
-    free: {
-        name: 'Бесплатный',
-        price: 0,
-        description: 'Навсегда',
-        icon: 'fa-gift',
-        features: [
-            '10 проверок в месяц',
-            'Базовый анализ',
-            'Веб-интерфейс',
-            'Email-поддержка'
-        ]
-    },
-    pro: {
-        name: 'Тариф Про',
+    basic: {
+        name: 'Базовая подписка',
         price: 299,
-        description: 'Месячная подписка',
-        icon: 'fa-crown',
+        description: 'Месяц · 20 проверок',
+        icon: 'fa-leaf',
         features: [
-            'Безлимитные проверки',
-            'API доступ',
-            'История проверок',
+            '20 проверок в месяц',
+            'Полный разбор признаков фишинга',
+            'История проверок в кабинете',
             'Приоритетная поддержка'
         ]
     },
-    business: {
-        name: 'Тариф Бизнес',
+    pro: {
+        name: 'Подписка Про',
+        price: 999,
+        description: 'Месяц · 200 проверок',
+        icon: 'fa-crown',
+        features: [
+            '200 проверок в месяц',
+            'Всё из базовой подписки',
+            'API-доступ',
+            'Ранний доступ к новым моделям анализа'
+        ]
+    },
+    corporate: {
+        name: 'Корпоративная подписка',
         price: 1990,
-        description: 'Месячная подписка',
+        description: 'Месяц · без лимита проверок',
         icon: 'fa-building',
         features: [
-            'Всё из тарифа Про',
-            'Командный доступ',
-            'White-label решение',
-            'Персональный менеджер',
-            'SLA 99.9%'
+            'Проверки без лимита',
+            'Командный доступ и общие отчёты',
+            'Интеграция с корпоративной почтой',
+            'SLA 99.9% и персональный менеджер'
         ]
     }
 };
@@ -45,7 +44,10 @@ const plans = {
 // ПОЛУЧАЕМ ПЛАН ИЗ URL
 // ===================================
 const urlParams = new URLSearchParams(window.location.search);
-const planKey = urlParams.get('plan') || 'pro';
+// Старые ключи ссылок (personal/business) — маппим на новые тарифы
+const PLAN_ALIASES = { personal: 'basic', business: 'corporate' };
+const rawPlanKey = urlParams.get('plan') || 'basic';
+const planKey = PLAN_ALIASES[rawPlanKey] || rawPlanKey;
 const trial = urlParams.get('trial') === 'true' || urlParams.get('trial') === '1';
 
 // ===================================
@@ -64,7 +66,7 @@ if (planKey === 'free') {
     window.location.replace('auth.html?mode=register' + (check ? `&check=${encodeURIComponent(check)}` : ''));
 }
 
-const selectedPlan = plans[planKey] || plans.pro;
+const selectedPlan = plans[planKey] || plans.basic;
 
 // ===================================
 // ОБНОВЛЯЕМ ИНФОРМАЦИЮ О ПЛАНЕ

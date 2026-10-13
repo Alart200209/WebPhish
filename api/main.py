@@ -167,9 +167,9 @@ class PaymentCreateRequest(BaseModel):
         return self.customer_email or (self.customer or {}).get("email")
 
 
-PLANS_RUB = {"personal": 29900, "corporate": 199000}  # копейки, должно совпадать с js/checkout.js
-# Ключи URL-параметров из старых ссылок (pro/business) — маппим на новые тарифы
-PLAN_ALIASES = {"pro": "personal", "business": "corporate"}
+PLANS_RUB = {"basic": 29900, "pro": 99900, "corporate": 199000}  # копейки, должно совпадать с js/checkout.js
+# Ключи URL-параметров из старых ссылок (personal/business) — маппим на новые тарифы
+PLAN_ALIASES = {"personal": "basic", "business": "corporate"}
 TRIAL_DAYS = 7
 
 
@@ -185,7 +185,7 @@ async def create_payment(
         raise HTTPException(status_code=400, detail="Неизвестный тариф")
 
     expected_price = PLANS_RUB[plan]
-    is_trial = bool(payload.trial) and payload.amount == 0 and plan == "personal"
+    is_trial = bool(payload.trial) and payload.amount == 0 and plan in ("basic", "pro")
 
     # Триал — один раз на аккаунт, иначе кнопка «7 дней бесплатно» превращается в вечный бесплатный доступ
     if is_trial and current_user.trial_used:
@@ -245,7 +245,13 @@ async def payment_webhook(
 
         if user:
             now = datetime.utcnow()
-            plan = "corporate" if "corporate" in order_id.lower() else "personal"
+            order_lower = order_id.lower()
+            if "corporate" in order_lower:
+                plan = "corporate"
+            elif "_pro" in order_lower:
+                plan = "pro"
+            else:
+                plan = "basic"
             user.subscription_plan = plan
             # Сброс месячного цикла: при входе на платный тариф счётчик обнуляется
             user.monthly_checks_count = 0
