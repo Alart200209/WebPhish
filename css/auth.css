@@ -21,6 +21,17 @@
     z-index: -1;
 }
 
+.auth-bg .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+}
+
 .auth-card {
     max-width: 480px;
     width: 100%;
@@ -40,10 +51,7 @@
 .auth-title {
     font-size: 2rem;
     margin-bottom: 8px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-primary);
 }
 
 .auth-subtitle {
@@ -111,7 +119,7 @@
 .auth-input:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(245, 165, 36, 0.12);
 }
 
 .auth-btn {
@@ -218,10 +226,7 @@
 .stat-card-value {
     font-size: 2rem;
     font-weight: 800;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent-primary);
 }
 
 .dashboard-section {

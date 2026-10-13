@@ -1,17 +1,45 @@
-// Подсветка выбранного плана из URL
-const urlParams = new URLSearchParams(window.location.search);
-const selectedPlan = urlParams.get('plan');
+// ===================================
+// PRICING: подсветка карточки под курсором + переход к плану из URL
+// ===================================
+(function () {
+    const cards = document.querySelectorAll('.plan-card');
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-if (selectedPlan) {
-    const planElement = document.getElementById(selectedPlan);
-    if (planElement) {
-        setTimeout(() => {
-            planElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            planElement.style.boxShadow = '0 0 60px rgba(99, 102, 241, 0.3)';
-
-            setTimeout(() => {
-                planElement.style.boxShadow = '';
-            }, 2000);
-        }, 300);
+    if (finePointer) {
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--card-mouse-x', (e.clientX - rect.left) + 'px');
+                card.style.setProperty('--card-mouse-y', (e.clientY - rect.top) + 'px');
+            });
+            card.addEventListener('mouseenter', () => {
+                cards.forEach(c => c.classList.remove('is-lit'));
+                card.classList.add('is-lit');
+            });
+            card.addEventListener('mouseleave', () => card.classList.remove('is-lit'));
+        });
     }
-}
+
+    // Плавный переход и подсветка плана, указанного в URL (?plan=pro)
+    const selectedPlan = new URLSearchParams(window.location.search).get('plan');
+    if (!selectedPlan) return;
+
+    const planElement = document.getElementById(selectedPlan);
+    if (!planElement) return;
+
+    setTimeout(() => {
+        planElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        planElement.classList.add('is-lit');
+        setTimeout(() => planElement.classList.remove('is-lit'), 2500);
+    }, 300);
+})();
+
+// Межстраничные якоря (#free/#pro/#business) — плавный довод после загрузки
+(function smoothHashScroll() {
+    const hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+    try {
+        const el = document.querySelector(hash);
+        if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    } catch (e) {}
+})();
