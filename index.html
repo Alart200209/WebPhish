@@ -16,12 +16,14 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                <a href="index.html" class="logo" aria-label="PhishDet — на главную">
+                    <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
 
@@ -30,12 +32,8 @@
                     <a href="#how-it-works" class="nav-link">Как работает</a>
                     <a href="#pricing" class="nav-link">Тарифы</a>
                     <a href="#faq" class="nav-link">FAQ</a>
-                    <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">
-                        <i class="fas fa-user"></i> Кабинет
-                    </a>
-                    <a href="auth.html" class="btn btn-secondary" id="loginBtn">
-                        <i class="fas fa-sign-in-alt"></i> Войти
-                    </a>
+                    <a href="dashboard.html" class="nav-link" id="dashboardLink" style="display: none;">Кабинет</a>
+                    <a href="auth.html" class="btn btn-secondary btn-sm" id="loginBtn">Войти</a>
                 </nav>
 
                 <button class="mobile-toggle" id="mobileToggle">
@@ -50,20 +48,21 @@
     <!-- Hero -->
     <section class="hero" id="hero">
         <div class="hero-bg">
-
             <div class="grid-bg"></div>
+            <div class="hero-enso" aria-hidden="true"></div>
         </div>
 
         <div class="container">
             <div class="hero-content hero-editorial">
-                <div class="hero-side">
-                    <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg>
-                    <span class="hero-tate">リンクケンサ &middot; ссылка · проверка</span>
+                <div class="hero-side" aria-hidden="true">
+                    <span class="hero-side-num">№ 001</span>
+                    <span class="hero-side-line"></span>
+                    <span class="hero-side-label">ссылка · проверка</span>
                 </div>
                 <div class="hero-main">
-                <div class="hero-kicker mono-label">PhishDet — детектор фишинговых ссылок</div>
+                <p class="mono-label hero-kicker reveal">PhishDet — детектор фишинговых ссылок</p>
 
-                <h1 class="hero-title">
+                <h1 class="hero-title mask-reveal">
                     Не открывай,<br>пока не <span class="highlight">проверил</span>
                 </h1>
 
@@ -73,10 +72,10 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#checker" class="btn btn-primary">
+                    <a href="#checker" class="btn btn-primary magnetic">
                         Проверить ссылку <span aria-hidden="true">&darr;</span>
                     </a>
-                    <a href="#how-it-works" class="btn btn-secondary">Как это работает</a>
+                    <a href="#how-it-works" class="btn btn-ghost">Как это работает <span aria-hidden="true">&rarr;</span></a>
                 </div>
                 </div>
             </div>
@@ -126,50 +125,76 @@
         </div>
     </section>
 
+<!-- Manifest — editorialная пауза в духе референсов -->
+    <section class="manifest">
+        <div class="container">
+            <p class="manifest-text reveal">
+                Мы не пугаем. Мы показываем <em>почему</em> ссылка выглядит опасно —
+                и оставляем решение за&nbsp;вами.
+            </p>
+            <div class="manifest-meta mono-label reveal" data-scramble="security · simplicity · trust">security · simplicity · trust</div>
+        </div>
+    </section>
+
     <!-- Features -->
     <section class="features" id="features">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-badge">
-                    <span class="badge-num">01</span>
-                    Возможности
-                </div>
+                <div class="section-index mono-label">01 &mdash; Возможности</div>
                 <h2 class="section-title">Почему выбирают PhishDet</h2>
                 <p class="section-subtitle">
                     Без установки, без расширений браузера — просто вставьте ссылку
                 </p>
             </div>
 
-            <div class="features-grid">
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">速</span><span class="feature-kanji-meaning">скорость</span></div>
-                    <h3 class="feature-title">Быстрая проверка</h3>
-                    <p class="feature-text">Результат за пару секунд. Анализ идёт по тексту адреса, страница мошенника не загружается.</p>
+            <div class="features-list">
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">01</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">Быстрая проверка</h3>
+                        <p class="feature-text">Результат за пару секунд. Анализ идёт по тексту адреса, страница мошенника не загружается.</p>
+                    </div>
+                    <div class="feature-tag mono-label">скорость</div>
                 </div>
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">解</span><span class="feature-kanji-meaning">разбор</span></div>
-                    <h3 class="feature-title">Объясняет, а не пугает</h3>
-                    <p class="feature-text">Не просто «опасно/безопасно», а конкретные признаки: подменённый домен, чужие ключевые слова, странные редиректы.</p>
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">02</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">Объясняет, а не пугает</h3>
+                        <p class="feature-text">Не просто «опасно/безопасно», а конкретные признаки: подменённый домен, чужие ключевые слова, странные редиректы.</p>
+                    </div>
+                    <div class="feature-tag mono-label">разбор</div>
                 </div>
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">静</span><span class="feature-kanji-meaning">тишина</span></div>
-                    <h3 class="feature-title">Конфиденциальность</h3>
-                    <p class="feature-text">На бесплатном тарифе ссылки не сохраняются. Аккаунт нужен только для счётчика проверок.</p>
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">03</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">Конфиденциальность</h3>
+                        <p class="feature-text">На бесплатном тарифе ссылки не сохраняются. Аккаунт нужен только для счётчика проверок.</p>
+                    </div>
+                    <div class="feature-tag mono-label">тишина</div>
                 </div>
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">機</span><span class="feature-kanji-meaning">устройство</span></div>
-                    <h3 class="feature-title">Работает везде</h3>
-                    <p class="feature-text">С телефона удобно проверять ссылки из SMS и мессенджеров прямо перед тем, как в них что-то вводить.</p>
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">04</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">Работает везде</h3>
+                        <p class="feature-text">С телефона удобно проверять ссылки из SMS и мессенджеров прямо перед тем, как в них что-то вводить.</p>
+                    </div>
+                    <div class="feature-tag mono-label">устройство</div>
                 </div>
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">型</span><span class="feature-kanji-meaning">форма · API</span></div>
-                    <h3 class="feature-title">API для разработчиков</h3>
-                    <p class="feature-text">Интегрируйте проверку ссылок в свои приложения, ботов или корпоративную почту через REST API.</p>
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">05</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">API для разработчиков</h3>
+                        <p class="feature-text">Интегрируйте проверку ссылок в свои приложения, ботов или корпоративную почту через REST API.</p>
+                    </div>
+                    <div class="feature-tag mono-label">api</div>
                 </div>
-                <div class="feature-card reveal card-spotlight">
-                    <div class="feature-icon"><span class="feature-kanji">歴</span><span class="feature-kanji-meaning">история</span></div>
-                    <h3 class="feature-title">История и лимиты</h3>
-                    <p class="feature-text">В кабинете видно, сколько проверок осталось и что вы уже проверяли, — ничего не потеряется.</p>
+                <div class="feature-row reveal card-spotlight">
+                    <div class="feature-num">06</div>
+                    <div class="feature-body">
+                        <h3 class="feature-title">История и лимиты</h3>
+                        <p class="feature-text">В кабинете видно, сколько проверок осталось и что вы уже проверяли, — ничего не потеряется.</p>
+                    </div>
+                    <div class="feature-tag mono-label">история</div>
                 </div>
             </div>
         </div>
@@ -179,10 +204,7 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-badge">
-                    <span class="badge-num">02</span>
-                    Как это работает
-                </div>
+                <div class="section-index mono-label">02 &mdash; Как это работает</div>
                 <h2 class="section-title">Три простых шага</h2>
                 <p class="section-subtitle">Проверка ссылки занимает всего несколько секунд</p>
             </div>
@@ -193,11 +215,13 @@
                     <h3 class="step-title">Вставьте ссылку</h3>
                     <p class="step-text">Скопируйте подозрительную ссылку из письма, SMS или мессенджера</p>
                 </div>
+                <div class="step-arrow" aria-hidden="true">&mdash;&mdash;&mdash;&#10140;</div>
                 <div class="step reveal">
                     <div class="step-number">2</div>
                     <h3 class="step-title">Нажмите «Проверить»</h3>
                     <p class="step-text">Сервис проанализирует адрес по десяткам признаков фишинга — без перехода по ссылке</p>
                 </div>
+                <div class="step-arrow" aria-hidden="true">&mdash;&mdash;&mdash;&#10140;</div>
                 <div class="step reveal">
                     <div class="step-number">3</div>
                     <h3 class="step-title">Получите результат</h3>
@@ -211,17 +235,17 @@
     <section class="pricing" id="pricing">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-badge">
-                    <span class="badge-num">03</span>
-                    Тарифы
-                </div>
+                <div class="section-index mono-label">03 &mdash; Тарифы</div>
                 <h2 class="section-title">Выберите свой план</h2>
                 <p class="section-subtitle">Начните бесплатно, масштабируйтесь по мере роста</p>
             </div>
 
-            <div class="pricing-grid" id="pricingGrid">
+            <div class="pricing-grid tilt-grid" id="pricingGrid">
                 <div class="pricing-card reveal card-spotlight">
-                    <h3 class="pricing-name">Бесплатный</h3>
+                    <div class="pricing-head">
+                        <h3 class="pricing-name">Бесплатный</h3>
+                        <span class="pricing-seal" aria-hidden="true"></span>
+                    </div>
                     <div class="pricing-price">0 ₽ <span>/ месяц</span></div>
                     <p class="pricing-desc">Для личного использования</p>
                     <ul class="pricing-features">
@@ -234,7 +258,10 @@
 
                 <div class="pricing-card featured reveal card-spotlight">
                     <div class="pricing-badge">Популярный</div>
-                    <h3 class="pricing-name">Про</h3>
+                    <div class="pricing-head">
+                        <h3 class="pricing-name">Про</h3>
+                        <span class="pricing-seal pricing-seal-active" aria-hidden="true"></span>
+                    </div>
                     <div class="pricing-price">299 ₽ <span>/ месяц</span></div>
                     <p class="pricing-desc">Первые 7 дней — бесплатно</p>
                     <ul class="pricing-features">
@@ -248,7 +275,10 @@
                 </div>
 
                 <div class="pricing-card reveal card-spotlight">
-                    <h3 class="pricing-name">Бизнес</h3>
+                    <div class="pricing-head">
+                        <h3 class="pricing-name">Бизнес</h3>
+                        <span class="pricing-seal" aria-hidden="true"></span>
+                    </div>
                     <div class="pricing-price">1 990 ₽ <span>/ месяц</span></div>
                     <p class="pricing-desc">Для компаний и команд</p>
                     <ul class="pricing-features">
@@ -272,19 +302,14 @@
     <section class="testimonials" id="testimonials">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-badge">
-                    <span class="badge-num">04</span>
-                    Отзывы
-                </div>
+                <div class="section-index mono-label">04 &mdash; Отзывы</div>
                 <h2 class="section-title">Что говорят наши пользователи</h2>
                 <p class="section-subtitle">Отзывы пользователей, которые проверили хотя бы одну ссылку</p>
             </div>
 
-            <div class="testimonials-slider">
+            <div class="testimonials-track-wrap reveal">
+                <div class="testimonials-track" id="testimonialsTrack">
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
                     <p class="testimonial-text">Пришло «письмо из банка» про блокировку карты. Проверил ссылку — сервис нашёл подмену домена. Открыл настоящую страницу банка через приложение, всё в порядке.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">АК</div>
@@ -296,9 +321,6 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-stroke"></i>
-                    </div>
                     <p class="testimonial-text">Подключили API к нашей почте, ссылки проверяются на лету. Из минусов — хотелось бы больше примеров в документации, но работает стабильно.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">МС</div>
@@ -310,9 +332,6 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
                     <p class="testimonial-text">Раньше просто угадывал по названию домена. Теперь вставляю ссылку и вижу конкретные причины, почему она подозрительная. Понятно даже не техническому человеку.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">ДВ</div>
@@ -324,9 +343,6 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-                    </div>
                     <p class="testimonial-text">Используем Бизнес-тариф для корпоративной почты. Сотрудники стали в два раза реже пересылать подозрительные письма в техподдержку — проверяют сами.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">ОП</div>
@@ -337,6 +353,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </section>
 
@@ -344,10 +361,7 @@
     <section class="faq" id="faq">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-badge">
-                    <span class="badge-num">05</span>
-                    FAQ
-                </div>
+                <div class="section-index mono-label">05 &mdash; FAQ</div>
                 <h2 class="section-title">Частые вопросы</h2>
                 <p class="section-subtitle">Ответы на самые популярные вопросы о PhishDet</p>
             </div>
@@ -444,17 +458,18 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <div class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+            <div class="footer-brand-row">
+                <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
+                    <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
-                    </a>
-                    <p>Показываем, насколько ссылка похожа на фишинговую, прежде чем вы по ней перейдёте.</p>
-                    <div class="footer-social">
-                        <a href="https://t.me/phishdet" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a>
-                        <a href="mailto:hello@phishdet.ru" aria-label="Написать на почту"><i class="fas fa-envelope"></i></a>
-                    </div>
+                </a>
+                <p class="footer-motto mono-label">не открывай, пока не проверил</p>
+            </div>
+
+            <div class="footer-grid">
+                <div>
+                    <h4 class="footer-title">О сервисе</h4>
+                    <p style="color:inherit;max-width:260px;">Показываем, насколько ссылка похожа на фишинговую, прежде чем вы по ней перейдёте.</p>
                 </div>
                 <div>
                     <h4 class="footer-title">Продукт</h4>

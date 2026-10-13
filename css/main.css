@@ -1,40 +1,44 @@
 /* ===================================
-   CSS VARIABLES — тёмная тема в духе суми-э (墨絵)
-   Суми-чёрный фон · васи-текст · один янтарный акцент · киноварь — только для угрозы
+   CSS VARIABLES — тёплая васи-бумага · ваби-саби
+   Светлая «бумажная» база, чернильный текст,
+   янтарь — основной акцент, киноварь — печать/угроза.
 =================================== */
 :root {
-    --bg-primary: #0c0d10;              /* 墨 sumi — чернила */
-    --bg-secondary: #0f1013;
-    --bg-tertiary: #14161a;
-    --bg-elevated: #191b20;
-    --bg-card: rgba(244, 241, 234, 0.028);
-    --bg-card-hover: rgba(244, 241, 234, 0.055);
+    --bg-primary: #f4f1ea;              /* 和紙 washi — тёплая бумага */
+    --bg-secondary: #edeae1;            /* сгиб бумаги, на тон темнее */
+    --bg-tertiary: #e6e2d6;
+    --bg-elevated: #fbfaf6;             /* лист на просвет — почти белый */
+    --bg-card: rgba(12, 13, 16, 0.03);
+    --bg-card-hover: rgba(12, 13, 16, 0.055);
+    --ink-block: #17181c;               /* суми-блок для контрастных секций */
+    --ink-block-soft: #22242a;
 
-    --text-primary: #ece8de;            /* 和紙 washi — тёплая бумага */
-    --text-secondary: #9b978c;
-    --text-muted: #615e57;
+    --text-primary: #1c1d21;            /* 墨 sumi — чернила */
+    --text-secondary: #5d5a52;
+    --text-muted: #8f8b80;
+    --text-on-ink: #efece3;
+    --text-on-ink-soft: rgba(239, 236, 227, 0.62);
 
-    --accent-primary: #f5a524;          /* 琥珀 янтарь — единственный акцент бренда */
-    --accent-primary-strong: #ffb43a;
-    --accent-on-primary: #14110a;       /* текст на янтарном */
-    --accent-vermilion: #e8442f;        /* 朱色 киноварь — печать / сигнал угрозы */
-    --accent-success: #7d9c6a;          /* 若竹 молодой бамбук */
-    --accent-warning: #d29922;
-    --accent-danger: #e8442f;
-    --accent-info: #8a9bb0;             /* 藍灰 серо-синий */
+    --accent-primary: #c96a08;          /* 琥珀 янтарь — темнее для контраста на бумаге */
+    --accent-primary-strong: #a85804;
+    --accent-bright: #f5a524;           /* янтарь свечения на тёмных блоках */
+    --accent-on-primary: #fdf8ef;
+    --accent-vermilion: #d5442c;        /* 朱色 киноварь — ханко-печать / угроза */
+    --accent-success: #4c7a52;          /* 若竹 бамбук */
+    --accent-warning: #a8760c;
+    --accent-danger: #c23a24;
+    --accent-info: #5d7186;             /* 藍灰 серо-синий */
 
-    --gradient-primary: linear-gradient(135deg, #f5a524 0%, #e0870e 100%);
+    --border-color: rgba(28, 29, 33, 0.12);
+    --border-strong: rgba(28, 29, 33, 0.26);
+    --border-glow: rgba(201, 106, 8, 0.4);
 
-    --border-color: rgba(236, 232, 222, 0.10);
-    --border-strong: rgba(236, 232, 222, 0.20);
-    --border-glow: rgba(245, 165, 36, 0.35);
+    --shadow-sm: 0 1px 2px rgba(28, 29, 33, 0.06);
+    --shadow-md: 0 10px 30px -12px rgba(28, 29, 33, 0.18);
+    --shadow-lg: 0 30px 60px -24px rgba(28, 29, 33, 0.25);
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.55);
-
-    --radius-sm: 4px;                   /* японский минимализм: острые грани */
-    --radius-md: 6px;
+    --radius-sm: 3px;                   /* ваби-саби: почти прямые углы */
+    --radius-md: 5px;
     --radius-lg: 8px;
     --radius-xl: 10px;
 
@@ -43,6 +47,7 @@
     --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
     --container-max: 1200px;
     --header-height: 72px;
@@ -72,15 +77,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* тонкая «бумажная» текстура васи поверх всего — не ИИ-глянец, а живая поверхность */
+/* зернистость васи — живая поверхность, а не ИИ-глянец */
 body::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 9999;
     pointer-events: none;
-    opacity: 0.5;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.93 0 0 0 0 0.91 0 0 0 0 0.86 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.33 0 0 0 0 0.28 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .container {
@@ -110,14 +116,44 @@ p {
 }
 
 ::selection {
-    background: var(--accent-primary);
-    color: var(--accent-on-primary);
+    background: var(--accent-vermilion);
+    color: #fdf8ef;
 }
 
 a {
     color: inherit;
     text-decoration: none;
     transition: color var(--transition-fast);
+}
+
+/* Моно-метка в духе webtactics: капс, разрядка, линейка */
+.mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ===================================
+   SCROLL PROGRESS — тонкий «шов» сверху страницы
+=================================== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 1100;
+    background: transparent;
+}
+
+.scroll-progress span {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent-vermilion);
 }
 
 /* ===================================
@@ -130,7 +166,7 @@ a {
     gap: 10px;
     padding: 15px 28px;
     min-height: 48px;
-    border-radius: var(--radius-sm);   /* японский минимализм: почти прямые углы */
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.2;
@@ -141,13 +177,13 @@ a {
     touch-action: manipulation;
     transition:
         background-color var(--transition-fast),
+        color var(--transition-fast),
         border-color var(--transition-fast),
         box-shadow var(--transition-fast),
         transform 0.1s ease;
     position: relative;
 }
 
-/* Единое состояние нажатия — кнопка «утапливается», а не парит */
 .btn:active {
     transform: translateY(1px) scale(0.98);
 }
@@ -157,51 +193,60 @@ a {
     outline-offset: 2px;
 }
 
-.btn i {
-    font-size: 0.9em;
-    opacity: 0.9;
+.btn i { font-size: 0.9em; opacity: 0.9; }
+
+.btn-sm {
+    padding: 9px 18px;
+    min-height: 38px;
+    font-size: 0.875rem;
+}
+
+.btn-lg {
+    padding: 18px 36px;
+    min-height: 56px;
+    font-size: 1.0625rem;
 }
 
 .btn-primary {
-    background: var(--accent-primary);
-    color: var(--accent-on-primary);
-    border-color: var(--accent-primary);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    background: var(--ink-block);
+    color: var(--text-on-ink);
+    border-color: var(--ink-block);
 }
 
 .btn-primary:hover {
-    background: var(--accent-primary-strong);
-    border-color: var(--accent-primary-strong);
-    box-shadow: none;
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--accent-on-primary);
 }
 
 .btn-secondary {
-    background: rgba(236, 232, 222, 0.05);
+    background: transparent;
     color: var(--text-primary);
-    border-color: rgba(236, 232, 222, 0.18);
+    border-color: var(--border-strong);
 }
 
 .btn-secondary:hover {
-    background: rgba(236, 232, 222, 0.1);
-    border-color: rgba(236, 232, 222, 0.34);
+    background: var(--ink-block);
+    border-color: var(--ink-block);
+    color: var(--text-on-ink);
 }
+
+/* призрачная кнопка — текстовая линия */
+.btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-primary);
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.btn-ghost:hover { color: var(--accent-primary); }
 
 .btn[disabled],
 .btn:disabled {
     opacity: 0.55;
     cursor: not-allowed;
     transform: none;
-}
-
-/* CTA-кнопки с явным следующим действием */
-.btn-arrow::after {
-    content: '\2192';
-    font-weight: 600;
-    transition: transform var(--transition-fast);
-}
-
-.btn-arrow:hover::after {
-    transform: translateX(3px);
 }
 
 /* ===================================
@@ -218,8 +263,9 @@ a {
 }
 
 .header.scrolled {
-    background: rgba(12, 13, 16, 0.85);
+    background: rgba(244, 241, 234, 0.88);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -231,15 +277,13 @@ a {
 }
 
 /* ===================================
-   ЛОГОТИП — знак «д»-крюк + словесная часть
+   ЛОГОТИП — знак «д»-щит + крюк + наживка, словесная часть
+   Знак наследует цвет текста (currentColor), точка — киноварь
 =================================== */
 .logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-    font-size: 1.4rem;
-    font-weight: 900;
-    letter-spacing: -0.01em;
+    gap: 11px;
 }
 
 .logo-icon {
@@ -249,22 +293,33 @@ a {
     align-items: center;
     justify-content: center;
     flex: none;
+    color: var(--ink-block);
 }
 
 .logo-mark {
     width: 100%;
     height: 100%;
     display: block;
-    transition: transform var(--transition-base);
+    transition: transform 0.45s var(--ease-out-expo);
 }
 
 .logo:hover .logo-mark {
-    transform: rotate(-6deg);
+    transform: rotate(-8deg);
+}
+
+.logo-word {
+    font-size: 1.375rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
 }
 
 .logo-word-accent {
     color: var(--accent-vermilion);
 }
+
+.logo-lg .logo-icon { width: 44px; height: 44px; }
+.logo-lg .logo-word { font-size: 1.75rem; }
 
 .nav {
     display: flex;
@@ -279,6 +334,7 @@ a {
     padding: 8px 0;
 }
 
+/* underline растёт слева направо, как росчерк кисти */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -290,13 +346,8 @@ a {
     transition: width var(--transition-base);
 }
 
-.nav-link:hover {
-    color: var(--text-primary);
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { width: 100%; }
 
 .mobile-toggle {
     display: none;
@@ -321,7 +372,9 @@ a {
 .reveal {
     opacity: 0;
     transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+        opacity 0.9s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-expo);
 }
 
 .reveal.active {
@@ -329,78 +382,73 @@ a {
     transform: translateY(0);
 }
 
+/* Маска-росчерк: текст выезжает из-под линии (webtactics-style) */
+.mask-reveal {
+    clip-path: inset(0 0 105% 0);
+    animation: maskIn 1.1s 0.15s var(--ease-out-expo) forwards;
+}
+
+@keyframes maskIn {
+    to { clip-path: inset(-20% -5% -5% -5%); }
+}
+
 /* ===================================
-   FOOTER
+   FOOTER — суми-блок: контраст «чернила по бумаге»
 =================================== */
 .footer {
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border-color);
-    padding: 60px 0 30px;
+    background: var(--ink-block);
+    color: var(--text-on-ink);
+    padding: 80px 0 30px;
 }
+
+.footer p { color: var(--text-on-ink-soft); }
+
+.footer-brand-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(239, 236, 227, 0.12);
+    margin-bottom: 48px;
+}
+
+.footer .logo-icon { color: var(--text-on-ink); }
+.footer .logo-word { color: var(--text-on-ink); }
+.footer .logo-word-accent { color: var(--accent-bright); }
+.footer .footer-motto { color: var(--text-on-ink-soft); }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
     margin-bottom: 60px;
 }
 
-.footer-brand p {
-    color: var(--text-secondary);
-    margin-top: 16px;
-    max-width: 300px;
-}
-
 .footer-title {
-    font-size: 1rem;
+    font-size: 0.875rem;
     margin-bottom: 20px;
+    color: var(--text-on-ink);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
-.footer-links {
-    list-style: none;
-}
-
-.footer-links li {
-    margin-bottom: 12px;
-}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 12px; }
 
 .footer-links a {
-    color: var(--text-secondary);
+    color: var(--text-on-ink-soft);
     transition: color var(--transition-fast);
 }
 
-.footer-links a:hover {
-    color: var(--text-primary);
-}
-
-.footer-social {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-}
-
-.footer-social a {
-    width: 40px;
-    height: 40px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all var(--transition-base);
-}
-
-.footer-social a:hover {
-    background: var(--bg-elevated);
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-    transform: translateY(-2px);
-}
+.footer-links a:hover { color: var(--accent-bright); }
 
 .footer-bottom {
     padding-top: 30px;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(239, 236, 227, 0.12);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -409,19 +457,14 @@ a {
 }
 
 .footer-bottom p {
-    color: var(--text-muted);
+    color: rgba(239, 236, 227, 0.45);
     font-size: 0.875rem;
 }
 
 /* ===================================
-   КУРСОР-ПРОЖЕКТОР (spotlight) — обычный системный курсор,
-   рядом с ним только мягкое тёплое свечение. Никаких кастомных
-   курсоров, колец и «линий» за мышью.
+   КУРСОР-ТЕПЛО (spotlight) — обычный системный курсор,
+   рядом только мягкое тёплое пятно света. Без кастомных курсоров.
 =================================== */
-body.has-spotlight {
-    position: relative;
-}
-
 body.has-spotlight::before {
     content: '';
     position: fixed;
@@ -429,14 +472,13 @@ body.has-spotlight::before {
     z-index: 0;
     pointer-events: none;
     background: radial-gradient(
-        420px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
-        rgba(245, 165, 36, 0.06),
+        480px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+        rgba(245, 165, 36, 0.10),
         transparent 65%
     );
     transition: opacity 0.4s ease;
 }
 
-/* Прожектор внутри карточек — подсвечивает ту, на которой мышь */
 .card-spotlight {
     position: relative;
     isolation: isolate;
@@ -451,8 +493,8 @@ body.has-spotlight::before {
     pointer-events: none;
     opacity: 0;
     background: radial-gradient(
-        260px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
-        rgba(245, 165, 36, 0.18),
+        300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(245, 165, 36, 0.16),
         transparent 70%
     );
     transition: opacity 0.35s ease;
@@ -465,23 +507,20 @@ body.has-spotlight::before {
 
 @media (prefers-reduced-motion: reduce) {
     body.has-spotlight::before,
-    .card-spotlight::after {
-        display: none;
-    }
+    .card-spotlight::after { display: none; }
     html { scroll-behavior: auto; }
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
     }
+    .mask-reveal { clip-path: none; animation: none; }
 }
 
 /* ===================================
    RESPONSIVE
 =================================== */
 @media (max-width: 768px) {
-    section {
-        padding: 80px 0;
-    }
+    section { padding: 80px 0; }
 
     .nav {
         display: none;
@@ -496,22 +535,13 @@ body.has-spotlight::before {
         gap: 16px;
     }
 
-    .nav.active {
-        display: flex;
-    }
-
-    .mobile-toggle {
-        display: flex;
-    }
+    .nav.active { display: flex; }
+    .mobile-toggle { display: flex; }
 
     .mobile-toggle.active span:nth-child(1) {
         transform: rotate(45deg) translate(6px, 6px);
     }
-
-    .mobile-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-
+    .mobile-toggle.active span:nth-child(2) { opacity: 0; }
     .mobile-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
     }

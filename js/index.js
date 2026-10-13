@@ -135,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await response.json();
                 displayResult(data, url);
-                showQuotaStatus(data);
 
             } catch (error) {
                 showStatus(error.message, "error");
@@ -199,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!checkerResult) return;
         checkerResult.className = "result-card result-warning";
         checkerResult.hidden = false;
-        checkerResult.style.cssText = "padding:20px; border-radius:16px; margin-top:16px; border:1px solid rgba(245,158,11,0.3); background:var(--bg-card);";
+        checkerResult.style.cssText = "padding:20px; border-radius:var(--radius-md); margin-top:16px; border:1px solid rgba(168,118,12,0.35); border-left:3px solid var(--accent-warning); background:var(--bg-elevated); box-shadow:var(--shadow-sm);";
         checkerResult.innerHTML = `
             <div style="font-weight:700; font-size:1.1rem; margin-bottom:8px; color:var(--text-primary);">Лимит бесплатных проверок исчерпан</div>
             <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:16px;">
@@ -259,11 +258,12 @@ document.addEventListener("DOMContentLoaded", () => {
         checkerResult.className = `result-card ${statusClass}`;
         checkerResult.hidden = false;
         checkerResult.style.padding = "20px";
-        checkerResult.style.borderRadius = "var(--radius-md)";   /* японская геометрия: почти прямые углы */
+        checkerResult.style.borderRadius = "var(--radius-md)";   /* ваби-саби геометрия: почти прямые углы */
         checkerResult.style.marginTop = "16px";
         checkerResult.style.border = `1px solid ${borderColor}`;
         checkerResult.style.borderLeftWidth = "3px";             /* «корешок» как в книгах вадзёку */
-        checkerResult.style.background = "var(--bg-card)";
+        checkerResult.style.background = "var(--bg-elevated)";
+        checkerResult.style.boxShadow = "var(--shadow-sm)";
 
         checkerResult.innerHTML = `
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 limitNote.innerHTML =
                     `Осталось ${remaining} бесплатных проверок. ` +
-                    `<a href="checkout.html?plan=pro&trial=1" style="color:var(--accent-primary,#6366f1); font-weight:600;">Про без ограничений — 7 дней бесплатно →</a>`;
+                    `<a href="checkout.html?plan=pro&trial=1" style="color:var(--accent-primary); font-weight:600;">Про без ограничений — 7 дней бесплатно →</a>`;
             }
             checkerResult.appendChild(limitNote);
         }
@@ -322,6 +322,37 @@ document.addEventListener("DOMContentLoaded", () => {
 (function pricingGridScene() {
     const grid = document.getElementById('pricingGrid');
     if (!grid || !window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     grid.addEventListener('mouseenter', () => grid.classList.add('has-hover'));
     grid.addEventListener('mouseleave', () => grid.classList.remove('has-hover'));
+
+    // Tilt: карточка слегка наклоняется вслед за курсором + тёплая подсветка
+    grid.querySelectorAll('.pricing-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width - 0.5;
+            const py = (e.clientY - r.top) / r.height - 0.5;
+            card.style.transform = `rotateX(${(-py * 4).toFixed(2)}deg) rotateY(${(px * 5).toFixed(2)}deg) translateY(-4px)`;
+            card.style.setProperty('--card-mouse-x', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+            card.style.setProperty('--card-mouse-y', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+})();
+
+// ===================================
+// БЕСКОНЕЧНАЯ ЛЕНТА ОТЗЫВОВ (marquee)
+// Дублируем набор карточек, чтобы цикл был непрерывным
+// ===================================
+(function testimonialMarquee() {
+    const track = document.getElementById('testimonialsTrack');
+    if (!track) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    track.setAttribute('aria-roledescription', 'carousel');
+    track.insertAdjacentHTML('beforeend', track.innerHTML);
+    track.querySelectorAll('.testimonial-card').forEach((c, i) => {
+        if (i >= 4) c.setAttribute('aria-hidden', 'true');
+    });
 })();
