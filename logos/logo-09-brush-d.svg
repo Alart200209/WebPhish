@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Кистевая D» — буква D, написанная одним мазком фудэ-кисти с киноварной печатью -->
+  <path d="M18 8c-2 16-2 32 0 48" stroke="#2B2620" stroke-width="8" stroke-linecap="round"/>
+  <path d="M18 10c18 0 28 8 28 22s-10 22-28 22" stroke="#2B2620" stroke-width="7" stroke-linecap="round"/>
+  <rect x="44" y="44" width="12" height="12" rx="2" fill="#C2452D"/>
+</svg>

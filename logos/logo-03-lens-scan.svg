@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- «Линза-сканер» — кольцо + диагональный луч, отсекающий подозрительное -->
+  <circle cx="28" cy="28" r="18" stroke="#4F81EA" stroke-width="6"/>
+  <path d="M41 41l16 16" stroke="#2B2620" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="28" cy="28" r="5" fill="#E05A4A"/>
+</svg>

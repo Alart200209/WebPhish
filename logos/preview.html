@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>PhishDet — варианты логотипов</title>
+<style>
+  body{background:#12172B;color:#EAE6DC;font-family:'Jost',system-ui,sans-serif;margin:0;padding:48px}
+  h1{font-weight:500;letter-spacing:.02em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+  .card{border:1px solid #2A3147;border-radius:12px;padding:24px;background:#171D33}
+  .card.light{background:#F6F2E9;color:#2B2620;border-color:#D8D2C2}
+  .row{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+  .wordmark{font-size:26px;font-weight:600;letter-spacing:.01em}
+  .wordmark span{font-weight:300;opacity:.75}
+  img.big{width:64px;height:64px} img.mid{width:32px;height:32px} img.sm{width:16px;height:16px}
+  .sizes{display:flex;align-items:flex-end;gap:20px}
+  .cap{font-size:12px;opacity:.6;margin-top:4px;text-align:center}
+  .name{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.7;margin-bottom:8px}
+</style>
+</head>
+<body>
+<h1>PhishDet — 10 вариантов знака + wordmark «Phish<span>Det</span>» (Jost SemiBold/Light)</h1>
+<p>Надпись: Phish — начертаниеMedium/Bold, Det — Light или акцентным цветом. Палитры разных вариантов: киноварь #C2452D, суми #2B2620, индиго #4F81EA / айзуме #33517E, янтарь #E6B450, васи #F6F2E9.</p>
+<div class="grid" id="g"></div>
+<script>
+const items=[["logo-01-fishing-hook","Крючок (текущий)","dark"],["logo-02-enso-shield","Энсо-щит","dark"],["logo-03-lens-scan","Линза-сканер","dark"],["logo-04-d-monogram","Печать P×D","light"],["logo-05-torii-gate","Тории-фильтр","light"],["logo-06-waves-check","Волны+галочка","dark"],["logo-07-eye-kamon","Око-камон","light"],["logo-08-link-cut","Разорванная ссылка","dark"],["logo-09-brush-d","Кистевая D","light"],["logo-10-badge-dot","Бейдж с точкой","dark"]];
+document.getElementById('g').innerHTML=items.map(([f,n,t])=>`<div class="card ${t==='light'?'light':''}">
+<div class="name">${n}</div>
+<div class="row"><img class="big" src="${f}.svg"><div class="wordmark">Phish<span>Det</span></div></div>
+<div class="sizes"><div><img class="mid" src="${f}.svg"><div class="cap">32px</div></div><div><img class="sm" src="${f}.svg"><div class="cap">16px</div></div></div>
+</div>`).join('');
+</script>
+</body>
+</html>
