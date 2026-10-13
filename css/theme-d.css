@@ -1,0 +1,156 @@
+/* =====================================================================
+   ВАРИАНТ ДИЗАЙНА D — «Неон-терминал» (cyber-console)
+   ---------------------------------------------------------------------
+   ВКЛЮЧЕНИЕ: закомментируйте активную тему (theme-b/theme-c) и
+   раскомментируйте строку в <head>:
+     <link rel="stylesheet" href="css/theme-d.css">
+   Включать только ОДНУ тему одновременно.
+
+   Тёмная «консольная» база (#070b12 — графит с холодным подтоном),
+   основной акцент — бирюзовый неон (#2ee6c8), служебный — кислотный
+   лайм (#b6ff4d), угроза — неоновый коралл (#ff4d6d).
+   Логика: интерфейс-«пульт» для проверки ссылок — сетка, свечение,
+   моноширинный ритм. Палитра: [ #070b12, #0f1826, #2ee6c8, #b6ff4d, #ff4d6d ].
+   ===================================================================== */
+
+:root {
+    /* Графитовые поверхности с холодным подтоном */
+    --bg-primary: #070b12;              /* фон страницы */
+    --bg-secondary: #0b111d;            /* «ступень» */
+    --bg-tertiary: #111a2b;             /* surface container */
+    --bg-elevated: #0f1826;             /* карточка/подъём */
+    --bg-card: rgba(120, 200, 220, 0.045);
+    --bg-card-hover: rgba(120, 220, 220, 0.085);
+    --ink-block: #05080e;               /* почти чёрный блок (footer) */
+    --ink-block-soft: #0d1622;
+
+    /* Светлый холодный текст */
+    --text-primary: #e8f3ff;
+    --text-secondary: #93a6bf;
+    --text-muted: #5d6f88;
+    --text-on-ink: #e8f3ff;
+    --text-on-ink-soft: rgba(232, 243, 255, 0.6);
+
+    /* Неоновая палитра */
+    --accent-primary: #2ee6c8;          /* бирюзовый — главный акцент */
+    --accent-primary-rgb: 46, 230, 200; /* тот же акцент в rgb */
+    --accent-primary-strong: #52f2d8;
+    --accent-bright: #b6ff4d;           /* кислотный лайм — второй акцент */
+    --accent-on-primary: #04100d;
+    --accent-vermilion: #ff4d6d;        /* неоновый коралл — угроза */
+    --accent-success: #35d07f;
+    --accent-warning: #ffc247;
+    --accent-danger: #ff4d6d;
+    --accent-info: #4db8ff;
+
+    --border-color: rgba(120, 200, 220, 0.14);
+    --border-strong: rgba(110, 220, 220, 0.3);
+    --border-glow: rgba(46, 230, 200, 0.45);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 16px 40px -16px rgba(0, 230, 200, 0.22);
+    --shadow-lg: 0 40px 80px -30px rgba(0, 0, 0, 0.85);
+
+    /* Более мягкая, «приборная» геометрия */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+}
+
+/* --- ЛОГОТИП: на тёмном фоне знак делаем неоновым, иначе он «тонет» --- */
+.logo-icon { color: var(--accent-primary); }
+.footer .logo-icon { color: var(--accent-primary); }
+.logo-word-accent { color: var(--accent-bright); }
+
+/* --- ФОН: холодная неоновая подсветка + графитовая виньетка --- */
+body::before {
+    background:
+        radial-gradient(120% 80% at 50% -10%, rgba(46, 230, 200, 0.12), transparent 55%),
+        radial-gradient(90% 70% at 100% 100%, rgba(182, 255, 77, 0.06), transparent 60%),
+        radial-gradient(140% 120% at 50% 120%, rgba(0, 0, 0, 0.6), transparent 60%);
+}
+
+/* --- СЕТКА ГЕРОЯ: бирюзовые «линии осциллографа» --- */
+.grid-bg {
+    background-image:
+        linear-gradient(rgba(46, 230, 200, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 230, 200, 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+}
+
+/* --- ШАПКА при прокрутке --- */
+.header.scrolled {
+    background: rgba(7, 11, 18, 0.82);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* --- КНОПКИ: неоновое свечение --- */
+.btn-primary {
+    box-shadow: 0 0 0 1px rgba(46, 230, 200, 0.25);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 22px -4px rgba(46, 230, 200, 0.6);
+}
+
+.btn-secondary:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--accent-on-primary);
+}
+
+.btn-ghost:hover { color: var(--accent-primary); }
+
+/* --- ПОЛЕ ПРОВЕРКИ: бирюзовая рамка вместо янтарной --- */
+.checker-form:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(46, 230, 200, 0.14);
+}
+
+/* --- КАРТОЧКИ ТАРИФОВ: неоновый кант при наведении --- */
+.pricing-card:hover {
+    border-color: rgba(46, 230, 200, 0.5);
+}
+
+.pricing-card.featured {
+    border-color: rgba(46, 230, 200, 0.4);
+    background: var(--bg-card-hover);
+}
+
+.pricing-card.featured:hover {
+    border-color: var(--accent-primary);
+}
+
+/* --- СЕКЦИЯ CTA: бирюзовая линия сверху --- */
+.cta-box::before {
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0.75;
+}
+
+/* --- ПОДСВЕТКА КУРСОРА: холодный неоновый отсвет вместо тёплого --- */
+body.has-spotlight::before {
+    background: radial-gradient(
+        460px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+        rgba(46, 230, 200, 0.10),
+        transparent 65%
+    );
+}
+
+.card-spotlight::after {
+    background: radial-gradient(
+        300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(46, 230, 200, 0.16),
+        transparent 70%
+    );
+}
+
+/* --- Акцентная полоса прогресса чтения --- */
+.scroll-progress span {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-bright));
+    box-shadow: 0 0 12px rgba(46, 230, 200, 0.7);
+}
+
+/* --- Моно-метки чуть ярче для «консольного» ритма --- */
+.mono-label { color: var(--accent-primary); }
+.section-subtitle { color: var(--text-secondary); }

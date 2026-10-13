@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/domain-slider.css">
 
     <!-- ===== ВАРИАНТЫ ДИЗАЙНА (переключатель тем) =====================
          A - текущий: тёмный mid-century (орех + охра), идёт по умолчанию.
@@ -85,8 +86,8 @@
                 </h1>
 
                 <p class="hero-subtitle">
-                    Прислали ссылку «от банка»? Зарегистрируйтесь, первые 3 проверки бесплатны.
-                    Покажем, насколько она похожа на фишинговую, и объясним почему. Саму ссылку не открываем.
+                    Прислали неизвестную ссылку? Зарегистрируйтесь и проверьте её.
+                    Определим, опасна ли она для перехода, и объясним почему. Данные остаются конфиденциальны.
                 </p>
 
                 <div class="hero-actions">
@@ -131,7 +132,7 @@
                     <div class="stat-label">секунды на одну проверку</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-value stat-symbol">&gt;1&thinsp;000&thinsp;000</div>
+                    <div class="stat-value stat-symbol">&gt;500&thinsp;тыс.</div>
                     <div class="stat-label">проверенных ссылок</div>
                 </div>
                 <div class="stat-item reveal">
@@ -142,11 +143,50 @@
         </div>
     </section>
 
-<!-- Manifest - editorialная пауза в духе референсов -->
+<!-- Domain slider - движущаяся лента доменов -->
+    <section class="domain-slider-section" id="domain-slider">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-index mono-label">Фишинг vs настоящее</div>
+                <h2 class="section-title" data-scramble="Подделка всегда рядом">Подделка всегда рядом</h2>
+                <p class="section-subtitle">
+                    Верхняя лента - настоящие адреса, нижняя - их подделки по типичным приёмам.
+                    Ленты движутся сами: наведите курсор, чтобы остановить, и нажмите на плашку,
+                    домен подставится в поле проверки.
+                </p>
+            </div>
+
+            <div class="domain-slider" data-domain-slider>
+                <div class="domain-track-wrap">
+                    <div class="domain-track" data-track="safe" aria-label="Примеры безопасных доменов"></div>
+                </div>
+                <div class="domain-track-wrap">
+                    <div class="domain-track domain-track--reverse" data-track="threat" aria-label="Примеры фишинговых доменов"></div>
+                </div>
+            </div>
+
+            <p class="domain-slider-hint mono-label reveal">примеры для демонстрации, по ссылкам мы не переходим</p>
+        </div>
+
+        <template data-template="safe">
+            <button type="button" class="domain-chip">
+                <span class="domain-chip-host"></span><span class="domain-chip-path"></span>
+                <span class="domain-chip-status"><i class="fas fa-check-circle"></i> безопасно</span>
+            </button>
+        </template>
+        <template data-template="threat">
+            <button type="button" class="domain-chip">
+                <span class="domain-chip-host"></span><span class="domain-chip-path"></span>
+                <span class="domain-chip-status"><i class="fas fa-triangle-exclamation"></i> фишинг</span>
+            </button>
+        </template>
+    </section>
+
+    <!-- Manifest - editorialная пауза в духе референсов -->
     <section class="manifest">
         <div class="container">
             <p class="manifest-text reveal">
-                Мы не пугаем. Мы показываем <em>почему</em> ссылка выглядит опасно —
+                Мы не пугаем. Мы показываем <em>почему</em> ссылка выглядит опасно,
                 и оставляем решение за&nbsp;вами.
             </p>
             <div class="manifest-meta mono-label reveal" data-scramble="security · simplicity · trust">security · simplicity · trust</div>
@@ -289,7 +329,7 @@
                     <div class="pricing-badge">Начните бесплатно</div>
                     <div class="pricing-head">
                         <h3 class="pricing-name">Базовая</h3>
-                        <span class="pricing-seal pricing-seal-active" aria-hidden="true"></span>
+                        <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
                     <div class="pricing-price">99 &#8381; <span>/ месяц</span></div>
                     <p class="pricing-desc">3 проверки бесплатно после регистрации, дальше 99&nbsp;&#8381; в месяц</p>
@@ -307,7 +347,7 @@
                         <h3 class="pricing-name">Про</h3>
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">4&thinsp;990 &#8381; <span>/ месяц</span></div>
+                    <div class="pricing-price">299 &#8381; <span>/ месяц</span></div>
                     <p class="pricing-desc">Для тех, кто проверяет часто</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 200 проверок в месяц</li>
@@ -323,8 +363,8 @@
                         <h3 class="pricing-name">Корпоративная</h3>
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">3&thinsp;990 &#8381; <span>/ мес за место</span></div>
-                    <p class="pricing-desc">От 5 мест, договор и оплата по счёту</p>
+                    <div class="pricing-price">4&thinsp;990 &#8381; <span>/ месяц</span></div>
+                    <p class="pricing-desc">Для команд и компаний от 5 человек, оплата по счёту.</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Проверки без лимита</li>
                         <li><i class="fas fa-check"></i> Командный доступ и отчёты</li>
@@ -352,7 +392,10 @@
                 <p class="section-subtitle">Отзывы пользователей, которые проверили хотя бы одну ссылку</p>
             </div>
 
-            <div class="reviews-slider"><div class="reviews-page testimonials-grid" id="testimonialsTrack">
+            <div class="reviews-slider">
+                <button type="button" class="t-arrow" id="reviewsPrev" aria-label="Предыдущие отзывы">&larr;</button>
+                <div class="reviews-pages">
+                <div class="reviews-page testimonials-grid" id="testimonialsTrack">
                 <div class="testimonial-card">
                     <p class="testimonial-text">Пришло «письмо из банка» про блокировку карты. Проверил ссылку, сервис нашёл подмену домена. Открыл настоящую страницу банка через приложение, всё в порядке.</p>
                     <div class="testimonial-author">
@@ -387,7 +430,7 @@
                 </div>
 
                 
-            </div></div>
+            </div>
 
             <!-- страница 2: скрыта до нажатия стрелки -->
             <div class="reviews-page testimonials-grid" id="testimonialsPage2" hidden>
@@ -422,11 +465,12 @@
                     </div>
                 </div>
             </div>
+                </div>
+                <button type="button" class="t-arrow" id="reviewsNext" aria-label="Следующие отзывы">&rarr;</button>
+            </div>
 
             <div class="testimonials-nav">
-                <button type="button" class="t-arrow" id="reviewsPrev" aria-label="Предыдущие отзывы">&larr;</button>
                 <span class="t-dots mono-label" id="reviewsDots"></span>
-                <button type="button" class="t-arrow" id="reviewsNext" aria-label="Следующие отзывы">&rarr;</button>
             </div>
         </div>
     </section>
@@ -436,7 +480,7 @@
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-index mono-label">05 - FAQ</div>
-                <h2 class="section-title">Частые вопросы</h2>
+                <h2 class="section-title" data-scramble="Частые вопросы">Частые вопросы</h2>
                 <p class="section-subtitle">Ответы на самые популярные вопросы о PhishDet</p>
             </div>
 
@@ -477,7 +521,7 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Лимит обновляется каждый месяц. Если проверок не хватает, возьмите подписку: Базовая 99 ₽ в месяц, Про 4 990 ₽ в месяц. Отменить можно в один клик в кабинете.</div>
+                        <div class="faq-answer-content">Лимит обновляется каждый месяц. Если проверок не хватает, возьмите подписку: Базовая 99 ₽ в месяц, Про 299 ₽ в месяц. Отменить можно в один клик в кабинете.</div>
                     </div>
                 </div>
 
@@ -520,7 +564,13 @@
             <div class="cta-box reveal">
                 <div class="cta-content">
                     <h2 class="cta-title">Проверьте ссылку, которая вас насторожила</h2>
-                    <p class="cta-text">После регистрации доступны 3 бесплатные проверки, без карты. Это займёт меньше минуты.</p>
+                    <p class="cta-text">Укажите ссылку и получите разбор с причинами. Проверка занимает меньше минуты.</p>
+                    <div class="cta-perks">
+                        <div class="cta-perk"><i class="fas fa-bolt"></i><span>Результат за &lt;1&nbsp;секунды</span></div>
+                        <div class="cta-perk"><i class="fas fa-gift"></i><span>3 проверки бесплатно</span></div>
+                        <div class="cta-perk"><i class="fas fa-credit-card"></i><span>Без банковской карты</span></div>
+                        <div class="cta-perk"><i class="fas fa-user-shield"></i><span>Ссылки не сохраняются</span></div>
+                    </div>
                     <a href="#checker" class="btn btn-primary btn-arrow">
                         Проверить ссылку
                     </a>
@@ -567,8 +617,8 @@
                     <ul class="footer-links">
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="mailto:support@phishdet.ru">support@phishdet.ru</a></li>
-                        <li><a href="#">Политика конфиденциальности</a></li>
-                        <li><a href="#">Условия использования</a></li>
+                        <li><a href="#" data-legal="privacy">Политика конфиденциальности</a></li>
+                        <li><a href="#" data-legal="terms">Условия использования</a></li>
                     </ul>
                 </div>
             </div>
@@ -579,7 +629,43 @@
         </div>
     </footer>
 
+    <!-- Модальное окно: Политика конфиденциальности / Условия использования -->
+    <div class="legal-modal" id="legalModal" hidden>
+        <div class="legal-modal-backdrop" data-legal-close></div>
+        <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle" aria-describedby="legalModalBody">
+            <button type="button" class="legal-modal-close" data-legal-close aria-label="Закрыть">&times;</button>
+            <h3 class="legal-modal-title" id="legalModalTitle"></h3>
+            <div class="legal-modal-body" id="legalModalBody"></div>
+        </div>
+    </div>
+
+    <template id="legal-privacy">
+        <h4>Какие данные мы собираем</h4>
+        <p>Почту при регистрации, ссылку для проверки, время запроса и IP-адрес для защиты от злоупотреблений.</p>
+        <h4>Как мы используем данные</h4>
+        <p>Для проверки ссылок, учёта лимитов подписки, поддержки и безопасности. Ссылки для проверки не передаются третьим лицам.</p>
+        <h4>Хранение и защита</h4>
+        <p>Данные хранятся на защищённых серверах в соответствии с законодательством. Доступ к ним есть только у сотрудников, которым это нужно для работы сервиса.</p>
+        <h4>Ваши права</h4>
+        <p>Вы можете запросить выгрузку или удаление своих данных в любой момент — напишите на privacy@phishdet.ru.</p>
+    </template>
+
+    <template id="legal-terms">
+        <h4>О сервисе</h4>
+        <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
+        <h4>Учётная запись и лимиты</h4>
+        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <h4>Подписки и отмена</h4>
+        <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
+        <h4>Запрещённое использование</h4>
+        <p>Нельзя использовать сервис для проверки ссылок с целью обхода защиты, рассылки спама или иных незаконных действий.</p>
+        <h4>Изменения условий</h4>
+        <p>Мы можем обновлять условия, уведомив вас на сайте. Продолжая пользоваться сервисом, вы принимаете новую редакцию.</p>
+    </template>
+
+    <script src="js/domain-slider.js"></script>
     <script src="js/main.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/legal-modal.js"></script>
 </body>
 </html>

@@ -21,6 +21,7 @@
     --text-on-ink-soft: rgba(236, 229, 216, 0.6);
 
     --accent-primary: #cf7b2e;          /* жжёная охра / коньячная кожа */
+    --accent-primary-rgb: 207, 123, 46; /* тот же акцент в rgb — для rgba()-подсветок */
     --accent-primary-strong: #e08c3d;
     --accent-bright: #e8a44c;           /* латунь */
     --accent-on-primary: #171310;
@@ -486,7 +487,7 @@ body.has-spotlight::before {
     pointer-events: none;
     background: radial-gradient(
         480px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
-        rgba(245, 165, 36, 0.10),
+        rgba(var(--accent-primary-rgb), 0.10),
         transparent 65%
     );
     transition: opacity 0.4s ease;
@@ -507,7 +508,7 @@ body.has-spotlight::before {
     opacity: 0;
     background: radial-gradient(
         300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
-        rgba(245, 165, 36, 0.16),
+        rgba(var(--accent-primary-rgb), 0.16),
         transparent 70%
     );
     transition: opacity 0.35s ease;

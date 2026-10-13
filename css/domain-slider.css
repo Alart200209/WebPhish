@@ -1,0 +1,193 @@
+/* =====================================================================
+   DOMAIN SLIDER — «движущаяся лента» доменов
+   ---------------------------------------------------------------------
+   Две дорожки бегут навстречу друг другу:
+     верх — безопасные домены (зелёный), низ — фишинговые (красный).
+   Бесшовный цикл: дорожка рендерится двумя одинаковыми половинами
+   и сдвигается на -50%. При наведении — пауза, клик подставляет
+   домен в поле проверки. Компонент тема-независимый (на переменных).
+   ===================================================================== */
+
+.domain-slider-section {
+    padding: 96px 0;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.domain-slider-section .section-header {
+    margin-bottom: 56px;
+}
+
+.domain-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 8px;
+}
+
+.domain-track-wrap {
+    overflow: hidden;
+    /* лента «растворяется» по краям */
+    mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.domain-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+    animation: domainScrollLeft 46s linear infinite;
+}
+
+.domain-track--reverse {
+    animation: domainScrollRight 52s linear infinite;
+}
+
+/* пауза, чтобы можно было спокойно прочитать/кликнуть */
+.domain-track-wrap:hover .domain-track,
+.domain-track-wrap:focus-within .domain-track {
+    animation-play-state: paused;
+}
+
+@keyframes domainScrollLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@keyframes domainScrollRight {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+
+/* --- Плашка домена --- */
+.domain-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 20px;
+    min-height: 52px;
+    flex: none;
+    /* отступ-«период» вместо flex-gap: так translateX(-50%) ложится ровно */
+    margin-right: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left-width: 3px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.35s var(--ease-out-expo),
+        border-color var(--transition-base),
+        background-color var(--transition-base),
+        box-shadow var(--transition-base);
+}
+
+.domain-chip .domain-chip-host {
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.domain-chip .domain-chip-path {
+    color: var(--text-muted);
+}
+
+.domain-chip-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.domain-chip-status i {
+    font-size: 0.7rem;
+}
+
+/* безопасный домен */
+.domain-chip--safe {
+    border-left-color: var(--accent-success);
+}
+
+.domain-chip--safe .domain-chip-status {
+    color: var(--accent-success);
+    background: rgba(53, 208, 127, 0.12);
+}
+
+/* фишинговый домен */
+.domain-chip--threat {
+    border-left-color: var(--accent-danger);
+}
+
+.domain-chip--threat .domain-chip-status {
+    color: var(--accent-danger);
+    background: rgba(255, 77, 109, 0.13);
+}
+
+/* пульс-точка у угрозы — «живой» сигнал тревоги */
+.domain-chip--threat .domain-chip-status i {
+    animation: domainPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes domainPulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+}
+
+.domain-chip:hover,
+.domain-chip:focus-visible {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    outline: none;
+}
+
+.domain-chip--safe:hover,
+.domain-chip--safe:focus-visible {
+    border-left-color: var(--accent-success);
+}
+
+.domain-chip--threat:hover,
+.domain-chip--threat:focus-visible {
+    border-left-color: var(--accent-danger);
+}
+
+.domain-slider-hint {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--text-muted);
+}
+
+/* --- Адаптив --- */
+@media (max-width: 768px) {
+    .domain-slider-section { padding: 64px 0; }
+    .domain-track { animation-duration: 34s; }
+    .domain-track--reverse { animation-duration: 38s; }
+    .domain-chip { padding: 11px 15px; min-height: 46px; font-size: 0.82rem; margin-right: 12px; }
+    .domain-slider-hint { font-size: 0.68rem; }
+}
+
+/* --- Уважение к prefers-reduced-motion: лента замирает,
+       остаётся горизонтальная прокрутка вручную --- */
+@media (prefers-reduced-motion: reduce) {
+    .domain-track {
+        animation: none !important;
+    }
+    .domain-track-wrap {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+    .domain-chip--threat .domain-chip-status i { animation: none; }
+}

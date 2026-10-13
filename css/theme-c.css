@@ -1,144 +1,478 @@
 /* =====================================================================
-   ТЕМА C — «Сейтай-ваби» (бело-чёрно-красная, mid-century минимализм)
+   ВАРИАНТ ДИЗАЙНА C — «Сейтай-ваби» (светлый васи-минимализм)
    ---------------------------------------------------------------------
-   ВКЛЮЧЕНИЕ: <link rel="stylesheet" href="css/theme-c.css">
-   (должна идти ПОСЛЕ main.css и index.css — так перебивает переменные)
+   ВКЛЮЧЕНИЕ: в index.html (и других страницах) раскомментируйте:
+     <link rel="stylesheet" href="css/theme-c.css">
+   и закомментируйте другие темы (B/D). Включать только ОДНУ тему.
 
-   База: бумага васи #f6f2e9 · чернила суми #1d1a16
-   Акценты: киноварь #c2452d + айзуме-индиго #33517e
-   Палитра muted, как подбор colormind.io:
-   [ #f6f2e9, #1d1a16, #c2452d, #33517e, #8a9a7b ]
+   Палитра: васи-бумага (#f6f2e9) + суми-чернила (#2b2620) +
+   киноварь (#d4422e) + индиго айзуме (#33517e).
+
+   Прокачано до уровня неоновой темы D, но в «бумажных» цветах:
+   — карточки подняты на белую бумагу с мягкими тенями;
+   — выраженные hover-состояния: подъём кнопок, свечение киновари,
+     подсветка строк, курсор-прожектор;
+   — светлая шапка при прокрутке, киноварная сетка, градиент прогресса.
    ===================================================================== */
 
 :root {
     /* Бумажные поверхности */
     --bg-primary: #f6f2e9;              /* васи — фон страницы */
-    --bg-secondary: #efe9dc;            /* «ступень» потемнее */
-    --bg-tertiary: #e7dfcd;
+    --bg-secondary: #efe9dd;            /* на тон темнее, «ступень» */
+    --bg-tertiary: #e7dfcf;
     --bg-elevated: #fffdf7;             /* карточка — белее бумаги */
-    --bg-card: rgba(29, 26, 22, 0.03);
-    --bg-card-hover: rgba(29, 26, 22, 0.06);
-    --ink-block: #1d1a16;               /* суми-блок (footer) */
-    --ink-block-soft: #37312a;
+    --bg-card: rgba(255, 253, 247, 0.72);
+    --bg-card-hover: rgba(255, 255, 255, 0.96);
+    --ink-block: #2b2620;               /* суми-блок (footer) */
+    --ink-block-soft: #4a4238;
 
     /* Суми-чернила */
-    --text-primary: #1d1a16;
-    --text-secondary: #5f574a;
-    --text-muted: #93897a;
+    --text-primary: #2b2620;
+    --text-secondary: #6f6656;
+    --text-muted: #9a9080;
     --text-on-ink: #f2ecdf;
     --text-on-ink-soft: rgba(242, 236, 223, 0.65);
 
     /* Акценты: киноварь + айзуме-индиго */
-    --accent-primary: #c2452d;          /* киноварь — печать, главный акцент */
-    --accent-primary-strong: #a93a24;
-    --accent-bright: #a93a24;           /* ссылки/подсветка — темнее киновари на свете */
+    --accent-primary: #d4422e;          /* киноварь — печать, главный акцент */
+    --accent-primary-rgb: 212, 66, 46;  /* тот же акцент в rgb — для rgba()-подсветок */
+    --accent-primary-strong: #b93521;
+    --accent-bright: #33517e;           /* айзуме — второй акцент/ссылки */
     --accent-on-primary: #fdf8ef;
-    --accent-vermilion: #c2452d;
-    --accent-success: #5f7d5a;          /* моми-зелень, приглушённая */
-    --accent-warning: #b98a2f;
+    --accent-vermilion: #d4422e;
+    --accent-success: #4d7a4a;          /* насыщеннее — для светлого фона */
+    --accent-warning: #b07d1e;
     --accent-danger: #b03620;
     --accent-info: #33517e;
 
-    --border-color: rgba(29, 26, 22, 0.14);
-    --border-strong: rgba(29, 26, 22, 0.32);
-    --border-glow: rgba(194, 69, 45, 0.45);
+    --border-color: rgba(43, 38, 32, 0.13);
+    --border-strong: rgba(43, 38, 32, 0.3);
+    --border-glow: rgba(var(--accent-primary-rgb), 0.45);
 
-    --shadow-sm: 0 1px 2px rgba(29, 26, 22, 0.08);
-    --shadow-md: 0 14px 30px -14px rgba(29, 26, 22, 0.22);
-    --shadow-lg: 0 32px 60px -24px rgba(29, 26, 22, 0.28);
+    --shadow-sm: 0 1px 3px rgba(67, 56, 40, 0.08);
+    --shadow-md: 0 18px 40px -18px rgba(67, 56, 40, 0.3);
+    --shadow-lg: 0 40px 70px -30px rgba(67, 56, 40, 0.36);
 
-    /* Ваби: почти прямые углы */
-    --radius-sm: 3px;
-    --radius-md: 5px;
-    --radius-lg: 8px;
-    --radius-xl: 10px;
+    /* Немного мягче «прямые углы» ваби — та же философия, приятнее на светлом */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 10px;
+    --radius-xl: 14px;
 }
 
-/* ---------- Hover-детали светлой темы ---------- */
+/* --- Шапка: светлая васи-бумага с размытием вместо тёмной полосы --- */
+.header.scrolled {
+    background: rgba(246, 242, 233, 0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+}
 
-/* Кнопка-«печать»: инверсия при наведении */
+/* --- Светлая виньетка: тёплый киноварный луч сверху, холодный снизу --- */
+body::before {
+    background:
+        radial-gradient(120% 80% at 50% -12%, rgba(var(--accent-primary-rgb), 0.06), transparent 55%),
+        radial-gradient(90% 60% at 100% 100%, rgba(51, 81, 126, 0.05), transparent 60%);
+}
+
+/* --- Сетка героя: киноварные линии на светлой бумаге --- */
+.grid-bg {
+    background-image:
+        linear-gradient(rgba(var(--accent-primary-rgb), 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--accent-primary-rgb), 0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+}
+
+/* ===================================
+   КНОПКИ — подъём и «печатная» тень
+=================================== */
+.btn-primary {
+    box-shadow: 0 2px 8px -3px rgba(var(--accent-primary-rgb), 0.45);
+}
+
+.btn-primary:hover {
+    background: var(--accent-primary-strong);
+    border-color: var(--accent-primary-strong);
+    color: var(--accent-on-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -16px rgba(var(--accent-primary-rgb), 0.6);
+}
+
+.btn-secondary:hover {
+    background: var(--ink-block);
+    border-color: var(--ink-block);
+    color: var(--text-on-ink);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -16px rgba(43, 38, 32, 0.4);
+}
+
+.btn-ghost:hover {
+    color: var(--accent-primary);
+}
+
 .btn-outline:hover {
     color: var(--accent-on-primary);
     background: var(--accent-primary);
     border-color: var(--accent-primary);
 }
 
-/* Тёплая киноварная тень под основной кнопкой при hover */
-.btn-primary:hover {
-    box-shadow: 0 10px 24px -10px rgba(194, 69, 45, 0.55);
-}
+/* --- Навигация --- */
+.nav-link:hover { color: var(--accent-primary); }
+.nav-link::after { background: var(--accent-primary); }
 
-/* Ghost-кнопка: тонкая суми-подложка вместо невидимости */
-.btn-ghost:hover {
-    background: rgba(29, 26, 22, 0.06);
-    color: var(--text-primary);
-}
-
-/* Вторичная кнопка: рамка густеет до суми */
-.btn-secondary:hover {
-    border-color: var(--text-primary);
-    color: var(--text-primary);
-    background: rgba(29, 26, 22, 0.04);
-}
-
-/* Карточки: подъём с мягкой бумажной тенью */
-.pricing-card:hover,
-.feature-row:hover,
-.step-card:hover,
-.testimonial-card:hover,
-.plan-card:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-strong);
-}
-
-/* Подсветка курсора в карточках — киноварная, но едва заметная */
-.card-spotlight::before {
+/* ===================================
+   КУРСОР-ПРОЖЕКТОР — тёплый киноварный свет
+=================================== */
+body.has-spotlight::before {
     background: radial-gradient(
-        260px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
-        rgba(194, 69, 45, 0.09),
+        480px circle at var(--mouse-x, 50%) var(--mouse-y, 0%),
+        rgba(var(--accent-primary-rgb), 0.13),
         transparent 65%
     );
 }
 
-/* Эффект «сцены»: соседние карточки тускнеют мягче, чем в тёмной теме */
-.pricing-grid.has-hover .pricing-card:not(:hover) {
-    opacity: 0.6;
+.card-spotlight::after {
+    background: radial-gradient(
+        300px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(var(--accent-primary-rgb), 0.17),
+        transparent 70%
+    );
 }
 
-/* Навигация: подчёркивание-киноварь */
-.nav-link:hover {
-    color: var(--accent-primary);
+/* ===================================
+   ПОЛЕ ПРОВЕРКИ — белая «карточка» с тенью
+=================================== */
+.checker-form {
+    background: rgba(255, 253, 247, 0.85);
+    box-shadow: var(--shadow-md);
 }
 
-/* Ссылки в футере: кремовый → киноварь */
-.footer a:hover {
-    color: var(--accent-primary);
-}
-
-/* Инпут проверки: фокус-рамка киноварь + светлая подложка */
-.checker-input:focus {
+.checker-form:focus-within {
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(194, 69, 45, 0.15);
+    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.14), var(--shadow-md);
+}
+
+/* ===================================
+   КАРТОЧКИ — поднимаем на белую бумагу
+=================================== */
+.checker-result,
+.step-card,
+.pricing-card,
+.testimonial-card,
+.faq-item {
     background: var(--bg-elevated);
+    box-shadow: var(--shadow-sm);
 }
 
-/* FAQ: вопрос при hover — суми-подложка */
-.faq-question:hover {
-    background: rgba(29, 26, 22, 0.04);
+/* --- Отзывы читаются лучше: тёплая бумага вместо почти белой,
+       тёмный текст, заметная рамка --- */
+.testimonial-card {
+    background: var(--bg-secondary);
+    border-color: var(--border-strong);
 }
 
-/* Выделение в заголовке */
-.hero-title .highlight {
+.testimonial-text {
+    color: var(--ink-block-soft);
+}
+
+.testimonial-avatar {
+    background: var(--bg-primary);
+    border-color: var(--border-strong);
+}
+
+/* ===================================
+   ВОЗМОЖНОСТИ — лёгкая киноварная пыль при наведении
+=================================== */
+.feature-row:hover {
+    background: rgba(var(--accent-primary-rgb), 0.04);
+}
+
+.feature-row:hover .feature-title {
     color: var(--accent-primary);
 }
 
-/* Киноварная «печать» активного тарифа */
-.pricing-card.featured {
-    border-color: rgba(194, 69, 45, 0.4);
-    background: var(--bg-elevated);
+.feature-row:hover .feature-tag {
+    color: var(--accent-primary-strong);
 }
 
-/* Скролл-прогресс на светлом фоне */
-#scrollProgressBar {
+/* ===================================
+   ШАГИ
+=================================== */
+.step-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+}
+
+.step-card:hover .step-icon {
+    color: var(--accent-primary);
+}
+
+.step:hover .step-number {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 6px rgba(var(--accent-primary-rgb), 0.08);
+}
+
+/* ===================================
+   ТАРИФЫ — киноварный кант + подъём
+=================================== */
+.pricing-card:hover {
+    border-color: rgba(var(--accent-primary-rgb), 0.45);
+    box-shadow: var(--shadow-md);
+}
+
+.pricing-card.featured {
+    border-color: rgba(var(--accent-primary-rgb), 0.4);
+    background: linear-gradient(180deg, #fffdf7, rgba(var(--accent-primary-rgb), 0.045));
+}
+
+.pricing-card.featured:hover {
+    border-color: var(--accent-primary);
+}
+
+.pricing-card:hover .pricing-seal {
+    border-color: var(--accent-primary);
+    animation: sealSpin 12s linear infinite;
+}
+
+.pricing-card:hover .pricing-seal::after {
     background: var(--accent-primary);
+}
+
+/* --- CTA: киноварная линия сверху --- */
+.cta-box::before {
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0.7;
+}
+
+/* --- CTA: мини-фичи под текстом --- */
+.cta-perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: -8px 0 32px;
+}
+
+.cta-perk {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all var(--transition-base);
+}
+
+.cta-perk i {
+    color: var(--accent-primary);
+    font-size: 0.95rem;
+}
+
+.cta-perk:hover {
+    border-color: rgba(var(--accent-primary-rgb), 0.45);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -10px rgba(var(--accent-primary-rgb), 0.4);
+}
+
+/* --- Отзывы: на узких экранах одна колонка --- */
+@media (max-width: 860px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===================================
+   МОДАЛЬНЫЕ ОКНА — правовые документы
+=================================== */
+body.modal-open {
+    overflow: hidden;
+}
+
+.legal-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.legal-modal[hidden] {
+    display: none;
+}
+
+.legal-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(29, 26, 22, 0.5);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.legal-modal-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    animation: modalIn 0.25s var(--ease-out-expo);
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.legal-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.legal-modal-close:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--accent-on-primary);
+    transform: scale(1.06);
+}
+
+.legal-modal-title {
+    margin-bottom: 16px;
+    padding-right: 40px;
+}
+
+.legal-modal-body h4 {
+    margin: 18px 0 8px;
+    font-size: 1rem;
+}
+
+.legal-modal-body h4:first-child {
+    margin-top: 0;
+}
+
+.legal-modal-body p {
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* --- Полоса прогресса чтения --- */
+.scroll-progress span {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-bright));
+}
+
+/* --- Стрелки отзывов --- */
+.t-arrow:hover {
+    box-shadow: 0 8px 18px -12px rgba(var(--accent-primary-rgb), 0.35);
+}
+
+/* --- Логотип в подвале: «Det» киноварью, а не индиго --- */
+.footer .logo-word-accent {
+    color: var(--accent-vermilion);
+}
+
+/* --- Ссылки в тексте --- */
+.footer a:hover,
+a:hover {
+    color: var(--accent-bright);
+}
+
+/* ===================================
+   ФОН И ШАПКА — светлая бумага вместо тёмной виньетки
+   (base-тема рисует тёмный низ и тёмную «шапку» при скролле)
+================================== */
+body::before {
+    background:
+        radial-gradient(120% 90% at 50% -10%, rgba(var(--accent-primary-rgb), 0.06), transparent 55%),
+        radial-gradient(140% 120% at 50% 110%, rgba(29, 26, 22, 0.05), transparent 60%);
+}
+
+.header.scrolled {
+    background: rgba(246, 242, 233, 0.85);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Сетка героя и фоны авторизации — тонкие суми-линии на бумаге */
+.grid-bg,
+.auth-bg .grid-bg {
+    background-image:
+        linear-gradient(rgba(29, 26, 22, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29, 26, 22, 0.05) 1px, transparent 1px);
+}
+
+/* ===================================
+   СТРАНИЦА ТАРИФОВ — киноварные состояния вместо янтарных
+================================== */
+.plan-card.is-lit {
+    border-color: rgba(var(--accent-primary-rgb), 0.5);
+    box-shadow: var(--shadow-md);
+}
+
+.plan-card::after {
+    background: radial-gradient(
+        320px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
+        rgba(var(--accent-primary-rgb), 0.12),
+        transparent 70%
+    );
+}
+
+.plan-card.featured {
+    border-color: rgba(var(--accent-primary-rgb), 0.4);
+}
+
+.plan-popular-badge {
+    box-shadow: 0 8px 24px -8px rgba(var(--accent-primary-rgb), 0.55);
+}
+
+/* ===================================
+   ТАБЛИЦА СРАВНЕНИЯ — мягкая подсветка строки
+================================== */
+.comparison-table tbody tr {
+    transition: background-color var(--transition-fast);
+}
+
+.comparison-table tbody tr:hover {
+    background: rgba(var(--accent-primary-rgb), 0.04);
+}
+
+/* ===================================
+   ФОКУС ДЛЯ КЛАВИАТУРЫ — киноварная рамка
+================================== */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+.t-arrow:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
 }

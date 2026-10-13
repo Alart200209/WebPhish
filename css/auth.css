@@ -119,7 +119,7 @@
 .auth-input:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(245, 165, 36, 0.12);
+    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.12);
 }
 
 .auth-btn {

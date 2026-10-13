@@ -167,7 +167,7 @@ class PaymentCreateRequest(BaseModel):
         return self.customer_email or (self.customer or {}).get("email")
 
 
-PLANS_RUB = {"basic": 9900, "pro": 399000, "corporate": 399000}  # копейки, должно совпадать с js/checkout.js
+PLANS_RUB = {"basic": 9900, "pro": 29900, "corporate": 499000}  # копейки, должно совпадать с js/checkout.js
 # Ключи URL-параметров из старых ссылок (personal/business) — маппим на новые тарифы
 PLAN_ALIASES = {"personal": "basic", "business": "corporate"}
 TRIAL_DAYS = 7

@@ -30,6 +30,7 @@
 
     /* M3 primary / tertiary */
     --accent-primary: #4f81ea;          /* primary40 -> на тёмном brighter */
+    --accent-primary-rgb: 79, 129, 234; /* тот же акцент в rgb */
     --accent-primary-strong: #6d97f2;
     --accent-bright: #e6b450;           /* tertiary — тёплый янтарь-акцент */
     --accent-on-primary: #0e1322;

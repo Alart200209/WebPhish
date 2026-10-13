@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // ПРОВЕРКА АВТОРИЗАЦИИ
             const currentToken = localStorage.getItem("access_token");
             if (!currentToken) {
-                showStatus("Создайте аккаунт — это займёт меньше минуты, и вы получите 10 бесплатных проверок в месяц. Перенаправляем...", "warning");
+                showStatus("Создайте аккаунт: это займёт меньше минуты, и вы получите 3 бесплатные проверки. Перенаправляем...", "warning");
                 sessionStorage.setItem("pending_url", url); // Сохраняем ссылку
 
                 setTimeout(() => {
@@ -154,21 +154,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
     // ===================================
 
-    const FREE_MONTHLY_LIMIT = 10;
+    const FREE_STARTER_LIMIT = 3;
 
     function showQuotaStatus(data) {
         const remaining = data.checks_remaining;
 
         // Пользователи Про/Бизнес — без лимита
         if (remaining === null || remaining === undefined || remaining >= 9999) {
-            showStatus("Проверка завершена. На вашем тарифе проверки без ограничений.", "success");
+            showStatus("Проверка завершена. Проверки без ограничений на вашем тарифе.", "success");
             return;
         }
 
         if (remaining <= 3) {
             showUpgradeOffer(remaining);
         } else {
-            showStatus(`Проверка завершена. Осталось ${remaining} из ${FREE_MONTHLY_LIMIT} проверок в этом месяце.`, "success");
+            showStatus(`Проверка завершена. Осталось ${remaining} из ${FREE_STARTER_LIMIT} бесплатных проверок.`, "success");
         }
     }
 
@@ -176,39 +176,39 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!checkStatus) return;
         checkStatus.innerHTML = `
             <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-                <span>Осталось ${remaining} ${remaining === 1 ? 'проверка' : remaining < 5 ? 'проверки' : 'проверок'} из ${FREE_MONTHLY_LIMIT}.
-                Проверки нужны чаще? Тариф Про — безлимит, первые 7 дней бесплатно.</span>
-                <a href="checkout.html?plan=pro&trial=1" class="btn btn-primary" style="padding:8px 16px; min-height:38px; font-size:0.85rem;">Попробовать Про</a>
+                <span>Осталось ${remaining} ${remaining === 1 ? 'проверка' : 'проверки'} из ${FREE_STARTER_LIMIT}.
+                Проверки нужны чаще? На тарифе Про доступно 200 проверок в месяц.</span>
+                <a href="checkout.html?plan=pro" class="btn btn-primary" style="padding:8px 16px; min-height:38px; font-size:0.85rem;">Перейти на Про</a>
             </div>
         `;
         checkStatus.style.display = "block";
         checkStatus.style.padding = "12px";
         checkStatus.style.borderRadius = "12px";
         checkStatus.style.fontSize = "0.95rem";
-        checkStatus.style.background = "rgba(245, 165, 36, 0.1)";
-        checkStatus.style.border = "1px solid rgba(245, 165, 36, 0.35)";
+        checkStatus.style.background = "rgba(var(--accent-primary-rgb), 0.1)";
+        checkStatus.style.border = "1px solid rgba(var(--accent-primary-rgb), 0.35)";
         checkStatus.style.color = "var(--text-primary)";
     }
 
     function renderLimitReached(detail) {
-        const used = detail.checks_used ?? FREE_MONTHLY_LIMIT;
-        const limit = detail.checks_limit ?? FREE_MONTHLY_LIMIT;
+        const used = detail.checks_used ?? FREE_STARTER_LIMIT;
+        const limit = detail.checks_limit ?? FREE_STARTER_LIMIT;
         showStatus(
-            `Вы использовали все ${limit} бесплатных проверок этого месяца (${used}/${limit}). ` +
-            `Новые проверки будут доступны с начала следующего месяца или оформите тариф Про — безлимит с первыми 7 днями бесплатно.`,
+            `Вы использовали все ${limit} бесплатные проверки (${used}/${limit}). ` +
+            `Чтобы проверять ссылки дальше, выберите тариф: Базовая (20 проверок) или Про (200 проверок).`,
             "warning"
         );
         if (!checkerResult) return;
         checkerResult.className = "result-card result-warning";
         checkerResult.hidden = false;
-        checkerResult.style.cssText = "padding:20px; border-radius:var(--radius-md); margin-top:16px; border:1px solid rgba(168,118,12,0.35); border-left:3px solid var(--accent-warning); background:var(--bg-elevated); box-shadow:var(--shadow-sm);";
+        checkerResult.style.cssText = "padding:20px; border-radius:var(--radius-md); margin-top:16px; border:1px solid rgba(var(--accent-primary-rgb), 0.3); border-left:3px solid var(--accent-primary); background:var(--bg-elevated); box-shadow:var(--shadow-sm);";
         checkerResult.innerHTML = `
             <div style="font-weight:700; font-size:1.1rem; margin-bottom:8px; color:var(--text-primary);">Лимит бесплатных проверок исчерпан</div>
             <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:16px;">
-                Бесплатный тариф включает ${limit} проверок в месяц. С тарифом Про проверки не ограничены,
-                а первые 7 дней стоят 0 ₽ — отменить можно в любой момент.
+                После регистрации доступны ${limit} бесплатные проверки. Чтобы проверять ссылки дальше,
+                выберите подходящий тариф, отменить подписку можно в любой момент.
             </p>
-            <a href="checkout.html?plan=pro&trial=1" class="btn btn-primary btn-arrow">Попробовать Про 7 дней бесплатно</a>
+            <a href="checkout.html?plan=pro" class="btn btn-primary btn-arrow">Перейти на тариф Про</a>
             <div class="result-title" hidden>Лимит бесплатных проверок исчерпан</div>
         `;
     }
@@ -234,9 +234,9 @@ document.addEventListener("DOMContentLoaded", () => {
             checkStatus.style.border = "1px solid rgba(16, 185, 129, 0.3)";
             checkStatus.style.color = "var(--accent-success, #10b981)";
         } else {
-            checkStatus.style.background = "rgba(245, 165, 36, 0.1)";
-            checkStatus.style.border = "1px solid rgba(245, 165, 36, 0.35)";
-            checkStatus.style.color = "var(--accent-primary, #f5a524)";
+            checkStatus.style.background = "rgba(var(--accent-primary-rgb), 0.1)";
+            checkStatus.style.border = "1px solid rgba(var(--accent-primary-rgb), 0.35)";
+            checkStatus.style.color = "var(--accent-primary)";
         }
     }
 
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 limitNote.innerHTML =
                     `Осталось ${remaining} бесплатных проверок. ` +
-                    `<a href="checkout.html?plan=pro&trial=1" style="color:var(--accent-primary); font-weight:600;">Про без ограничений — 7 дней бесплатно →</a>`;
+                    `<a href="checkout.html?plan=pro" style="color:var(--accent-primary); font-weight:600;">Про: 200 проверок в месяц →</a>`;
             }
             checkerResult.appendChild(limitNote);
         }
@@ -342,6 +342,36 @@ document.addEventListener("DOMContentLoaded", () => {
         card.addEventListener('mouseleave', () => {
             card.style.transform = '';
         });
+    });
+})();
+
+// ===================================
+// ВЫБОР ТАРИФА КЛИКОМ
+// Если тариф выбран — красная подсветка закрепляется за ним и не
+// «переходит» при наведении/скролле. Пока выбор не сделан — красный
+// следует за курсором (обычное hover-поведение).
+// ===================================
+(function pricingSelect() {
+    const grid = document.getElementById('pricingGrid');
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll('.pricing-card');
+
+    grid.addEventListener('click', (e) => {
+        // клик по кнопке/ссылке внутри карточки не засчитываем как выбор
+        if (e.target.closest('a,button')) return;
+        const card = e.target.closest('.pricing-card');
+        if (!card) return;
+
+        const wasSelected = card.classList.contains('selected');
+        cards.forEach(c => c.classList.remove('selected'));
+
+        if (wasSelected) {
+            grid.classList.remove('has-selected');
+        } else {
+            card.classList.add('selected');
+            grid.classList.add('has-selected');
+        }
     });
 })();
 

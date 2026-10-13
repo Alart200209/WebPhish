@@ -122,7 +122,7 @@
 
 .checker-form:focus-within {
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(245, 165, 36, 0.12);
+    box-shadow: 0 0 0 3px rgba(var(--accent-primary-rgb), 0.12);
 }
 
 .checker-input {
@@ -581,21 +581,49 @@
     transition: all var(--transition-base);
 }
 
-.pricing-seal-active {
-    border-color: var(--accent-primary);
-    animation: sealSpin 14s linear infinite;
-}
-
-.pricing-seal-active::after {
-    background: var(--accent-primary);
-}
-
 @keyframes sealSpin {
     to { transform: rotate(360deg); }
 }
 
+/* Кружок «загорается» только у того плана, на который наведён курсор.
+   У остальных карточек он остаётся серым. */
 .pricing-card:hover .pricing-seal {
-    border-color: var(--accent-bright);
+    border-color: var(--accent-primary);
+    animation: sealSpin 12s linear infinite;
+}
+
+.pricing-card:hover .pricing-seal::after {
+    background: var(--accent-primary);
+}
+
+/* Выбранный тариф: красная подсветка закрепляется за карточкой.
+   Если выбор не сделан — красный «переходит» за курсором. */
+.pricing-grid .pricing-card.selected {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.pricing-card.selected .pricing-seal {
+    border-color: var(--accent-primary);
+    animation: sealSpin 12s linear infinite;
+}
+
+.pricing-card.selected .pricing-seal::after {
+    background: var(--accent-primary);
+}
+
+.pricing-grid.has-selected .pricing-card:not(.selected):hover .pricing-seal,
+.pricing-grid.has-selected .pricing-card:not(.selected):hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+}
+
+.pricing-grid.has-selected .pricing-card:not(.selected):hover .pricing-seal::after {
+    background: var(--border-strong);
+}
+
+.pricing-grid.has-selected .pricing-card:not(.selected):hover .pricing-seal {
+    animation: none;
 }
 
 /* testimonials marquee track */
@@ -814,7 +842,7 @@
 
 .step:hover .step-number {
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 6px rgba(245, 165, 36, 0.08);
+    box-shadow: 0 0 0 6px rgba(var(--accent-primary-rgb), 0.08);
 }
 
 .step-title {
@@ -918,22 +946,22 @@
     border-radius: 2px;
 }
 
-/* Отзывы: сетка 3 в ряд + кнопка «показать ещё» */
+/* Отзывы: сетка 3 в ряд, листание стрелками влево/вправо */
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
+}
+
+/* Страницы слайдера прячутся по [hidden] — правило страховка,
+   чтобы display:grid не отменяло скрытие. */
+.reviews-page[hidden] {
+    display: none !important;
 }
 
 .testimonials-grid .testimonial-card {
     flex: none;
     width: auto;
-}
-
-.testimonials-more {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
 }
 
 .review-enter {
@@ -983,7 +1011,7 @@
 }
 
 .pricing-card:hover {
-    border-color: rgba(245, 165, 36, 0.45);
+    border-color: rgba(var(--accent-primary-rgb), 0.45);
     transform: none;
     box-shadow: none;
 }
@@ -1065,7 +1093,7 @@
 
 /* Карточка Про всегда чуть выделена рамкой */
 .pricing-card.featured {
-    border-color: rgba(245, 165, 36, 0.35);
+    border-color: rgba(var(--accent-primary-rgb), 0.35);
     background: var(--bg-card-hover);
 }
 
@@ -1104,6 +1132,14 @@
     scroll-snap-align: start;
 }
 
+/* Отзывы: выразительнее читаются — тёплая бумага вместо почти белой,
+   тёмный текст, заметная рамка */
+.testimonial-card {
+    background: var(--bg-secondary);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
+}
+
 .testimonial-stars {
     display: flex;
     gap: 4px;
@@ -1112,7 +1148,7 @@
 }
 
 .testimonial-text {
-    color: var(--text-secondary);
+    color: var(--ink-block-soft);
     margin-bottom: 24px;
     font-style: italic;
 }
@@ -1126,7 +1162,7 @@
 .testimonial-avatar {
     width: 48px;
     height: 48px;
-    background: var(--bg-elevated);
+    background: var(--bg-primary);
     border: 1px solid var(--border-strong);
     border-radius: var(--radius-sm);
     display: flex;
@@ -1303,36 +1339,47 @@
 =================================== */
 .reviews-slider {
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.reviews-pages {
+    flex: 1;
+    min-width: 0;
 }
 
 .testimonials-nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 10px;
     margin-top: 40px;
 }
 
+/* Стрелки по бокам отзывов, ненавязчивые */
 .t-arrow {
-    width: 48px;
-    height: 48px;
+    flex: none;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    color: var(--text-primary);
+    font-size: 1rem;
+    color: var(--text-muted);
     background: transparent;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
+    opacity: 0.75;
     cursor: pointer;
     transition: all var(--transition-base);
 }
 
 .t-arrow:hover {
-    color: var(--accent-on-primary);
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
-    transform: scale(1.06);
+    color: var(--accent-primary);
+    border-color: rgba(var(--accent-primary-rgb), 0.35);
+    background: rgba(var(--accent-primary-rgb), 0.06);
+    opacity: 1;
 }
 
 .t-dots {
@@ -1382,4 +1429,47 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Описание тарифа во всех карточках одинаковой высоты — тогда
+   списки фич начинаются на одном уровне и выглядят ровно */
+.pricing-grid .pricing-desc {
+    min-height: 3.2em;
+    margin-bottom: 20px;
+}
+
+/* Ровные строки фич: одинаковая высота у каждого пункта и чуть
+   компактнее шрифт, чтобы длинные пункты не переносились */
+.pricing-grid .pricing-features li {
+    font-size: 0.875rem;
+    min-height: 3.2em;
+}
+
+/* При выборе тарифа кликом: кнопка выбранного плана загорается красным,
+   а кнопка базового тарифа гаснет до серой. Без выбора — как было. */
+.pricing-card.selected .pricing-btn.btn-secondary {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--accent-on-primary);
+    box-shadow: 0 2px 8px -3px rgba(var(--accent-primary-rgb), 0.45);
+}
+
+.pricing-card.selected .pricing-btn.btn-secondary:hover {
+    background: var(--accent-primary-strong);
+    border-color: var(--accent-primary-strong);
+    transform: translateY(-2px);
+}
+
+.pricing-grid.has-selected .pricing-card:not(.selected) .pricing-btn.btn-primary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    box-shadow: none;
+}
+
+.pricing-grid.has-selected .pricing-card:not(.selected) .pricing-btn.btn-primary:hover {
+    background: transparent;
+    color: var(--text-primary);
+    transform: none;
+    box-shadow: none;
 }

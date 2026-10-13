@@ -104,8 +104,10 @@ revealElements.forEach(el => revealObserver.observe(el));
 // ===================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#' || href === '#!') return; // ссылки-заглушки — оставляем своему обработчику
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(href);
         if (target) {
             target.scrollIntoView({
                 behavior: 'smooth',
@@ -155,18 +157,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const cipherChars = Array.from('01!<>-_\\/[]{}=+*^?#ABCDEFXYZKMNPRST');
 
     function scrambleTo(el, finalText) {
-        const isHeading = el.classList.contains('section-title') || el.classList.contains('hero-title');
+        // поколение анимации — чтобы остановить старую цепочку при уходе из зоны видимости
+        const seq = (parseInt(el.dataset.scrambleSeq, 10) || 0) + 1;
+        el.dataset.scrambleSeq = String(seq);
+        el.dataset.scrambling = '1';
+
         const frame = [];
         const len = finalText.length;
-        // Заголовки «раскодируются» слева направо волной; мелкие подписи — хаотично
-        const wave = isHeading ? 3 : 0;
+        // Изначальная скорость: символы перебираются на каждом кадре экрана,
+        // время раскодировки не зависит от длины текста
         for (let i = 0; i < len; i++) {
-            const start = wave ? i * wave + Math.floor(Math.random() * 4) : Math.floor(Math.random() * 16);
+            const start = Math.floor(Math.random() * 16);
             const end = start + 8 + Math.floor(Math.random() * 16);
             frame.push({ from: null, to: finalText[i], start, end, char: null });
         }
         let tick = 0;
         const run = () => {
+            if (!el.isConnected) return;
+            // анимацию прервали (уехали из зоны видимости) — цепочку останавливаем
+            if (parseInt(el.dataset.scrambleSeq, 10) !== seq) return;
             let out = '';
             let done = 0;
             for (const f of frame) {
@@ -179,7 +188,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 } else { out += '&nbsp;'; }
             }
             el.innerHTML = out;
-            if (done === len) return;
+            if (done === len) { el.dataset.scrambling = ''; return; }
             tick++;
             requestAnimationFrame(run);
         };
@@ -188,11 +197,21 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            obs.unobserve(entry.target);
-            scrambleTo(entry.target, entry.target.dataset.scramble);
+            const el = entry.target;
+            if (entry.isIntersecting) {
+                // уже раскодируется — не запускаем второй раз
+                if (el.dataset.scrambling === '1') return;
+                scrambleTo(el, el.dataset.scramble);
+            } else {
+                // секция ушла из зоны видимости: останавливаем анимацию и
+                // возвращаем финальный текст, чтобы при обратном скролле
+                // эффект раскодировки сработал снова
+                el.dataset.scrambleSeq = String((parseInt(el.dataset.scrambleSeq, 10) || 0) + 1);
+                el.dataset.scrambling = '';
+                el.innerHTML = el.dataset.scramble;
+            }
         });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.4 });
 
     els.forEach(el => obs.observe(el));
 })();

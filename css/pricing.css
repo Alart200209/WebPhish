@@ -60,7 +60,7 @@
 }
 
 .plan-card.is-lit {
-    border-color: rgba(245, 165, 36, 0.5);
+    border-color: rgba(var(--accent-primary-rgb), 0.5);
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
 }
@@ -76,7 +76,7 @@
     opacity: 0;
     background: radial-gradient(
         320px circle at var(--card-mouse-x, 50%) var(--card-mouse-y, 50%),
-        rgba(245, 165, 36, 0.14),
+        rgba(var(--accent-primary-rgb), 0.14),
         transparent 70%
     );
     transition: opacity 0.35s ease;
@@ -88,7 +88,7 @@
 
 .plan-card.featured {
     background: var(--bg-card-hover);
-    border-color: rgba(245, 165, 36, 0.4);
+    border-color: rgba(var(--accent-primary-rgb), 0.4);
 }
 
 .plan-popular-badge {
@@ -101,7 +101,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--accent-on-primary);
-    box-shadow: 0 8px 24px rgba(245, 165, 36, 0.25);
+    box-shadow: 0 8px 24px rgba(var(--accent-primary-rgb), 0.25);
 }
 
 .plan-header {
@@ -189,13 +189,13 @@
     align-items: start;
     gap: 16px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-card);
     border-radius: var(--radius-md);
     transition: all var(--transition-base);
 }
 
 .feature-item:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--bg-card-hover);
 }
 
 .feature-icon {

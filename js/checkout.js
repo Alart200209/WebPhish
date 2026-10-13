@@ -16,7 +16,7 @@ const plans = {
     },
     pro: {
         name: 'Подписка Про',
-        price: 4990,
+        price: 299,
         description: 'Месяц · 200 проверок',
         icon: 'fa-crown',
         features: [
@@ -28,7 +28,7 @@ const plans = {
     },
     corporate: {
         name: 'Корпоративная подписка',
-        price: 3990,
+        price: 4990,
         description: 'Месяц · без лимита проверок',
         icon: 'fa-building',
         features: [
