@@ -8,7 +8,7 @@ const plans = {
         description: 'Навсегда',
         icon: 'fa-gift',
         features: [
-            '10 проверок в день',
+            '10 проверок в месяц',
             'Базовый анализ',
             'Веб-интерфейс',
             'Email-поддержка'
@@ -46,7 +46,24 @@ const plans = {
 // ===================================
 const urlParams = new URLSearchParams(window.location.search);
 const planKey = urlParams.get('plan') || 'pro';
-const trial = urlParams.get('trial') === 'true';
+const trial = urlParams.get('trial') === 'true' || urlParams.get('trial') === '1';
+
+// ===================================
+// АВТОРИЗАЦИЯ: оплата доступна только вошедшим пользователям.
+// Без токена отправляем на вход с возвратом обратно на checkout.
+// ===================================
+const authToken = localStorage.getItem('access_token');
+if (!authToken) {
+    const back = encodeURIComponent(window.location.pathname + window.location.search);
+    window.location.replace(`auth.html?mode=login&redirect=${back}`);
+}
+
+// Бесплатный тариф не требует оплаты — сразу ведём на регистрацию
+if (planKey === 'free') {
+    const check = urlParams.get('check');
+    window.location.replace('auth.html?mode=register' + (check ? `&check=${encodeURIComponent(check)}` : ''));
+}
+
 const selectedPlan = plans[planKey] || plans.pro;
 
 // ===================================
@@ -130,7 +147,8 @@ paymentForm.addEventListener('submit', async (e) => {
         const response = await fetch('/api/payment/create', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
             },
             body: JSON.stringify({
                 amount: displayPrice * 100, // Tinkoff принимает в копейках

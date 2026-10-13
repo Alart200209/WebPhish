@@ -2,12 +2,15 @@
 E2E тесты фронтенда через Playwright
 """
 from playwright.sync_api import sync_playwright, expect
+from fastapi.testclient import TestClient
 import re
 import subprocess
 import time
 import os
 import pytest
 import urllib.request
+
+from api.main import app
 
 BASE_URL = "http://127.0.0.1:8000"
 
@@ -74,6 +77,12 @@ def page(browser):
     context.close()
 
 
+@pytest.fixture(scope="session")
+def client():
+    """HTTP-клиент для API-подготовки тестовых данных (регистрация и т.п.)"""
+    return TestClient(app)
+
+
 # ==========================================
 # ВСЕ КЛАССЫ ТЕПЕРЬ НА ОДНОМ УРОВНЕ (БЕЗ ВЛОЖЕННОСТИ)
 # ==========================================
@@ -83,7 +92,7 @@ class TestIndexPage:
 
     def test_page_loads(self, page, server):
         page.goto(BASE_URL)
-        expect(page).to_have_title("PhishDet — Защита от фишинговых ссылок с помощью ИИ")
+        expect(page).to_have_title("PhishDet — проверка ссылок на фишинг перед открытием")
 
     def test_header_visible(self, page, server):
         page.goto(BASE_URL)
@@ -167,6 +176,14 @@ class TestPricingPage:
         assert "checkout.html" in href
         assert "plan=pro" in href
 
+    def test_free_plan_cta_goes_to_register_not_checkout(self, page, server):
+        """Бесплатный тариф не должен вести на оплату — только регистрация."""
+        page.goto(f"{BASE_URL}/pricing.html")
+        free_button = page.locator("#free .plan-cta a")
+        href = free_button.get_attribute("href")
+        assert "auth.html" in href
+        assert "checkout" not in href
+
     def test_comparison_table_visible(self, page, server):
         page.goto(f"{BASE_URL}/pricing.html")
         table = page.locator(".comparison-table")
@@ -233,36 +250,69 @@ class TestCheckoutPage:
         expect(page.locator(".security-notice")).to_be_visible()
 
 
+# ==========================================
+# Тесты проверки URL.
+# Проверка требует авторизации (лимиты привязаны к аккаунту),
+# поэтому регистрируем тестового пользователя через API и подставляем
+# токен в localStorage браузера.
+# ==========================================
+
+import json
+
+
+def _register_test_user(client):
+    """Регистрирует нового пользователя и возвращает access_token."""
+    import time
+    email = f"e2e_{int(time.time() * 1000)}@example.com"
+    response = client.post("/api/auth/register", json={
+        "email": email,
+        "password": "TestPass123!",
+    })
+    assert response.status_code in (200, 201), response.text
+    data = response.json()
+    return data.get("access_token") or data.get("token")
+
+
+@pytest.fixture
+def authed_page(page, server, client):
+    """Страница с авторизованным пользователем."""
+    token = _register_test_user(client)
+    page.goto(BASE_URL)
+    page.evaluate(f"localStorage.setItem('access_token', '{token}')")
+    page.goto(BASE_URL)
+    return page
+
+
 class TestURLChecker:
     """Тесты проверки URL"""
 
-    def test_safe_url(self, page, server):
-        page.goto(BASE_URL)
+    def test_safe_url(self, authed_page):
+        page = authed_page
         page.fill("#urlInput", "https://google.com")
         page.click('button[type="submit"]')
 
-        result = page.locator("#checkerResult")
+        result = page.locator("#checker-result")
         expect(result).to_be_visible(timeout=5000)
 
-        result_title = page.locator(".result-title")
+        result_title = page.locator(".result-title").first
         expect(result_title).to_contain_text("безопасн", ignore_case=True)
 
-    def test_suspicious_url(self, page, server):
-        page.goto(BASE_URL)
+    def test_suspicious_url(self, authed_page):
+        page = authed_page
         page.fill("#urlInput", "http://secure-login-bank-verify.ru")
         page.click('button[type="submit"]')
 
-        result = page.locator("#checkerResult")
+        result = page.locator("#checker-result")
         expect(result).to_be_visible(timeout=5000)
 
-        result_title = page.locator(".result-title")
-        expect(result_title).to_contain_text("подозрительн", ignore_case=True)
+        result_title = page.locator(".result-title").first
+        expect(result_title).to_contain_text("риск", ignore_case=True)
 
-    def test_empty_url_validation(self, page, server):
-        page.goto(BASE_URL)
+    def test_empty_url_validation(self, authed_page):
+        page = authed_page
         page.click('button[type="submit"]')
 
-        result = page.locator("#checkerResult")
+        result = page.locator("#checker-result")
         expect(result).not_to_be_visible()
 
 

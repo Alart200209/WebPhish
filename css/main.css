@@ -107,55 +107,81 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 16px 32px;
-    border-radius: var(--radius-md);
+    gap: 10px;
+    padding: 15px 28px;
+    min-height: 48px;
+    border-radius: 12px;
     font-weight: 600;
     font-size: 1rem;
-    border: none;
+    line-height: 1.2;
+    border: 1px solid transparent;
     cursor: pointer;
-    transition: all var(--transition-base);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform 0.1s ease;
     position: relative;
-    overflow: hidden;
+}
+
+/* Единое состояние нажатия — кнопка «утапливается», а не парит */
+.btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+.btn i {
+    font-size: 0.9em;
+    opacity: 0.9;
 }
 
 .btn-primary {
-    background: var(--gradient-primary);
+    background: #4f46e5;
     color: white;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+    border-color: #4f46e5;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
-}
-
-.btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-}
-
-.btn-primary:hover::before {
-    left: 100%;
+    background: #4338ca;
+    border-color: #4338ca;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .btn-secondary {
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(10px);
+    border-color: rgba(255, 255, 255, 0.16);
 }
 
 .btn-secondary:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.32);
+}
+
+.btn[disabled],
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* CTA-кнопки с явным следующим действием */
+.btn-arrow::after {
+    content: '\2192';
+    font-weight: 600;
+    transition: transform var(--transition-fast);
+}
+
+.btn-arrow:hover::after {
+    transform: translateX(3px);
 }
 
 /* ===================================

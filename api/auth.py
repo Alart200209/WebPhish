@@ -64,7 +64,17 @@ async def get_current_user(
     if user is None:
         raise credentials_exception
 
+    # Ленивый автооткат истёкшего триала/подписки — без фоновых задач и миграций.
+    if apply_trial_expiry(user):
+        await db.commit()
+        await db.refresh(user)
+
     return user
+
+
+# Лимиты проверок по тарифам. None — без ограничений.
+# Единственный источник правды: синхронизирован с лендингом и ценой (10/мес на free).
+PLAN_LIMITS = {"free": 10, "pro": None, "business": None}
 
 
 async def check_monthly_limit(user: User) -> bool:
@@ -75,7 +85,8 @@ async def check_monthly_limit(user: User) -> bool:
             user.monthly_checks_count = 0
             user.last_check_reset = now
 
-    if user.subscription_plan == "free" and user.monthly_checks_count >= 5:
+    limit = PLAN_LIMITS.get(user.subscription_plan, PLAN_LIMITS["free"])
+    if limit is not None and user.monthly_checks_count >= limit:
         return False
 
     return True
@@ -83,3 +94,26 @@ async def check_monthly_limit(user: User) -> bool:
 
 async def increment_check_count(user: User):
     user.monthly_checks_count += 1
+
+
+def apply_trial_expiry(user: User) -> bool:
+    """Ленивый автооткат истёкшей подписки/триала на free.
+
+    Миграции не требуются: колонка subscription_expires_at создаётся через
+    Base.metadata.create_all для новых БД; для существующей SQLite-БД
+    применяется лёгкий ALTER TABLE при старте (см. startup в main.py).
+    Возвращает True, если подписка истекла и была откачена.
+    """
+    if user.subscription_plan in ("free", None):
+        return False
+    expires = user.subscription_expires_at
+    if expires is None:
+        # Платная подписка без срока (оформлена до введения поля) — считаем активной
+        return False
+    if expires.tzinfo is not None:
+        expires = expires.replace(tzinfo=None)
+    if datetime.utcnow() >= expires:
+        user.subscription_plan = "free"
+        user.subscription_expires_at = None
+        return True
+    return False

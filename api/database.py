@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL") or "sqlite+aiosqlite:///./phishdet.db"
 
 # Определяем, используется ли SQLite
 if DATABASE_URL.startswith("sqlite"):

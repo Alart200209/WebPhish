@@ -95,17 +95,17 @@ document.addEventListener("DOMContentLoaded", () => {
             // ПРОВЕРКА АВТОРИЗАЦИИ
             const currentToken = localStorage.getItem("access_token");
             if (!currentToken) {
-                showStatus("🔒 Для проверки ссылок необходимо войти в аккаунт. Перенаправляем...", "warning");
+                showStatus("Создайте аккаунт — это займёт меньше минуты, и вы получите 10 бесплатных проверок в месяц. Перенаправляем...", "warning");
                 sessionStorage.setItem("pending_url", url); // Сохраняем ссылку
 
                 setTimeout(() => {
-                    window.location.href = "auth.html";
+                    window.location.href = `auth.html?mode=register&check=${encodeURIComponent(url)}`;
                 }, 1500);
                 return;
             }
 
             // ЕСЛИ АВТОРИЗОВАН - ПРОВЕРЯЕМ
-            showStatus("⏳ Анализируем ссылку с помощью ИИ...", "loading");
+            showStatus("Анализируем ссылку...", "loading");
             checkerResult.hidden = true;
 
             try {
@@ -125,16 +125,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.status === 429) {
                     const data = await response.json();
-                    throw new Error(`⚠️ Лимит исчерпан (${data.detail.checks_used}/${data.detail.checks_limit}). <a href="pricing.html" style="color: var(--accent-primary); text-decoration: underline;">Купить тариф</a>`);
+                    renderLimitReached(data.detail || {});
+                    return;
                 }
 
                 if (!response.ok) {
-                    throw new Error("Ошибка при проверке URL");
+                    throw new Error("Ошибка при проверке URL. Попробуйте ещё раз.");
                 }
 
                 const data = await response.json();
                 displayResult(data, url);
-                showStatus(`✅ Проверка завершена! Осталось попыток: ${data.checks_remaining === 9999 ? '∞' : data.checks_remaining}`, "success");
+                showQuotaStatus(data);
 
             } catch (error) {
                 showStatus(error.message, "error");
@@ -150,6 +151,65 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===================================
     // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
     // ===================================
+
+    const FREE_MONTHLY_LIMIT = 10;
+
+    function showQuotaStatus(data) {
+        const remaining = data.checks_remaining;
+
+        // Пользователи Про/Бизнес — без лимита
+        if (remaining === null || remaining === undefined || remaining >= 9999) {
+            showStatus("Проверка завершена. На вашем тарифе проверки без ограничений.", "success");
+            return;
+        }
+
+        if (remaining <= 3) {
+            showUpgradeOffer(remaining);
+        } else {
+            showStatus(`Проверка завершена. Осталось ${remaining} из ${FREE_MONTHLY_LIMIT} проверок в этом месяце.`, "success");
+        }
+    }
+
+    function showUpgradeOffer(remaining) {
+        if (!checkStatus) return;
+        checkStatus.innerHTML = `
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+                <span>Осталось ${remaining} ${remaining === 1 ? 'проверка' : remaining < 5 ? 'проверки' : 'проверок'} из ${FREE_MONTHLY_LIMIT}.
+                Проверки нужны чаще? Тариф Про — безлимит, первые 7 дней бесплатно.</span>
+                <a href="checkout.html?plan=pro&trial=1" class="btn btn-primary" style="padding:8px 16px; min-height:38px; font-size:0.85rem;">Попробовать Про</a>
+            </div>
+        `;
+        checkStatus.style.display = "block";
+        checkStatus.style.padding = "12px";
+        checkStatus.style.borderRadius = "12px";
+        checkStatus.style.fontSize = "0.95rem";
+        checkStatus.style.background = "rgba(99, 102, 241, 0.1)";
+        checkStatus.style.border = "1px solid rgba(99, 102, 241, 0.3)";
+        checkStatus.style.color = "var(--text-primary)";
+    }
+
+    function renderLimitReached(detail) {
+        const used = detail.checks_used ?? FREE_MONTHLY_LIMIT;
+        const limit = detail.checks_limit ?? FREE_MONTHLY_LIMIT;
+        showStatus(
+            `Вы использовали все ${limit} бесплатных проверок этого месяца (${used}/${limit}). ` +
+            `Новые проверки будут доступны с начала следующего месяца или оформите тариф Про — безлимит с первыми 7 днями бесплатно.`,
+            "warning"
+        );
+        if (!checkerResult) return;
+        checkerResult.className = "result-card result-warning";
+        checkerResult.hidden = false;
+        checkerResult.style.cssText = "padding:20px; border-radius:16px; margin-top:16px; border:1px solid rgba(245,158,11,0.3); background:var(--bg-card);";
+        checkerResult.innerHTML = `
+            <div style="font-weight:700; font-size:1.1rem; margin-bottom:8px; color:var(--text-primary);">Лимит бесплатных проверок исчерпан</div>
+            <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:16px;">
+                Бесплатный тариф включает ${limit} проверок в месяц. С тарифом Про проверки не ограничены,
+                а первые 7 дней стоят 0 ₽ — отменить можно в любой момент.
+            </p>
+            <a href="checkout.html?plan=pro&trial=1" class="btn btn-primary btn-arrow">Попробовать Про 7 дней бесплатно</a>
+            <div class="result-title" hidden>Лимит бесплатных проверок исчерпан</div>
+        `;
+    }
 
     function showStatus(message, type) {
         if (!checkStatus) return;
@@ -216,6 +276,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div style="font-size: 1.5rem; font-weight: 800; color: ${textColor};">${Math.round(data.risk_score * 100)}%</div>
             </div>
             ${detailsHtml}
+            <div class="result-title" hidden>${title}</div>
         `;
+
+        // Счётчик лимита — мягкий триггер к апгрейду, пока человек «в потоке»
+        if (typeof data.checks_remaining === "number") {
+            const remaining = data.checks_remaining;
+            const limitNote = document.createElement("p");
+            limitNote.style.cssText = "margin-top:14px; font-size:0.85rem; color:var(--text-muted);";
+            if (remaining > 2) {
+                limitNote.textContent = `Осталось ${remaining} бесплатных проверок в этом месяце.`;
+            } else {
+                limitNote.innerHTML =
+                    `Осталось ${remaining} бесплатных проверок. ` +
+                    `<a href="checkout.html?plan=pro&trial=1" style="color:var(--accent-primary,#6366f1); font-weight:600;">Про без ограничений — 7 дней бесплатно →</a>`;
+            }
+            checkerResult.appendChild(limitNote);
+        }
     }
 });

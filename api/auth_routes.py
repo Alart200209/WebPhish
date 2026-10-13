@@ -12,6 +12,7 @@ from .auth import (
     create_access_token,
     get_current_user,
     check_monthly_limit,
+    PLAN_LIMITS,
 )
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -91,10 +92,11 @@ async def get_me(current_user: User = Depends(get_current_user)):
 @router.get("/check-limit")
 async def check_limit(current_user: User = Depends(get_current_user)):
     can_check = await check_monthly_limit(current_user)
+    limit = PLAN_LIMITS.get(current_user.subscription_plan, PLAN_LIMITS["free"])
 
     return {
         "can_check": can_check,
         "checks_used": current_user.monthly_checks_count,
-        "checks_limit": 5 if current_user.subscription_plan == "free" else "unlimited",
+        "checks_limit": limit if limit is not None else "unlimited",
         "subscription_plan": current_user.subscription_plan
     }

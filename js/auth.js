@@ -2,6 +2,13 @@
 const tabs = document.querySelectorAll('.auth-tab');
 const forms = document.querySelectorAll('.auth-form');
 
+// Открываем нужную вкладку по ?mode=register (ссылки с лендинга и цен)
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('mode') === 'register') {
+    const registerTab = document.querySelector('.auth-tab[data-tab="register"]');
+    if (registerTab) registerTab.click();
+}
+
 tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         const targetTab = tab.dataset.tab;
@@ -52,9 +59,13 @@ loginForm.addEventListener('submit', async (e) => {
         loginStatus.textContent = 'Успешный вход! Перенаправляем...';
         loginStatus.classList.add('show', 'success');
 
-        // Перенаправляем на главную через 1 секунду
+        // Если пришли проверять ссылку — возвращаем на главную сразу с ней
+        const check = urlParams.get('check') || sessionStorage.getItem('pending_url');
+        const pendingUrl = check ? encodeURIComponent(check) : '';
+        sessionStorage.removeItem('pending_url');
+
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'index.html' + (pendingUrl ? `?check=${pendingUrl}` : '');
         }, 1000);
 
     } catch (error) {

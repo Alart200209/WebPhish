@@ -18,15 +18,14 @@ python -m venv .venv
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Установка зависимостей
-pip install -r api/requirements.txt
+# Установка зависимостей сервера (в api/requirements.txt лежит лишнее — numpy, torch и т.п., они для запуска сайта не нужны)
+pip install -r requirements-server.txt
 
-# Создайте файл .env в корне проекта и добавьте свои ключи Tinkoff:
-TINKOFF_TERMINAL_KEY=ваш_ключ
-
-TINKOFF_SECRET_KEY=ваш_секретный_ключ
-
-WEBHOOK_URL=http://localhost:8000/api/payment/webhook
+# (Необязательно) Скопируйте .env.example в .env и укажите свои ключи Tinkoff:
+#   cp .env.example .env        # macOS / Linux
+#   copy .env.example .env      # Windows
+# Без .env всё работает на локальной SQLite-базе (файл phishdet.db создастся сам)
+# и тестовых ключах оплаты.
 
 # Запустите сервер
 uvicorn api.main:app --reload --port 8000
