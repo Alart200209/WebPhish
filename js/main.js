@@ -3,13 +3,22 @@
 // ===================================
 const header = document.getElementById('header');
 
+const progressBar = document.getElementById('scrollProgressBar');
+
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
-});
+
+    // тонкая линия прогресса чтения вверху страницы
+    if (progressBar) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        progressBar.style.width = (p * 100).toFixed(2) + '%';
+    }
+}, { passive: true });
 
 // ===================================
 // MOBILE MENU
@@ -45,6 +54,13 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
+});
+
+// лёгкий каскад: элементы внутри одной секции появляются лесенкой
+document.querySelectorAll('section').forEach(section => {
+    section.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = Math.min(i, 5) * 70 + 'ms';
+    });
 });
 
 revealElements.forEach(el => revealObserver.observe(el));
@@ -98,3 +114,82 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ===================================
+// МАГНИТНЫЕ КНОПКИ — кнопка мягко «тянется» к курсору
+// (приём с сайтов-референсов; на тач-устройствах отключён)
+// ===================================
+(function initMagnetic() {
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.querySelectorAll('.magnetic').forEach(btn => {
+        let raf = null;
+        btn.addEventListener('mousemove', (e) => {
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+                raf = null;
+                const r = btn.getBoundingClientRect();
+                const x = (e.clientX - r.left - r.width / 2) * 0.25;
+                const y = (e.clientY - r.top - r.height / 2) * 0.35;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            btn.style.transform = '';
+            setTimeout(() => { btn.style.transition = ''; }, 500);
+        });
+    });
+})();
+
+// ===================================
+// SCRAMBLE-ДЕКОД — текст «раскодировывается» при появлении
+// (фишка blackwood.dev: символы перебираются до финального слова)
+// ===================================
+(function initScramble() {
+    const els = document.querySelectorAll('[data-scramble]');
+    if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const chars = '!<>-_\/[]{}—=+*^?#·:';
+    const glyphs = Array.from('абвгдежзиклмнопрстуфхцчшщъыьэюя');
+
+    function scrambleTo(el, finalText) {
+        const frame = [];
+        const len = finalText.length;
+        for (let i = 0; i < len; i++) {
+            const start = Math.floor(Math.random() * 16);
+            const end = start + 8 + Math.floor(Math.random() * 16);
+            frame.push({ from: null, to: finalText[i], start, end, char: null });
+        }
+        let tick = 0;
+        const run = () => {
+            let out = '';
+            let done = 0;
+            for (const f of frame) {
+                if (tick >= f.end) { out += f.to; done++; }
+                else if (tick >= f.start) {
+                    if (!f.char || Math.random() < 0.28) {
+                        f.char = f.to === ' ' ? ' ' : (Math.random() < 0.5 ? chars[Math.floor(Math.random() * chars.length)] : glyphs[Math.floor(Math.random() * glyphs.length)]);
+                    }
+                    out += `<span style="opacity:.45">${f.char}</span>`;
+                } else { out += '&nbsp;'; }
+            }
+            el.innerHTML = out;
+            if (done === len) return;
+            tick++;
+            requestAnimationFrame(run);
+        };
+        run();
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            scrambleTo(entry.target, entry.target.dataset.scramble);
+        });
+    }, { threshold: 0.6 });
+
+    els.forEach(el => obs.observe(el));
+})();
