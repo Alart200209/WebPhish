@@ -167,7 +167,7 @@ class PaymentCreateRequest(BaseModel):
         return self.customer_email or (self.customer or {}).get("email")
 
 
-PLANS_RUB = {"basic": 29900, "pro": 99900, "corporate": 199000}  # копейки, должно совпадать с js/checkout.js
+PLANS_RUB = {"basic": 9900, "pro": 399000, "corporate": 399000}  # копейки, должно совпадать с js/checkout.js
 # Ключи URL-параметров из старых ссылок (personal/business) — маппим на новые тарифы
 PLAN_ALIASES = {"personal": "basic", "business": "corporate"}
 TRIAL_DAYS = 7
@@ -185,19 +185,12 @@ async def create_payment(
         raise HTTPException(status_code=400, detail="Неизвестный тариф")
 
     expected_price = PLANS_RUB[plan]
-    is_trial = bool(payload.trial) and payload.amount == 0 and plan in ("basic", "pro")
+    is_trial = False  # триалов нет: бесплатно — только стартовые 3 проверки при регистрации
 
-    # Триал — один раз на аккаунт, иначе кнопка «7 дней бесплатно» превращается в вечный бесплатный доступ
-    if is_trial and current_user.trial_used:
-        raise HTTPException(
-            status_code=400,
-            detail="Бесплатный пробный период уже был использован на этом аккаунте"
-        )
-
-    if not is_trial and payload.amount != expected_price:
+    if payload.amount != expected_price:
         raise HTTPException(status_code=400, detail="Несовпадение суммы с тарифом")
 
-    order_id = f"{payload.order_id}_{plan}" + ("_trial" if is_trial else "")
+    order_id = f"{payload.order_id}_{plan}"
 
     try:
         result = payment_service.init_payment(

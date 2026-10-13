@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
                 const target = parseInt(counter.dataset.target);
+                const suffix = counter.dataset.suffix || '';
                 const duration = 2000;
                 const step = target / (duration / 16);
                 let current = 0;
@@ -16,10 +17,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const updateCounter = () => {
                     current += step;
                     if (current < target) {
-                        counter.textContent = Math.floor(current).toLocaleString();
+                        counter.textContent = Math.floor(current).toLocaleString() + suffix;
                         requestAnimationFrame(updateCounter);
                     } else {
-                        counter.textContent = target.toLocaleString();
+                        counter.textContent = target.toLocaleString() + suffix;
                     }
                 };
 
@@ -29,7 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { threshold: 0.5 });
 
-    counters.forEach(counter => counterObserver.observe(counter));
+    counters.forEach(counter => {
+        if (counter.dataset.target) counterObserver.observe(counter);
+    });
 
     // ===================================
     // FAQ АККОРДЕОН
@@ -343,16 +346,31 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 // ===================================
-// БЕСКОНЕЧНАЯ ЛЕНТА ОТЗЫВОВ (marquee)
-// Дублируем набор карточек, чтобы цикл был непрерывным
+// ОТЗЫВЫ: 3 видно, по кнопке подгружается ещё по 3
 // ===================================
-(function testimonialMarquee() {
-    const track = document.getElementById('testimonialsTrack');
-    if (!track) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    track.setAttribute('aria-roledescription', 'carousel');
-    track.insertAdjacentHTML('beforeend', track.innerHTML);
-    track.querySelectorAll('.testimonial-card').forEach((c, i) => {
-        if (i >= 4) c.setAttribute('aria-hidden', 'true');
+(function testimonialsLoadMore() {
+    const grid = document.getElementById('testimonialsTrack');
+    const tpl = document.getElementById('moreTestimonials');
+    const btn = document.getElementById('loadMoreReviews');
+    if (!grid || !tpl || !btn) return;
+
+    btn.addEventListener('click', () => {
+        const nodes = tpl.content.cloneNode(true);
+        const cards = [...nodes.querySelectorAll('.testimonial-card')];
+        if (cards.length === 0) {
+            btn.remove();
+            return;
+        }
+        cards.forEach((card, i) => {
+            card.classList.add('review-enter');
+            card.style.animationDelay = `${i * 90}ms`;
+            grid.appendChild(card);
+        });
+        // очищаем шаблон — новые отзывы закончились
+        while (tpl.content.firstChild) tpl.content.removeChild(tpl.content.firstChild);
+        if (!tpl.content.querySelector('.testimonial-card')) {
+            btn.disabled = true;
+            btn.textContent = 'Все отзывы показаны';
+        }
     });
 })();

@@ -234,10 +234,50 @@
 }
 
 /* ===================================
-   HERO — editorial-сетка в духе webtactics:
-   левая вертикальная метка, крупный заголовок слева,
-   большая «гравюра» знака справа. Никаких иероглифов.
+   HERO — редакторский, по центру
 =================================== */
+.hero-centered {
+    max-width: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-centered .hero-kicker {
+    margin-bottom: 24px;
+    color: var(--accent-primary);
+}
+
+.hero-centered .hero-title {
+    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+}
+
+.hero-centered .hero-subtitle {
+    text-align: center;
+    font-size: 1.125rem;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-centered .hero-actions {
+    justify-content: center;
+}
+
+.checker-centered {
+    margin-top: 64px;
+    width: 100%;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* legacy editorial grid (не используется на главной) */
 .hero-editorial {
     max-width: none;
     text-align: left;
@@ -784,6 +824,132 @@
 
 .step-text {
     color: var(--text-secondary);
+}
+
+/* --- Шаги v3: карточки mid-century, крупный номер + тонкая линия + знак --- */
+.steps-v3 {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.step-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 36px 32px 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform 0.5s var(--ease-out-expo), border-color var(--transition-base);
+}
+
+.step-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+}
+
+.step-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.steps-v3 .step-index {
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--accent-primary);
+    letter-spacing: -0.02em;
+}
+
+.step-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-strong), transparent);
+}
+
+.step-card .step-title {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.step-card .step-text {
+    color: var(--text-secondary);
+    max-width: 34ch;
+}
+
+.step-icon {
+    margin-top: auto;
+    width: 56px;
+    height: 56px;
+    color: var(--text-muted);
+    transition: color 0.4s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.step-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.step-card:hover .step-icon {
+    color: var(--accent-primary);
+    transform: translateX(6px);
+}
+
+/* Статистики со знаками (<1 с, >1 000 000) */
+.stat-symbol {
+    font-family: var(--font-mono);
+    font-size: 2.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+.stat-symbol::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 3px;
+    background: var(--accent-primary);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* Отзывы: сетка 3 в ряд + кнопка «показать ещё» */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.testimonials-grid .testimonial-card {
+    flex: none;
+    width: auto;
+}
+
+.testimonials-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.review-enter {
+    opacity: 0;
+    animation: reviewIn 0.7s var(--ease-out-expo) forwards;
+}
+
+@keyframes reviewIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===================================
