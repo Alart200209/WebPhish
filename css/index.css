@@ -234,6 +234,353 @@
 }
 
 /* ===================================
+   HERO — editorial-сетка в духе webtactics:
+   левая вертикальная метка, крупный заголовок слева,
+   большая «гравюра» знака справа. Никаких иероглифов.
+=================================== */
+.hero-editorial {
+    max-width: none;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 48px;
+    align-items: start;
+}
+
+.hero-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-top: 8px;
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+}
+
+.hero-side-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--accent-primary);
+    writing-mode: vertical-rl;
+}
+
+.hero-side-line {
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(var(--border-strong), transparent);
+}
+
+.hero-side-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    writing-mode: vertical-rl;
+}
+
+.hero-main { min-width: 0; }
+
+.hero-kicker {
+    margin-bottom: 24px;
+    color: var(--accent-primary);
+}
+
+.hero-title {
+    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+}
+
+.hero-subtitle {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    font-size: 1.125rem;
+    max-width: 560px;
+}
+
+.hero-actions {
+    justify-content: flex-start;
+}
+
+/* Правая колонка — большой знак логотипа как гравюра */
+.hero-art {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+}
+
+.hero-art-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            rgba(236, 229, 216, 0.02) 0 1px,
+            transparent 1px 14px
+        );
+}
+
+.hero-art-mark {
+    width: min(300px, 70%);
+    color: var(--text-on-ink-soft);
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
+    transition: transform 1.2s var(--ease-out-expo);
+}
+
+.hero-art:hover .hero-art-mark {
+    transform: rotate(-6deg) scale(1.03);
+}
+
+.hero-art-stamp {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-vermilion);
+    border: 1px solid var(--accent-vermilion);
+    border-radius: var(--radius-sm);
+    padding: 6px 10px;
+    transform: rotate(-4deg);
+    background: rgba(213, 68, 44, 0.06);
+}
+
+.hero .checker {
+    grid-column: 2 / 4;
+    margin-top: 64px;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 760px;
+}
+
+@media (max-width: 1024px) {
+    .hero-editorial {
+        grid-template-columns: 44px 1fr;
+    }
+    .hero-art { display: none; }
+    .hero .checker { grid-column: 2 / 3; }
+}
+
+@media (max-width: 768px) {
+    .hero-editorial {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .hero-side {
+        flex-direction: row;
+        position: static;
+        justify-content: flex-start;
+    }
+    .hero-side-num,
+    .hero-side-label { writing-mode: horizontal-tb; }
+    .hero-side-line { width: 80px; height: 1px; background: var(--border-strong); }
+    .hero .checker { grid-column: 1 / 2; }
+}
+
+/* ===================================
+   MANIFEST — editorialная пауза: одна большая фраза
+=================================== */
+.manifest {
+    padding: 140px 0;
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.manifest-text {
+    font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    max-width: 900px;
+    margin: 0 auto 32px;
+}
+
+.manifest-text em {
+    font-style: normal;
+    color: var(--accent-primary);
+    border-bottom: 3px solid var(--accent-primary);
+    padding-bottom: 2px;
+}
+
+.manifest-meta {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* ===================================
+   FEATURES — список строк, не карточки-плитки
+=================================== */
+.features-list {
+    border-top: 1px solid var(--border-color);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-row {
+    display: grid;
+    grid-template-columns: 88px 1fr auto;
+    gap: 32px;
+    align-items: baseline;
+    padding: 36px 16px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-base);
+}
+
+.feature-row:hover {
+    background: var(--bg-card-hover);
+}
+
+.feature-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+}
+
+.feature-title {
+    font-size: 1.35rem;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+}
+
+.feature-text {
+    color: var(--text-secondary);
+    max-width: 640px;
+}
+
+.feature-tag {
+    color: var(--accent-primary);
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .feature-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 28px 8px;
+    }
+    .feature-tag { display: none; }
+}
+
+/* ===================================
+   SECTION INDEX — моно-метка над заголовком секции
+=================================== */
+.section-index {
+    display: block;
+    margin-bottom: 16px;
+    color: var(--accent-primary);
+}
+
+/* ===================================
+   TILT — лёгкий наклон сетки карточек (webtactics-style)
+=================================== */
+.tilt-grid {
+    transition: transform 0.6s var(--ease-out-expo);
+}
+
+@media (min-width: 1024px) {
+    .tilt-grid { transform: perspective(1400px) rotateX(1.5deg); }
+}
+
+/* ===================================
+   MAGNETIC — кнопка мягко тянется к курсору
+=================================== */
+.magnetic {
+    will-change: transform;
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+/* ===================================
+   PRICING SEAL — круглая «печать» на карточке тарифа
+=================================== */
+.pricing-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.pricing-seal {
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 50%;
+    border: 1.5px dashed var(--border-strong);
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+.pricing-seal::after {
+    content: '';
+    position: absolute;
+    inset: 9px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    transition: all var(--transition-base);
+}
+
+.pricing-seal-active {
+    border-color: var(--accent-primary);
+    animation: sealSpin 14s linear infinite;
+}
+
+.pricing-seal-active::after {
+    background: var(--accent-primary);
+}
+
+@keyframes sealSpin {
+    to { transform: rotate(360deg); }
+}
+
+.pricing-card:hover .pricing-seal {
+    border-color: var(--accent-bright);
+}
+
+/* testimonials marquee track */
+.testimonials-track-wrap {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.testimonials-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+}
+
+.testimonials-track-wrap:hover .testimonials-track {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    to { transform: translateX(-50%); }
+}
+
+/* ===================================
    STATS
 =================================== */
 .stats {
