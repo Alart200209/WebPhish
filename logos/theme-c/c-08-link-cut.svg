@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-08 «Разрезанное звено»: два звена цепи разведены, рассечены киноварной линией -->
+  <path d="M10 32a8 8 0 0 1 8-8h8" stroke="#33517e" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M54 32a8 8 0 0 0-8-8h-8" stroke="#2b2620" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M10 32a8 8 0 0 0 8 8h8" stroke="#33517e" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M54 32a8 8 0 0 1-8 8h-8" stroke="#2b2620" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M32 8v48" stroke="#c2452d" stroke-width="5" stroke-linecap="round"/>
+</svg>

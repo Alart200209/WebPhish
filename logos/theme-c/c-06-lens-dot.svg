@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-06 «Линза»: кольцо суми + диагональная ручка индиго, в центре киноварная точка -->
+  <circle cx="28" cy="28" r="17" stroke="#2b2620" stroke-width="5"/>
+  <path d="M41 41l13 13" stroke="#33517e" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="28" cy="28" r="5.5" fill="#c2452d"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-01 «Энсо с разрывом»: круг, начатый и оборванный мазком кисти; в разрыве — киноварная точка -->
+  <path d="M50.5 38.5a19 19 0 1 1-8.7-21.9" stroke="#2b2620" stroke-width="5.5" stroke-linecap="round"/>
+  <circle cx="46.5" cy="14.5" r="4.5" fill="#c2452d"/>
+</svg>

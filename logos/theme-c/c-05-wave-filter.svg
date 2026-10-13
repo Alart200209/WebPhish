@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- C-05 «Волна-фильтр»: три сейкай-волны, верхняя отсекается как галочка -->
+  <path d="M6 44c6-6 12-6 18 0s12 6 18 0 12-6 16 0" stroke="#33517e" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M6 54c6-6 12-6 18 0s12 6 18 0 12-6 16 0" stroke="#9a9080" stroke-width="4" stroke-linecap="round"/>
+  <path d="M14 22l10 10 22-22" stroke="#c2452d" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
