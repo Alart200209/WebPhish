@@ -4,38 +4,39 @@
    янтарь — основной акцент, киноварь — печать/угроза.
 =================================== */
 :root {
-    --bg-primary: #f4f1ea;              /* 和紙 washi — тёплая бумага */
-    --bg-secondary: #edeae1;            /* сгиб бумаги, на тон темнее */
-    --bg-tertiary: #e6e2d6;
-    --bg-elevated: #fbfaf6;             /* лист на просвет — почти белый */
-    --bg-card: rgba(12, 13, 16, 0.03);
-    --bg-card-hover: rgba(12, 13, 16, 0.055);
-    --ink-block: #17181c;               /* суми-блок для контрастных секций */
-    --ink-block-soft: #22242a;
+    /* mid-century modern, тёмный: ореховое дерево + кожа + латунь */
+    --bg-primary: #171310;              /* тёмный орех — фон страницы */
+    --bg-secondary: #1e1915;            /* на тон светлее, «ступень» */
+    --bg-tertiary: #262019;
+    --bg-elevated: #2b241d;             /* карточка/подъём */
+    --bg-card: rgba(240, 234, 224, 0.035);
+    --bg-card-hover: rgba(240, 234, 224, 0.06);
+    --ink-block: #0f0c0a;               /* почти чёрный блок (footer) */
+    --ink-block-soft: #221c16;
 
-    --text-primary: #1c1d21;            /* 墨 sumi — чернила */
-    --text-secondary: #5d5a52;
-    --text-muted: #8f8b80;
-    --text-on-ink: #efece3;
-    --text-on-ink-soft: rgba(239, 236, 227, 0.62);
+    --text-primary: #ece5d8;            /* кремовый текст на тёмном дереве */
+    --text-secondary: #a89e8d;
+    --text-muted: #776f62;
+    --text-on-ink: #ece5d8;
+    --text-on-ink-soft: rgba(236, 229, 216, 0.6);
 
-    --accent-primary: #c96a08;          /* 琥珀 янтарь — темнее для контраста на бумаге */
-    --accent-primary-strong: #a85804;
-    --accent-bright: #f5a524;           /* янтарь свечения на тёмных блоках */
-    --accent-on-primary: #fdf8ef;
-    --accent-vermilion: #d5442c;        /* 朱色 киноварь — ханко-печать / угроза */
-    --accent-success: #4c7a52;          /* 若竹 бамбук */
-    --accent-warning: #a8760c;
-    --accent-danger: #c23a24;
-    --accent-info: #5d7186;             /* 藍灰 серо-синий */
+    --accent-primary: #cf7b2e;          /* жжёная охра / коньячная кожа */
+    --accent-primary-strong: #e08c3d;
+    --accent-bright: #e8a44c;           /* латунь */
+    --accent-on-primary: #171310;
+    --accent-vermilion: #d5442c;        /* киноварь — знак угрозы, акцент логотипа */
+    --accent-success: #7fa07a;          /* приглушённый шалфей */
+    --accent-warning: #d9a441;
+    --accent-danger: #e05a41;
+    --accent-info: #8b9bab;
 
-    --border-color: rgba(28, 29, 33, 0.12);
-    --border-strong: rgba(28, 29, 33, 0.26);
-    --border-glow: rgba(201, 106, 8, 0.4);
+    --border-color: rgba(236, 229, 216, 0.1);
+    --border-strong: rgba(236, 229, 216, 0.22);
+    --border-glow: rgba(207, 123, 46, 0.45);
 
-    --shadow-sm: 0 1px 2px rgba(28, 29, 33, 0.06);
-    --shadow-md: 0 10px 30px -12px rgba(28, 29, 33, 0.18);
-    --shadow-lg: 0 30px 60px -24px rgba(28, 29, 33, 0.25);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 32px 64px -24px rgba(0, 0, 0, 0.65);
 
     --radius-sm: 3px;                   /* ваби-саби: почти прямые углы */
     --radius-md: 5px;
@@ -68,7 +69,7 @@ html {
 }
 
 body {
-    font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+    font-family: 'Jost', 'Futura', 'Century Gothic', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
@@ -77,16 +78,28 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* зернистость васи — живая поверхность, а не ИИ-глянец */
+/* зерно тёмного дерева — живая поверхность, виньетка по краям */
 body::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 9999;
     pointer-events: none;
-    opacity: 0.55;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.33 0 0 0 0 0.28 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.7;
+    mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.78 0 0 0 0 0.64 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* тёплая виньетка — как свет лампы в комнате mid-century */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(120% 90% at 50% -10%, rgba(207, 123, 46, 0.07), transparent 55%),
+        radial-gradient(140% 120% at 50% 110%, rgba(0, 0, 0, 0.5), transparent 60%);
 }
 
 .container {
@@ -208,14 +221,14 @@ a {
 }
 
 .btn-primary {
-    background: var(--ink-block);
-    color: var(--text-on-ink);
-    border-color: var(--ink-block);
+    background: var(--accent-primary);
+    color: var(--accent-on-primary);
+    border-color: var(--accent-primary);
 }
 
 .btn-primary:hover {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
+    background: var(--accent-primary-strong);
+    border-color: var(--accent-primary-strong);
     color: var(--accent-on-primary);
 }
 
@@ -263,7 +276,7 @@ a {
 }
 
 .header.scrolled {
-    background: rgba(244, 241, 234, 0.88);
+    background: rgba(23, 19, 16, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-color);
