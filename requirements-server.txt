@@ -1,0 +1,11 @@
+fastapi>=0.116
+uvicorn[standard]>=0.35
+sqlalchemy>=2.0
+aiosqlite>=0.20
+python-jose[cryptography]>=3.3
+passlib[bcrypt]>=1.7
+# passlib 1.7 несовместим с bcrypt 4.1+ (ошибка "password cannot be longer than 72 bytes")
+bcrypt>=3.2.0,<4.1
+python-dotenv>=1.0
+pydantic>=2.0
+requests>=2.32

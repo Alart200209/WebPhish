@@ -12,6 +12,9 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     subscription_plan = Column(String, default="free")  # free, pro, business
+    # До этого момента действует платная/триальная подписка; после — автооткат на free
+    subscription_expires_at = Column(DateTime(timezone=True), nullable=True)
+    trial_used = Column(Boolean, default=False)  # триал даём один раз на аккаунт
 
     # Лимит проверок
     monthly_checks_count = Column(Integer, default=0)  # Сколько проверок в этом месяце
