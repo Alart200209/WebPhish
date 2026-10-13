@@ -16,7 +16,7 @@ const plans = {
     },
     pro: {
         name: 'Подписка Про',
-        price: 3990,
+        price: 4990,
         description: 'Месяц · 200 проверок',
         icon: 'fa-crown',
         features: [
