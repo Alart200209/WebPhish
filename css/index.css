@@ -1298,3 +1298,88 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+/* ===================================
+   ОТЗЫВЫ: слайдер страницами по 3 + стрелки
+=================================== */
+.reviews-slider {
+    position: relative;
+}
+
+.testimonials-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.t-arrow {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.t-arrow:hover {
+    color: var(--accent-on-primary);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: scale(1.06);
+}
+
+.t-dots {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.t-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--border-strong);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.t-dot-active,
+.t-dot:hover {
+    background: var(--accent-primary);
+    transform: scale(1.25);
+}
+
+/* ===================================
+   ТАРИФЫ: кнопки на одном уровне (карточка = колонка)
+=================================== */
+.pricing-grid .pricing-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.pricing-grid .pricing-features {
+    flex: 1 1 auto;
+}
+
+.pricing-grid .pricing-btn {
+    margin-top: auto;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Одинаковая минимальная высота кнопок */
+.pricing-grid .pricing-btn.btn {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

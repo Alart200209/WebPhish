@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>Тарифы — PhishDet</title>
-    <meta name="description" content="Выберите тариф PhishDet. Бесплатный, Про и Бизнес планы для любых задач.">
+    <meta name="description" content="Выберите тариф PhishDet: Базовая 99 ₽, Про 4 990 ₽, Корпоративный. После регистрации 3 проверки бесплатно.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 
     <!-- ===== ВАРИАНТЫ ДИЗАЙНА: включите только ОДНУ тему (см. index.html) -->
     <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
-    <!-- <link rel="stylesheet" href="css/theme-c.css"> -->
+    <link rel="stylesheet" href="css/theme-c.css">
 </head>
 <body>
     <!-- Header -->
@@ -62,19 +62,19 @@
                             <i class="fas fa-gift"></i>
                         </div>
                         <div>
-                            <h2>Бесплатный</h2>
+                            <h2>Базовая</h2>
                             <p class="plan-tagline">Для личного использования</p>
                         </div>
                     </div>
                     <div class="plan-price-block">
-                        <div class="plan-price">0 ₽</div>
-                        <span class="plan-period">навсегда</span>
+                        <div class="plan-price">99 ₽</div>
+                        <span class="plan-period">в месяц</span>
                     </div>
                 </div>
 
                 <p class="plan-description">
-                    Идеально подходит для личного использования. Проверяйте подозрительные ссылки
-                    и защитите себя от фишинга без каких-либо затрат.
+                    После регистрации доступны 3 бесплатные проверки, без карты.
+                    Дальше подписка 99 ₽ в месяц, отмена в один клик.
                 </p>
 
                 <div class="plan-features">
@@ -83,8 +83,8 @@
                             <i class="fas fa-check"></i>
                         </div>
                         <div class="feature-content">
-                            <h4>10 проверок в месяц</h4>
-                            <p>Достаточно для повседневного использования</p>
+                            <h4>20 проверок в месяц</h4>
+                            <p>Плюс 3 бесплатные проверки после регистрации</p>
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
 
                 <div class="plan-cta">
                     <a href="auth.html?mode=register" class="btn btn-primary btn-arrow">
-                        Начать бесплатно
+                        Попробуйте бесплатно
                     </a>
                 </div>
             </div>
@@ -137,17 +137,17 @@
                         </div>
                         <div>
                             <h2>Тариф Про</h2>
-                            <p class="plan-tagline">Для активных пользователей</p>
+                            <p class="plan-tagline">Для тех, кто проверяет часто</p>
                         </div>
                     </div>
                     <div class="plan-price-block">
-                        <div class="plan-price">299 ₽</div>
+                        <div class="plan-price">4 990 ₽</div>
                         <span class="plan-period">в месяц</span>
                     </div>
                 </div>
 
                 <p class="plan-description">
-                    Для активных пользователей, которым нужна неограниченная проверка ссылок
+                    Для активных пользователей: 200 проверок в месяц
                     и доступ к API для интеграции в свои проекты.
                 </p>
 
@@ -157,8 +157,8 @@
                             <i class="fas fa-infinity"></i>
                         </div>
                         <div class="feature-content">
-                            <h4>Безлимитные проверки</h4>
-                            <p>Проверяйте столько ссылок, сколько нужно</p>
+                            <h4>200 проверок в месяц</h4>
+                            <p>Для тех, кто проверяет ссылки часто</p>
                         </div>
                     </div>
 
@@ -214,14 +214,11 @@
                 </div>
 
                 <div class="plan-cta">
-                    <a href="checkout.html?plan=pro&trial=true" class="btn btn-primary btn-arrow">
-                        Попробовать 7 дней бесплатно
-                    </a>
-                    <a href="checkout.html?plan=pro" class="btn btn-secondary">
-                        Сразу за 299 ₽/мес
+                    <a href="checkout.html?plan=pro" class="btn btn-primary btn-arrow">
+                        Перейти к оплате
                     </a>
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
-                        Первые 7 дней — 0 ₽. Любая отмена в один клик, звонков «для удержания» не будет.
+                        4 990 ₽ в месяц. Отмена в один клик, звонков «для удержания» не будет.
                     </p>
                 </div>
             </div>
@@ -234,13 +231,13 @@
                             <i class="fas fa-building"></i>
                         </div>
                         <div>
-                            <h2>Тариф Бизнес</h2>
+                            <h2>Корпоративный тариф</h2>
                             <p class="plan-tagline">Для компаний и команд</p>
                         </div>
                     </div>
                     <div class="plan-price-block">
-                        <div class="plan-price">1 990 ₽</div>
-                        <span class="plan-period">в месяц</span>
+                        <div class="plan-price">4 990 ₽</div>
+                        <span class="plan-period">в месяц за место</span>
                     </div>
                 </div>
 
@@ -329,16 +326,16 @@
                         <thead>
                             <tr>
                                 <th>Функция</th>
-                                <th>Бесплатный</th>
+                                <th>Базовая</th>
                                 <th>Про</th>
-                                <th>Бизнес</th>
+                                <th>Корпоративный</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Проверок в месяц</td>
-                                <td>10</td>
-                                <td>Безлимит</td>
+                                <td>20 (+3 стартовые)</td>
+                                <td>200</td>
                                 <td>Безлимит</td>
                             </tr>
                             <tr>
@@ -388,7 +385,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-bottom" style="justify-content: center;">
-                <p>© 2024 PhishDet. Все права защищены.</p>
+                <p>© 2025 PhishDet. Все права защищены.</p>
             </div>
         </div>
     </footer>

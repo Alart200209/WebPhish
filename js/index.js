@@ -346,31 +346,71 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 // ===================================
-// ОТЗЫВЫ: 3 видно, по кнопке подгружается ещё по 3
+// ОТЗЫВЫ: слайдер страницами по 3, листание стрелками влево/вправо
 // ===================================
-(function testimonialsLoadMore() {
-    const grid = document.getElementById('testimonialsTrack');
-    const tpl = document.getElementById('moreTestimonials');
-    const btn = document.getElementById('loadMoreReviews');
-    if (!grid || !tpl || !btn) return;
+(function reviewsSlider() {
+    const pages = [
+        document.getElementById('testimonialsTrack'),
+        document.getElementById('testimonialsPage2')
+    ].filter(Boolean);
+    const prevBtn = document.getElementById('reviewsPrev');
+    const nextBtn = document.getElementById('reviewsNext');
+    const dotsWrap = document.getElementById('reviewsDots');
+    if (pages.length < 2 || !prevBtn || !nextBtn) return;
 
-    btn.addEventListener('click', () => {
-        const nodes = tpl.content.cloneNode(true);
-        const cards = [...nodes.querySelectorAll('.testimonial-card')];
-        if (cards.length === 0) {
-            btn.remove();
-            return;
-        }
-        cards.forEach((card, i) => {
-            card.classList.add('review-enter');
-            card.style.animationDelay = `${i * 90}ms`;
-            grid.appendChild(card);
+    let current = 0;
+
+    // точки-индикаторы
+    if (dotsWrap) {
+        dotsWrap.textContent = '';
+        pages.forEach((_, i) => {
+            const d = document.createElement('button');
+            d.type = 'button';
+            d.className = 't-dot' + (i === 0 ? ' t-dot-active' : '');
+            d.setAttribute('aria-label', `Страница отзывов ${i + 1}`);
+            d.addEventListener('click', () => go(i));
+            dotsWrap.appendChild(d);
         });
-        // очищаем шаблон — новые отзывы закончились
-        while (tpl.content.firstChild) tpl.content.removeChild(tpl.content.firstChild);
-        if (!tpl.content.querySelector('.testimonial-card')) {
-            btn.disabled = true;
-            btn.textContent = 'Все отзывы показаны';
+    }
+
+    function animateIn(page) {
+        page.querySelectorAll('.testimonial-card').forEach((card, i) => {
+            card.classList.remove('review-enter');
+            void card.offsetWidth; // перезапуск анимации
+            card.style.animationDelay = `${i * 90}ms`;
+            card.classList.add('review-enter');
+        });
+    }
+
+    function go(index) {
+        current = (index + pages.length) % pages.length;
+        pages.forEach((page, i) => {
+            if (i === current) {
+                page.hidden = false;
+                animateIn(page);
+            } else {
+                page.hidden = true;
+            }
+        });
+        if (dotsWrap) {
+            dotsWrap.querySelectorAll('.t-dot').forEach((d, i) =>
+                d.classList.toggle('t-dot-active', i === current));
         }
-    });
+    }
+
+    prevBtn.addEventListener('click', () => go(current - 1));
+    nextBtn.addEventListener('click', () => go(current + 1));
+
+    // свайп на мобильных
+    let startX = null;
+    const slider = document.querySelector('.reviews-slider');
+    if (slider) {
+        slider.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+        slider.addEventListener('touchend', e => {
+            if (startX === null) return;
+            const dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 50) go(current + (dx < 0 ? 1 : -1));
+            startX = null;
+        }, { passive: true });
+    }
 })();

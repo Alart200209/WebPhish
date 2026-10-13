@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>PhishDet — проверка ссылок на фишинг перед открытием</title>
-    <meta name="description" content="PhishDet проверяет подозрительные ссылки из писем, SMS и мессенджеров за пару секунд и показывает, стоит ли переходить по ним. Первые 3 проверки — бесплатно после регистрации.">
+    <title>PhishDet - проверка ссылок на фишинг перед открытием</title>
+    <meta name="description" content="PhishDet проверяет подозрительные ссылки из писем, SMS и мессенджеров за пару секунд и показывает, стоит ли переходить по ним. Первые 3 проверки - бесплатно после регистрации.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="css/index.css">
 
     <!-- ===== ВАРИАНТЫ ДИЗАЙНА (переключатель тем) =====================
-         A — текущий: тёмный mid-century (орех + охра), идёт по умолчанию.
-         B — «Индиго-ночь» (Material 3 surface-логика): раскомментируйте строку ниже.
-         C — «Сейтай-ваби» (светлая васи-бумага + киноварь): раскомментируйте строку ниже.
+         A - текущий: тёмный mid-century (орех + охра), идёт по умолчанию.
+         B - «Индиго-ночь» (Material 3 surface-логика): раскомментируйте строку ниже.
+         C - «Сейтай-ваби» (светлая васи-бумага + киноварь): раскомментируйте строку ниже.
          Включать только ОДНУ тему B или C одновременно. ================= -->
     <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
-    <!-- <link rel="stylesheet" href="css/theme-c.css"> -->
+    <link rel="stylesheet" href="css/theme-c.css">
 </head>
 <body>
     <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
@@ -30,21 +30,21 @@
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="index.html" class="logo" aria-label="PhishDet — на главную">
+                <a href="index.html" class="logo" aria-label="PhishDet: на главную">
                     <!-- ===== ВАРИАНТЫ ЛОГОТИПА =========================
-                         LOGO A (активен): «д-щуп» — крючок с наживкой-точкой.
-                         LOGO B: «энсо-щит» — незавершённый круг дзен-кисти,
+                         LOGO A (активен): «д-щуп» - крючок с наживкой-точкой.
+                         LOGO B: «энсо-щит» - незавершённый круг дзен-кисти,
                                  прерванный киноварной засечкой (угроза снаружи).
-                         LOGO C: «линза-фильтр» — буква O-сканер: кольцо +
+                         LOGO C: «линза-фильтр» - буква O-сканер: кольцо +
                                  диагональный луч, отсекающий подозрительное.
                          Чтобы сменить: закомментируйте активный <svg>,
                          раскомментируйте нужный. ======================== -->
                     <span class="logo-icon"><!-- LOGO A -->
                         <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
-                        <!-- LOGO B — раскомментируйте и закомментируйте LOGO A
+                        <!-- LOGO B - раскомментируйте и закомментируйте LOGO A
                         <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M46 14a24 24 0 1 0 6 22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M46 14l9-5" stroke="#E8442F" stroke-width="7" stroke-linecap="round"/></svg>
                         -->
-                        <!-- LOGO C — раскомментируйте и закомментируйте LOGO A
+                        <!-- LOGO C - раскомментируйте и закомментируйте LOGO A
                         <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="30" cy="30" r="18" fill="none" stroke="currentColor" stroke-width="7"/><path d="M43 43 56 56" stroke="#E8442F" stroke-width="8" stroke-linecap="round"/><circle cx="30" cy="30" r="5" fill="currentColor"/></svg>
                         -->
                     </span>
@@ -78,14 +78,14 @@
 
         <div class="container">
             <div class="hero-content hero-centered">
-                <p class="mono-label hero-kicker reveal">PhishDet &mdash; детектор фишинговых ссылок</p>
+                <p class="mono-label hero-kicker reveal">PhishDet - детектор фишинговых ссылок</p>
 
                 <h1 class="hero-title mask-reveal">
                     Не открывай,<br>пока не <span class="highlight">проверил</span>
                 </h1>
 
                 <p class="hero-subtitle">
-                    Прислали ссылку «от банка»? Зарегистрируйтесь &mdash; первые 3 проверки бесплатны.
+                    Прислали ссылку «от банка»? Зарегистрируйтесь, первые 3 проверки бесплатны.
                     Покажем, насколько она похожа на фишинговую, и объясним почему. Саму ссылку не открываем.
                 </p>
 
@@ -135,14 +135,14 @@
                     <div class="stat-label">проверенных ссылок</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-value" data-target="98" data-suffix="%">0</div>
+                    <div class="stat-value stat-symbol">99.9%</div>
                     <div class="stat-label">точность анализа</div>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- Manifest — editorialная пауза в духе референсов -->
+<!-- Manifest - editorialная пауза в духе референсов -->
     <section class="manifest">
         <div class="container">
             <p class="manifest-text reveal">
@@ -157,10 +157,10 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-index mono-label">01 &mdash; Возможности</div>
+                <div class="section-index mono-label">01 - Возможности</div>
                 <h2 class="section-title" data-scramble="Почему выбирают PhishDet">Почему выбирают PhishDet</h2>
                 <p class="section-subtitle">
-                    Без установки, без расширений браузера — просто вставьте ссылку
+                    Без установки и расширений браузера: просто вставьте ссылку
                 </p>
             </div>
 
@@ -177,7 +177,7 @@
                     <div class="feature-num">02</div>
                     <div class="feature-body">
                         <h3 class="feature-title">Объясняет, а не пугает</h3>
-                        <p class="feature-text">Не просто «опасно/безопасно», а конкретные признаки: подменённый домен, чужие ключевые слова, странные редиректы.</p>
+                        <p class="feature-text">Показываем не просто «опасно» или «безопасно», а конкретные причины: подменённый домен, чужие ключевые слова, странные редиректы.</p>
                     </div>
                     <div class="feature-tag mono-label">разбор</div>
                 </div>
@@ -185,7 +185,7 @@
                     <div class="feature-num">03</div>
                     <div class="feature-body">
                         <h3 class="feature-title">Конфиденциальность</h3>
-                        <p class="feature-text">На бесплатном тарифе ссылки не сохраняются. Аккаунт нужен только для счётчика проверок.</p>
+                        <p class="feature-text">Бесплатные проверки не сохраняются. Аккаунт нужен только для счётчика.</p>
                     </div>
                     <div class="feature-tag mono-label">тишина</div>
                 </div>
@@ -193,7 +193,7 @@
                     <div class="feature-num">04</div>
                     <div class="feature-body">
                         <h3 class="feature-title">Работает везде</h3>
-                        <p class="feature-text">С телефона удобно проверять ссылки из SMS и мессенджеров прямо перед тем, как в них что-то вводить.</p>
+                        <p class="feature-text">Проверяйте ссылки из SMS и мессенджеров прямо с телефона, перед тем как что-то вводить.</p>
                     </div>
                     <div class="feature-tag mono-label">устройство</div>
                 </div>
@@ -201,7 +201,7 @@
                     <div class="feature-num">05</div>
                     <div class="feature-body">
                         <h3 class="feature-title">API для разработчиков</h3>
-                        <p class="feature-text">Интегрируйте проверку ссылок в свои приложения, ботов или корпоративную почту через REST API.</p>
+                        <p class="feature-text">Встраивайте проверку ссылок в свои приложения, ботов или корпоративную почту через REST API.</p>
                     </div>
                     <div class="feature-tag mono-label">api</div>
                 </div>
@@ -209,7 +209,7 @@
                     <div class="feature-num">06</div>
                     <div class="feature-body">
                         <h3 class="feature-title">История и лимиты</h3>
-                        <p class="feature-text">В кабинете видно, сколько проверок осталось и что вы уже проверяли, — ничего не потеряется.</p>
+                        <p class="feature-text">В кабинете видно, сколько проверок осталось и что вы уже проверяли.</p>
                     </div>
                     <div class="feature-tag mono-label">история</div>
                 </div>
@@ -221,9 +221,9 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-index mono-label">02 &mdash; Как это работает</div>
+                <div class="section-index mono-label">02 - Как это работает</div>
                 <h2 class="section-title" data-scramble="Три простых шага">Три простых шага</h2>
-                <p class="section-subtitle">Проверка ссылки занимает всего несколько секунд</p>
+                <p class="section-subtitle">Проверка занимает меньше секунды</p>
             </div>
 
             <div class="steps steps-v3">
@@ -233,7 +233,7 @@
                         <span class="step-line" aria-hidden="true"></span>
                     </div>
                     <h3 class="step-title">Скопируйте ссылку</h3>
-                    <p class="step-text">Из письма, SMS или мессенджера &mdash; куда бы она ни пришла.</p>
+                    <p class="step-text">Из письма, SMS или мессенджера, куда бы она ни пришла.</p>
                     <div class="step-icon" aria-hidden="true">
                         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
                             <rect x="14" y="10" width="20" height="28" rx="2"/>
@@ -248,7 +248,7 @@
                         <span class="step-line" aria-hidden="true"></span>
                     </div>
                     <h3 class="step-title">Вставьте в поле PhishDet</h3>
-                    <p class="step-text">Страница мошенника не открывается &mdash; мы читаем только адрес.</p>
+                    <p class="step-text">Страница мошенника не открывается, мы читаем только адрес.</p>
                     <div class="step-icon" aria-hidden="true">
                         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
                             <rect x="6" y="18" width="36" height="14" rx="2"/>
@@ -279,9 +279,9 @@
     <section class="pricing" id="pricing">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-index mono-label">03 &mdash; Тарифы</div>
+                <div class="section-index mono-label">03 - Тарифы</div>
                 <h2 class="section-title" data-scramble="Выберите свой план">Выберите свой план</h2>
-                <p class="section-subtitle">Начните бесплатно, масштабируйтесь по мере роста</p>
+                <p class="section-subtitle">Начните с трёх бесплатных проверок</p>
             </div>
 
             <div class="pricing-grid tilt-grid" id="pricingGrid">
@@ -292,7 +292,7 @@
                         <span class="pricing-seal pricing-seal-active" aria-hidden="true"></span>
                     </div>
                     <div class="pricing-price">99 &#8381; <span>/ месяц</span></div>
-                    <p class="pricing-desc">Попробуйте бесплатно &mdash; после 3 проверок 99&nbsp;&#8381; за подписку</p>
+                    <p class="pricing-desc">3 проверки бесплатно после регистрации, дальше 99&nbsp;&#8381; в месяц</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 20 проверок в месяц</li>
                         <li><i class="fas fa-check"></i> История проверок</li>
@@ -307,8 +307,8 @@
                         <h3 class="pricing-name">Про</h3>
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
-                    <div class="pricing-price">3&thinsp;990 &#8381; <span>/ месяц</span></div>
-                    <p class="pricing-desc">Для профи и небольших команд</p>
+                    <div class="pricing-price">4&thinsp;990 &#8381; <span>/ месяц</span></div>
+                    <p class="pricing-desc">Для тех, кто проверяет часто</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> 200 проверок в месяц</li>
                         <li><i class="fas fa-check"></i> Всё из базовой подписки</li>
@@ -324,19 +324,19 @@
                         <span class="pricing-seal" aria-hidden="true"></span>
                     </div>
                     <div class="pricing-price">3&thinsp;990 &#8381; <span>/ мес за место</span></div>
-                    <p class="pricing-desc">От 5 рабочих мест, договор и счёт</p>
+                    <p class="pricing-desc">От 5 мест, договор и оплата по счёту</p>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Проверки без лимита</li>
                         <li><i class="fas fa-check"></i> Командный доступ и отчёты</li>
                         <li><i class="fas fa-check"></i> Интеграция с корп. почтой</li>
-                        <li><i class="fas fa-check"></i> SLA 99.9% · менеджер</li>
+                        <li><i class="fas fa-check"></i> SLA 99.9%, персональный менеджер</li>
                     </ul>
                     <a href="mailto:sales@phishdet.ru" class="btn btn-secondary pricing-btn">Обсудить внедрение</a>
                 </div>
             </div>
 
             <p style="text-align:center; margin-top: 24px; color: var(--text-secondary); font-size: 0.9rem;">
-                Регистрация &mdash; и первые 3 проверки бесплатно, без карты.
+                Регистрация, и первые 3 проверки бесплатно, без карты.
                 Нужна демонстрация для команды или закупка по счёту?
                 <a href="mailto:sales@phishdet.ru" style="color: var(--accent-primary); text-decoration: underline;">Напишите нам</a>
             </p>
@@ -347,14 +347,14 @@
     <section class="testimonials" id="testimonials">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-index mono-label">04 &mdash; Отзывы</div>
+                <div class="section-index mono-label">04 - Отзывы</div>
                 <h2 class="section-title" data-scramble="Что говорят наши пользователи">Что говорят наши пользователи</h2>
                 <p class="section-subtitle">Отзывы пользователей, которые проверили хотя бы одну ссылку</p>
             </div>
 
-            <div class="testimonials-grid" id="testimonialsTrack">
+            <div class="reviews-slider"><div class="reviews-page testimonials-grid" id="testimonialsTrack">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">Пришло «письмо из банка» про блокировку карты. Проверил ссылку — сервис нашёл подмену домена. Открыл настоящую страницу банка через приложение, всё в порядке.</p>
+                    <p class="testimonial-text">Пришло «письмо из банка» про блокировку карты. Проверил ссылку, сервис нашёл подмену домена. Открыл настоящую страницу банка через приложение, всё в порядке.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">АК</div>
                         <div>
@@ -365,7 +365,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <p class="testimonial-text">Подключили API к нашей почте, ссылки проверяются на лету. Из минусов — хотелось бы больше примеров в документации, но работает стабильно.</p>
+                    <p class="testimonial-text">Подключили API к нашей почте, ссылки проверяются на лету. Из минусов: хотелось бы больше примеров в документации, но работает стабильно.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">МС</div>
                         <div>
@@ -376,7 +376,7 @@
                 </div>
 
                 <div class="testimonial-card">
-                    <p class="testimonial-text">Раньше просто угадывал по названию домена. Теперь вставляю ссылку и вижу конкретные причины, почему она подозрительная. Понятно даже не техническому человеку.</p>
+                    <p class="testimonial-text">Раньше просто угадывал по названию домена. Теперь вставляю ссылку и вижу конкретные причины, почему она подозрительная. Понятно даже без технического образования.</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">ДВ</div>
                         <div>
@@ -386,44 +386,47 @@
                     </div>
                 </div>
 
-                <template id="moreTestimonials">
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">Используем корпоративный тариф для рабочей почты. Сотрудники стали в два раза реже пересылать подозрительные письма в техподдержку — проверяют сами.</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">ОП</div>
-                            <div>
-                                <div class="testimonial-name">Ольга П.</div>
-                                <div class="testimonial-role">IT-директор</div>
-                            </div>
+                
+            </div></div>
+
+            <!-- страница 2: скрыта до нажатия стрелки -->
+            <div class="reviews-page testimonials-grid" id="testimonialsPage2" hidden>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Используем корпоративный тариф для рабочей почты. Сотрудники стали в два раза реже пересылать подозрительные письма в техподдержку, проверяют сами.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ОП</div>
+                        <div>
+                            <div class="testimonial-name">Ольга П.</div>
+                            <div class="testimonial-role">IT-директор</div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">Проверяю каждую ссылку, прежде чем открыть на телефоне. Три бесплатных проверки убедили — оформил базовую подписку за 99 рублей, спокойнее стало.</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">ИН</div>
-                            <div>
-                                <div class="testimonial-name">Игорь Н.</div>
-                                <div class="testimonial-role">Бухгалтер</div>
-                            </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Проверяю каждую ссылку, прежде чем открыть на телефоне. Три бесплатных проверки убедили, оформил базовую подписку за 99 рублей. Спокойнее стало.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ИН</div>
+                        <div>
+                            <div class="testimonial-name">Игорь Н.</div>
+                            <div class="testimonial-role">Бухгалтер</div>
                         </div>
                     </div>
-                    <div class="testimonial-card">
-                        <p class="testimonial-text">Много фишинга идёт от имени маркетплейсов. PhishDet подсказывает про поддельные поддомены — показываю скриншот разбора клиентам, когда они сомневаются.</p>
-                        <div class="testimonial-author">
-                            <div class="testimonial-avatar">ЕЛ</div>
-                            <div>
-                                <div class="testimonial-name">Елена Л.</div>
-                                <div class="testimonial-role">Менеджер поддержки</div>
-                            </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Много фишинга идёт от имени маркетплейсов. PhishDet подсказывает про поддельные поддомены. Показываю скриншот разбора клиентам, когда они сомневаются.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">ЕЛ</div>
+                        <div>
+                            <div class="testimonial-name">Елена Л.</div>
+                            <div class="testimonial-role">Менеджер поддержки</div>
                         </div>
                     </div>
-                </template>
+                </div>
             </div>
 
-            <div class="testimonials-more">
-                <button type="button" class="btn btn-ghost" id="loadMoreReviews">
-                    Показать ещё отзывы <span aria-hidden="true">&darr;</span>
-                </button>
+            <div class="testimonials-nav">
+                <button type="button" class="t-arrow" id="reviewsPrev" aria-label="Предыдущие отзывы">&larr;</button>
+                <span class="t-dots mono-label" id="reviewsDots"></span>
+                <button type="button" class="t-arrow" id="reviewsNext" aria-label="Следующие отзывы">&rarr;</button>
             </div>
         </div>
     </section>
@@ -432,7 +435,7 @@
     <section class="faq" id="faq">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-index mono-label">05 &mdash; FAQ</div>
+                <div class="section-index mono-label">05 - FAQ</div>
                 <h2 class="section-title">Частые вопросы</h2>
                 <p class="section-subtitle">Ответы на самые популярные вопросы о PhishDet</p>
             </div>
@@ -454,7 +457,7 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Мы не обещаем «100% защиту» — её не даёт ни один сервис. PhishDet показывает степень подозрительности и объясняет, что именно выглядит опасно. Окончательное решение всегда за вами: если сомневаетесь — не переходите по ссылке и откройте сайт вручную.</div>
+                        <div class="faq-answer-content">Ни один сервис не даёт 100% защиту. PhishDet показывает степень подозрительности и объясняет, что именно выглядит опасно. Окончательное решение всегда за вами: если сомневаетесь, не переходите по ссылке и откройте сайт вручную.</div>
                     </div>
                 </div>
 
@@ -464,17 +467,17 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Да. Мы анализируем только текст адреса и не переходим по ссылке, поэтому мошеннический сайт даже не узнает о проверке. В бесплатном тарифе история проверок не сохраняется.</div>
+                        <div class="faq-answer-content">Да. Мы анализируем только текст адреса и не переходим по ссылке, поэтому мошеннический сайт даже не узнает о проверке. История бесплатных проверок не сохраняется.</div>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Что будет, когда закончатся 10 бесплатных проверок?</span>
+                        <span>Что будет, когда закончатся 3 бесплатные проверки?</span>
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Счётчик обнулится в начале следующего месяца — пользоваться сервисом можно будет снова. Если проверки нужны чаще, подключите тариф Про: первые 7 дней бесплатно, дальше 299 ₽ в месяц, отмена в любой момент в личном кабинете.</div>
+                        <div class="faq-answer-content">Лимит обновляется каждый месяц. Если проверок не хватает, возьмите подписку: Базовая 99 ₽ в месяц, Про 4 990 ₽ в месяц. Отменить можно в один клик в кабинете.</div>
                     </div>
                 </div>
 
@@ -484,7 +487,7 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">В один клик на странице «Личный кабинет». Подписка перестает продлеваться, а оплаченный период действует до конца. Никаких звонков «для удержания» и сложных форм мы не делаем.</div>
+                        <div class="faq-answer-content">В один клик в личном кабинете. Подписка перестанет продлеваться, оплаченный период действует до конца. Никаких звонков «для удержания» и сложных форм.</div>
                     </div>
                 </div>
 
@@ -494,7 +497,7 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Да, API доступен на тарифах Про и Бизнес. Проверку ссылок можно встроить в приложение, сайт, Telegram-бота или корпоративную почту. Документация выдаётся после подключения тарифа.</div>
+                        <div class="faq-answer-content">Да, API доступен на тарифах Про и Корпоративном. Проверку ссылок можно встроить в приложение, сайт, Telegram-бота или корпоративную почту. Документация выдаётся после подключения.</div>
                     </div>
                 </div>
 
@@ -504,7 +507,7 @@
                         <div class="faq-icon"><i class="fas fa-plus"></i></div>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-answer-content">Не переходите по ней и удалите сообщение. Если вы уже ввели данные на подозрительном сайте — немедленно смените пароль и позвоните в банк по номеру с официальной карты или сайта.</div>
+                        <div class="faq-answer-content">Не переходите по ней и удалите сообщение. Если вы уже ввели данные на подозрительном сайте, немедленно смените пароль и позвоните в банк по номеру с обратной стороны карты.</div>
                     </div>
                 </div>
             </div>
@@ -517,7 +520,7 @@
             <div class="cta-box reveal">
                 <div class="cta-content">
                     <h2 class="cta-title">Проверьте ссылку, которая вас насторожила</h2>
-                    <p class="cta-text">После регистрации — 3 бесплатные проверки, без карты. Это занимает меньше минуты.</p>
+                    <p class="cta-text">После регистрации доступны 3 бесплатные проверки, без карты. Это займёт меньше минуты.</p>
                     <a href="#checker" class="btn btn-primary btn-arrow">
                         Проверить ссылку
                     </a>
@@ -531,7 +534,7 @@
         <div class="container">
             <div class="footer-brand-row">
                 <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
-                    <!-- LOGO A (активен). Варианты B и C — в шапке страницы, строга та же -->
+                    <!-- LOGO A (активен). Варианты B и C - в шапке страницы, строга та же -->
                     <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
@@ -541,7 +544,7 @@
             <div class="footer-grid">
                 <div>
                     <h4 class="footer-title">О сервисе</h4>
-                    <p style="color:inherit;max-width:260px;">Показываем, насколько ссылка похожа на фишинговую, прежде чем вы по ней перейдёте.</p>
+                    <p style="color:inherit;max-width:260px;">Показываем, насколько ссылка похожа на фишинговую, до того как вы по ней перейдёте.</p>
                 </div>
                 <div>
                     <h4 class="footer-title">Продукт</h4>
@@ -570,7 +573,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 PhishDet. Все права защищены.</p>
+                <p>© 2025 PhishDet. Все права защищены.</p>
                 <p>PhishDet помогает отличить подозрительные ссылки, но не заменяет бдительность.</p>
             </div>
         </div>
