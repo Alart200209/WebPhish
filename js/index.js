@@ -259,21 +259,22 @@ document.addEventListener("DOMContentLoaded", () => {
         checkerResult.className = `result-card ${statusClass}`;
         checkerResult.hidden = false;
         checkerResult.style.padding = "20px";
-        checkerResult.style.borderRadius = "16px";
+        checkerResult.style.borderRadius = "var(--radius-md)";   /* японская геометрия: почти прямые углы */
         checkerResult.style.marginTop = "16px";
         checkerResult.style.border = `1px solid ${borderColor}`;
+        checkerResult.style.borderLeftWidth = "3px";             /* «корешок» как в книгах вадзёку */
         checkerResult.style.background = "var(--bg-card)";
 
         checkerResult.innerHTML = `
             <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
-                <div style="width: 48px; height: 48px; border-radius: 50%; background: ${bgColor}; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: ${textColor}; flex-shrink: 0;">
+                <div style="width: 48px; height: 48px; border-radius: var(--radius-sm); background: ${bgColor}; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: ${textColor}; flex-shrink: 0;">
                     <i class="fas ${icon}"></i>
                 </div>
                 <div style="flex: 1; min-width: 200px;">
                     <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">${title}</div>
                     <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); word-break: break-all; margin-top: 4px;">${url}</div>
                 </div>
-                <div style="font-size: 1.5rem; font-weight: 800; color: ${textColor};">${Math.round(data.risk_score * 100)}%</div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 500; color: ${textColor};">${Math.round(data.risk_score * 100)}%</div>
             </div>
             ${detailsHtml}
             <div class="result-title" hidden>${title}</div>
