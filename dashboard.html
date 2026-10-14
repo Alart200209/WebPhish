@@ -4,108 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Личный кабинет — PhishDet</title>
-    <meta name="description" content="Ваш личный кабинет PhishDet">
+    <title>Личный кабинет - PhishDet</title>
+    <meta name="description" content="Личный кабинет PhishDet - остаток проверок, находки и история за месяц.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/auth.css">
-
-    <!-- ===== ВАРИАНТЫ ДИЗАЙНА: включите только ОДНУ тему (см. index.html) -->
-    <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
-    <link rel="stylesheet" href="css/theme-c.css">
+    <link rel="stylesheet" href="css/editorial.css">
+    <link rel="stylesheet" href="css/editorial-pages.css">
 </head>
 <body>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><!-- LOGO A (активен). Варианты B и C — в index.html, строга та же. -->
-                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                <a href="index.html" class="logo" aria-label="PhishDet - на главную">
+                    <span class="logo-icon">
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
+                    </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-                <nav class="nav">
-                    <a href="index.html" class="nav-link">Проверка</a>
-                    <a href="dashboard.html" class="nav-link active">Кабинет</a>
-                    <button class="logout-btn" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Выйти
-                    </button>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#checker" class="nav-link">Проверить ссылку</a>
+                    <a href="pricing.html" class="nav-link">Тарифы</a>
+                    <a href="index.html#features" class="nav-link">Возможности</a>
                 </nav>
+
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Dashboard -->
-    <div class="dashboard-container">
-        <div class="container">
-            <!-- Header -->
-            <div class="dashboard-header">
+    <main>
+        <div class="container dash">
+            <div class="dash-head reveal">
                 <div>
-                    <h1 class="dashboard-welcome">Привет, <span id="userEmail"></span>!</h1>
-                    <p class="dashboard-email">Ваш тариф: <strong id="userPlan"></strong></p>
+                    <div class="fileline mono" style="display:flex;gap:14px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--rule-strong);color:var(--ink-2);">
+                        <span>личное дело</span>
+                        <span class="dot" style="color:var(--verm);">●</span>
+                        <span>статус - в работе</span>
+                    </div>
+                    <h1 class="dash-welcome">Ваше <em>дело</em></h1>
+                    <p class="dash-plan">аккаунт - <strong id="userEmail">-</strong></p>
+                    <p class="dash-plan">тариф - <strong id="userPlan">-</strong></p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                    <a href="admin.html" class="logout-btn" id="adminLink" hidden>Модерация отзывов</a>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
                 </div>
             </div>
 
-            <!-- Stats -->
-            <div class="dashboard-stats">
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card-label">Проверок в этом месяце</div>
-                    <div class="stat-card-value"><span id="checksUsed">0</span> / <span id="checksLimit">5</span></div>
+            <div class="tiles reveal">
+                <div class="tile">
+                    <div class="tile-label">проверок за месяц</div>
+                    <div class="tile-value"><span id="checksUsed">0</span> / <span id="checksLimit">3</span></div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card-label">Обнаружено угроз</div>
-                    <div class="stat-card-value" id="threatsDetected">0</div>
+                <div class="tile">
+                    <div class="tile-label">фишинг нашла модель</div>
+                    <div class="tile-value" id="threatsDetected">0</div>
                 </div>
-
-                <div class="stat-card">
-                    <div class="stat-card-header">
-                        <div class="stat-card-icon">
-                            <i class="fas fa-calendar"></i>
-                        </div>
-                    </div>
-                    <div class="stat-card-label">Последняя проверка</div>
-                    <div class="stat-card-value" id="lastCheck">Никогда</div>
+                <div class="tile">
+                    <div class="tile-label">последняя проверка</div>
+                    <div class="tile-value sm" id="lastCheck">-</div>
                 </div>
             </div>
 
-            <!-- Checks History -->
-            <div class="dashboard-section">
-                <h2 class="section-title">
-                    <i class="fas fa-history"></i>
-                    История проверок
-                </h2>
+            <h2 class="dash-section-title reveal">История проверок</h2>
+            <div class="checks-list" id="checksList"></div>
+        </div>
 
-                <div class="checks-list" id="checksList">
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <p>У вас пока нет проверок</p>
-                        <a href="index.html" class="btn btn-primary" style="margin-top: 16px;">
-                            <i class="fas fa-search"></i>
-                            Проверить первую ссылку
-                        </a>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-brand-row">
+                    <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
+                        <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
+                        <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
+                    </a>
+                    <p class="footer-motto mono">не открывай, пока не проверил</p>
+                </div>
+
+                <div class="footer-grid">
+                    <div>
+                        <h4 class="footer-title">О сервисе</h4>
+                        <p>Наша модель разбирает адрес ссылки и показывает, куда он ведёт на самом деле - до того, как вы по нему перейдёте.</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Продукт</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#features">Возможности</a></li>
+                            <li><a href="index.html#how-it-works">Протокол</a></li>
+                            <li><a href="pricing.html">Тарифы</a></li>
+                            <li><a href="dashboard.html">Личный кабинет</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Компания</h4>
+                        <ul class="footer-links">
+                            <li><a href="mailto:hello@phishdet.ru">Контакты</a></li>
+                            <li><a href="mailto:sales@phishdet.ru">Для бизнеса</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Поддержка</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#faq">Мифы и вопросы</a></li>
+                            <li><a href="mailto:support@phishdet.ru">support@phishdet.ru</a></li>
+                            <li><a href="#" data-legal="privacy">Политика конфиденциальности</a></li>
+                            <li><a href="#" data-legal="terms">Условия использования</a></li>
+                        </ul>
                     </div>
                 </div>
+                <div class="footer-bottom">
+                    <p>© 2025 PhishDet. Все права защищены.</p>
+                    <p>PhishDet помогает отличить подозрительные ссылки, но не заменяет бдительность.</p>
+                </div>
             </div>
+        </footer>
+    </main>
+
+    <!-- Модальное окно - Политика конфиденциальности / Условия использования -->
+    <div class="legal-modal" id="legalModal" hidden>
+        <div class="legal-modal-backdrop" data-legal-close></div>
+        <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle" aria-describedby="legalModalBody">
+            <button type="button" class="legal-modal-close" data-legal-close aria-label="Закрыть">&times;</button>
+            <h3 class="legal-modal-title" id="legalModalTitle"></h3>
+            <div class="legal-modal-body" id="legalModalBody"></div>
         </div>
     </div>
 
+    <template id="legal-privacy">
+        <h4>Какие данные мы собираем</h4>
+        <p>Почту при регистрации, ссылку для проверки, время запроса и IP-адрес для защиты от злоупотреблений.</p>
+        <h4>Как мы используем данные</h4>
+        <p>Для проверки ссылок, учёта лимитов подписки, поддержки и безопасности. Ссылки для проверки не передаются третьим лицам.</p>
+        <h4>Хранение и защита</h4>
+        <p>Данные хранятся на защищённых серверах в соответствии с законодательством. Доступ к ним есть только у сотрудников, которым это нужно для работы сервиса.</p>
+        <h4>Ваши права</h4>
+        <p>Вы можете запросить выгрузку или удаление своих данных в любой момент - напишите на privacy@phishdet.ru.</p>
+    </template>
+
+    <template id="legal-terms">
+        <h4>О сервисе</h4>
+        <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
+        <h4>Учётная запись и лимиты</h4>
+        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <h4>Подписки и отмена</h4>
+        <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
+        <h4>Запрещённое использование</h4>
+        <p>Нельзя использовать сервис для проверки ссылок с целью обхода защиты, рассылки спама или иных незаконных действий.</p>
+        <h4>Изменения условий</h4>
+        <p>Мы можем обновлять условия, уведомив вас на сайте. Продолжая пользоваться сервисом, вы принимаете новую редакцию.</p>
+    </template>
+
+    <script src="js/main.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/legal-modal.js"></script>
 </body>
 </html>

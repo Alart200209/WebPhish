@@ -6,10 +6,10 @@ const plans = {
         name: 'Базовая подписка',
         price: 99,
         description: 'Месяц · 20 проверок',
-        icon: 'fa-leaf',
+        tag: 'СТАРТ',
         features: [
             '20 проверок в месяц',
-            'Полный разбор признаков фишинга',
+            'Разбор адреса нашей моделью, с причинами',
             'История проверок в кабинете',
             'Приоритетная поддержка'
         ]
@@ -18,7 +18,7 @@ const plans = {
         name: 'Подписка Про',
         price: 299,
         description: 'Месяц · 200 проверок',
-        icon: 'fa-crown',
+        tag: 'ПРО',
         features: [
             '200 проверок в месяц',
             'Всё из базовой подписки',
@@ -30,12 +30,12 @@ const plans = {
         name: 'Корпоративная подписка',
         price: 4990,
         description: 'Месяц · без лимита проверок',
-        icon: 'fa-building',
+        tag: 'КОРП',
         features: [
             'Проверки без лимита',
             'Командный доступ и общие отчёты',
             'Интеграция с корпоративной почтой',
-            'SLA 99.9% и персональный менеджер'
+            'SLA 99,9 % и персональный менеджер'
         ]
     }
 };
@@ -44,11 +44,11 @@ const plans = {
 // ПОЛУЧАЕМ ПЛАН ИЗ URL
 // ===================================
 const urlParams = new URLSearchParams(window.location.search);
-// Старые ключи ссылок (personal/business) — маппим на новые тарифы
+// Старые ключи ссылок (personal/business) - маппим на новые тарифы
 const PLAN_ALIASES = { personal: 'basic', business: 'corporate' };
 const rawPlanKey = urlParams.get('plan') || 'basic';
 const planKey = PLAN_ALIASES[rawPlanKey] || rawPlanKey;
-const trial = false; // триалов нет: бесплатно — только 3 стартовые проверки после регистрации
+const trial = false; // триалов нет: бесплатно - только 3 стартовые проверки после регистрации
 
 // ===================================
 // АВТОРИЗАЦИЯ: оплата доступна только вошедшим пользователям.
@@ -60,7 +60,7 @@ if (!authToken) {
     window.location.replace(`auth.html?mode=login&redirect=${back}`);
 }
 
-// Бесплатный тариф не требует оплаты — сразу ведём на регистрацию
+// Бесплатный тариф не требует оплаты - сразу ведём на регистрацию
 if (planKey === 'free') {
     const check = urlParams.get('check');
     window.location.replace('auth.html?mode=register' + (check ? `&check=${encodeURIComponent(check)}` : ''));
@@ -73,7 +73,7 @@ const selectedPlan = plans[planKey] || plans.basic;
 // ===================================
 document.getElementById('planName').textContent = selectedPlan.name;
 document.getElementById('planDescription').textContent = selectedPlan.description;
-document.getElementById('planIcon').innerHTML = `<i class="fas ${selectedPlan.icon}"></i>`;
+document.getElementById('planIcon').textContent = selectedPlan.tag;
 
 const displayPrice = trial && selectedPlan.price > 0 ? 0 : selectedPlan.price;
 document.getElementById('planPrice').textContent = `${selectedPlan.price} ₽`;
@@ -81,7 +81,7 @@ document.getElementById('totalPrice').textContent = `${displayPrice} ₽`;
 
 const featuresList = document.getElementById('planFeatures');
 featuresList.innerHTML = selectedPlan.features.map(feature =>
-    `<li><i class="fas fa-check"></i> ${feature}</li>`
+    `<li>${feature}</li>`
 ).join('');
 
 // ===================================
@@ -142,7 +142,7 @@ paymentForm.addEventListener('submit', async (e) => {
 
     // Блокируем кнопку
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Создаем платеж...';
+    submitBtn.textContent = 'Создаём платёж…';
 
     try {
         // Отправляем запрос на backend
@@ -188,7 +188,7 @@ paymentForm.addEventListener('submit', async (e) => {
 
         // Восстанавливаем кнопку
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-lock"></i> Перейти к оплате';
+        submitBtn.textContent = 'Перейти к оплате';
     }
 });
 

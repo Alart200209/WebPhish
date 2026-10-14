@@ -4,392 +4,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Тарифы — PhishDet</title>
-    <meta name="description" content="Выберите тариф PhishDet: Базовая 99 ₽, Про 299 ₽, Корпоративный. После регистрации 3 проверки бесплатно.">
+    <title>Тарифы - PhishDet</title>
+    <meta name="description" content="Тарифы PhishDet - три проверки в месяц бесплатно, Базовая 99 ₽, Про 299 ₽, Корпоративная 4 990 ₽. Отмена в один клик, нужна только регистрация.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pricing.css">
-
-    <!-- ===== ВАРИАНТЫ ДИЗАЙНА: включите только ОДНУ тему (см. index.html) -->
-    <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
-    <link rel="stylesheet" href="css/theme-c.css">
+    <link rel="stylesheet" href="css/editorial.css">
+    <link rel="stylesheet" href="css/editorial-pages.css">
 </head>
 <body>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><!-- LOGO A (активен). Варианты B и C — в index.html, строга та же. -->
-                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                <a href="index.html" class="logo" aria-label="PhishDet - на главную">
+                    <span class="logo-icon">
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
+                    </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-                <a href="index.html" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    На главную
-                </a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html" class="nav-link">Главная</a>
+                    <a href="index.html#features" class="nav-link">Возможности</a>
+                    <a href="index.html#faq" class="nav-link">Мифы</a>
+                    <a href="dashboard.html" class="btn btn-verm btn-sm nav-dash" id="dashboardLink" style="display: none;">Кабинет</a>
+                    <a href="auth.html" class="btn btn-secondary btn-sm" id="loginBtn">Войти</a>
+                </nav>
+
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="pricing-hero">
-        <div class="container">
-            <div class="hero-badge">
-                <i class="fas fa-star"></i>
-                Выберите свой план
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <div class="fileline mono reveal">
+                    <span>прайс-лист</span>
+                    <span class="dot">●</span>
+                    <span>без скрытых списаний</span>
+                    <span class="dot">●</span>
+                    <span>отмена в один клик</span>
+                </div>
+                <h1 class="reveal">Три тарифа. <em>Без звонков и переговоров.</em></h1>
+                <p class="page-sub reveal">
+                    Сначала - три бесплатные проверки, нужна только регистрация.
+                    Каждую ссылку разбирает наша модель, а платить стоит только тогда,
+                    когда ссылки действительно полетят каждый день.
+                </p>
             </div>
-            <h1>Подробности о <span class="accent">тарифах</span></h1>
-            <p class="hero-subtitle">
-                Выберите план, который подходит именно вам. Начните бесплатно и масштабируйтесь по мере роста.
-            </p>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing Details -->
-    <section class="pricing-details">
-        <div class="container">
-            <!-- Free Plan -->
-            <div class="plan-card" id="free">
-                <div class="plan-header">
-                    <div class="plan-info">
-                        <div class="plan-icon">
-                            <i class="fas fa-gift"></i>
-                        </div>
-                        <div>
-                            <h2>Базовая</h2>
-                            <p class="plan-tagline">Для личного использования</p>
-                        </div>
-                    </div>
-                    <div class="plan-price-block">
-                        <div class="plan-price">99 ₽</div>
-                        <span class="plan-period">в месяц</span>
+        <section class="pricing" id="pricing" style="border-bottom:1px solid var(--ink);">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="section-index">тарифы</div>
+                    <div>
+                        <h2 class="section-title" data-scramble="Сколько это стоит">Сколько это стоит</h2>
+                        <p class="section-subtitle">Цена за месяц, без годовых обязательств и «выгодных» пакетов, из которых не выбраться.</p>
                     </div>
                 </div>
 
-                <p class="plan-description">
-                    После регистрации доступны 3 бесплатные проверки, без карты.
-                    Дальше подписка 99 ₽ в месяц, отмена в один клик.
+                <div class="pricing-grid" id="pricingGrid">
+                    <div class="plan plan-card reveal" id="free">
+                        <div>
+                            <h3 class="plan-name">Базовая</h3>
+                            <div class="plan-price">99 ₽ <span>/ месяц</span></div>
+                            <p class="plan-desc">Если проверяете пару ссылок в неделю и просто хотите спать спокойнее.</p>
+                            <span class="plan-tag mono">старт</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>20 проверок в месяц</li>
+                            <li>История проверок в кабинете</li>
+                            <li>Ответ поддержки в рабочие дни</li>
+                            <li>Отмена в один клик</li>
+                        </ul>
+                        <div class="plan-cta">
+                            <a href="auth.html?mode=register" class="btn btn-verm pricing-btn">Начать бесплатно</a>
+                        </div>
+                    </div>
+
+                    <div class="plan plan--featured plan-card reveal" id="pro">
+                        <div>
+                            <h3 class="plan-name">Про</h3>
+                            <div class="plan-price">299 ₽ <span>/ месяц</span></div>
+                            <p class="plan-desc">Кому ссылки присылают каждый день - в почту, чаты и мессенджеры.</p>
+                            <span class="plan-tag mono">чаще всего берут</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>200 проверок в месяц</li>
+                            <li>Всё из Базовой</li>
+                            <li>API-доступ для своих задач</li>
+                            <li>Новые схемы - раньше остальных</li>
+                        </ul>
+                        <div class="plan-cta">
+                            <a href="checkout.html?plan=pro" class="btn btn-ink pricing-btn">Перейти к оплате</a>
+                        </div>
+                    </div>
+
+                    <div class="plan plan-card reveal" id="business">
+                        <div>
+                            <h3 class="plan-name">Корпоративная</h3>
+                            <div class="plan-price">4 990 ₽ <span>/ месяц</span></div>
+                            <p class="plan-desc">Отдел или компания от пяти человек. Оплата по счёту, документы для бухгалтерии.</p>
+                            <span class="plan-tag mono">для команд</span>
+                        </div>
+                        <ul class="plan-features">
+                            <li>Проверки без лимита</li>
+                            <li>Общий доступ и отчёты по команде</li>
+                            <li>Встраивание в рабочую почту</li>
+                            <li>SLA и человек на связи, а не бот</li>
+                        </ul>
+                        <div class="plan-cta">
+                            <a href="mailto:sales@phishdet.ru" class="btn btn-ink pricing-btn">Обсудить внедрение</a>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="ledger-note reveal">
+                    Регистрация занимает минуту, первые 3 проверки бесплатны.
+                    Нужен счёт или демонстрация для команды - <a href="mailto:sales@phishdet.ru" style="color:var(--verm); text-decoration:underline;">напишите нам</a>.
                 </p>
 
-                <div class="plan-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>20 проверок в месяц</h4>
-                            <p>Плюс 3 бесплатные проверки после регистрации</p>
-                        </div>
+                <div class="cmp reveal">
+                    <h3 class="cmp-title">что входит в каждый тариф</h3>
+                    <div class="cmp-scroll">
+                        <table class="cmp-table">
+                            <thead>
+                                <tr>
+                                    <th>возможность</th>
+                                    <th>Базовая</th>
+                                    <th class="col-pro">Про</th>
+                                    <th>Корпоративная</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Проверок в месяц</td><td>20</td><td>200</td><td>без лимита</td></tr>
+                                <tr><td>Разбор модели с причинами</td><td class="yes">есть</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+                                <tr><td>Модель машинного обучения</td><td class="yes">есть</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+                                <tr><td>История проверок</td><td class="yes">есть</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+                                <tr><td>API-доступ</td><td class="no">-</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+                                <tr><td>Отчёты по команде</td><td class="no">-</td><td class="no">-</td><td class="yes">есть</td></tr>
+                                <tr><td>Оплата по счёту</td><td class="no">-</td><td class="no">-</td><td class="yes">есть</td></tr>
+                                <tr><td>SLA и персональный менеджер</td><td class="no">-</td><td class="no">-</td><td class="yes">есть</td></tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Базовый анализ</h4>
-                            <p>Проверка по основным параметрам фишинга</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Веб-интерфейс</h4>
-                            <p>Удобная проверка через браузер</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Email-поддержка</h4>
-                            <p>Ответим на ваши вопросы в течение 24 часов</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="plan-cta">
-                    <a href="auth.html?mode=register" class="btn btn-primary btn-arrow">
-                        Попробуйте бесплатно
-                    </a>
                 </div>
             </div>
+        </section>
 
-            <!-- Pro Plan -->
-            <div class="plan-card featured" id="pro">
-                <div class="plan-popular-badge">Популярный выбор</div>
-
-                <div class="plan-header">
-                    <div class="plan-info">
-                        <div class="plan-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div>
-                            <h2>Тариф Про</h2>
-                            <p class="plan-tagline">Для тех, кто проверяет часто</p>
-                        </div>
-                    </div>
-                    <div class="plan-price-block">
-                        <div class="plan-price">299 ₽</div>
-                        <span class="plan-period">в месяц</span>
-                    </div>
-                </div>
-
-                <p class="plan-description">
-                    Для активных пользователей: 200 проверок в месяц
-                    и доступ к API для интеграции в свои проекты.
-                </p>
-
-                <div class="plan-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-infinity"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>200 проверок в месяц</h4>
-                            <p>Для тех, кто проверяет ссылки часто</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Расширенный анализ</h4>
-                            <p>Детальная информация о рисках и рекомендациях</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>API доступ</h4>
-                            <p>Интеграция в ваши приложения и сервисы</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>История проверок</h4>
-                            <p>Сохраняйте и отслеживайте все проверки</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Приоритетная поддержка</h4>
-                            <p>Ответим в течение 2 часов</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Быстрая обработка</h4>
-                            <p>Приоритетная очередь запросов</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="plan-cta">
-                    <a href="checkout.html?plan=pro" class="btn btn-primary btn-arrow">
-                        Перейти к оплате
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-brand-row">
+                    <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
+                        <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
+                        <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                     </a>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
-                        299 ₽ в месяц. Отмена в один клик, звонков «для удержания» не будет.
-                    </p>
+                    <p class="footer-motto mono">не открывай, пока не проверил</p>
+                </div>
+
+                <div class="footer-grid">
+                    <div>
+                        <h4 class="footer-title">О сервисе</h4>
+                        <p>Наша модель разбирает адрес ссылки и показывает, куда он ведёт на самом деле - до того, как вы по нему перейдёте.</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Продукт</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#features">Возможности</a></li>
+                            <li><a href="index.html#how-it-works">Протокол</a></li>
+                            <li><a href="pricing.html">Тарифы</a></li>
+                            <li><a href="dashboard.html">Личный кабинет</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Компания</h4>
+                        <ul class="footer-links">
+                            <li><a href="mailto:hello@phishdet.ru">Контакты</a></li>
+                            <li><a href="mailto:sales@phishdet.ru">Для бизнеса</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Поддержка</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#faq">Мифы и вопросы</a></li>
+                            <li><a href="mailto:support@phishdet.ru">support@phishdet.ru</a></li>
+                            <li><a href="#" data-legal="privacy">Политика конфиденциальности</a></li>
+                            <li><a href="#" data-legal="terms">Условия использования</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2025 PhishDet. Все права защищены.</p>
+                    <p>PhishDet помогает отличить подозрительные ссылки, но не заменяет бдительность.</p>
                 </div>
             </div>
+        </footer>
+    </main>
 
-            <!-- Business Plan -->
-            <div class="plan-card" id="business">
-                <div class="plan-header">
-                    <div class="plan-info">
-                        <div class="plan-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div>
-                            <h2>Корпоративный тариф</h2>
-                            <p class="plan-tagline">Для компаний и команд</p>
-                        </div>
-                    </div>
-                    <div class="plan-price-block">
-                        <div class="plan-price">4 990 ₽</div>
-                        <span class="plan-period">в месяц за место</span>
-                    </div>
-                </div>
-
-                <p class="plan-description">
-                    Для компаний и команд, которым нужна корпоративная защита,
-                    командный доступ и персональная поддержка.
-                </p>
-
-                <div class="plan-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Командный доступ</h4>
-                            <p>До 50 пользователей в команде</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>White-label решение</h4>
-                            <p>Используйте под своим брендом</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Персональный менеджер</h4>
-                            <p>Выделенный специалист для вашей компании</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>SLA 99.9%</h4>
-                            <p>Гарантия доступности сервиса</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>Аналитика и отчеты</h4>
-                            <p>Детальная статистика по проверкам</p>
-                        </div>
-                    </div>
-
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h4>24/7 поддержка</h4>
-                            <p>Телефон, email и чат: всегда на связи</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="plan-cta">
-                    <a href="checkout.html?plan=business" class="btn btn-primary">
-                        Оформить подписку
-                    </a>
-                    <a href="mailto:sales@phishdet.ru" class="btn btn-secondary">
-                        Запросить демо
-                    </a>
-                </div>
-            </div>
-
-            <!-- Comparison Table -->
-            <div class="comparison">
-                <h3>Сравнение тарифов</h3>
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Функция</th>
-                                <th>Базовая</th>
-                                <th>Про</th>
-                                <th>Корпоративный</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Проверок в месяц</td>
-                                <td>20 (+3 стартовые)</td>
-                                <td>200</td>
-                                <td>Безлимит</td>
-                            </tr>
-                            <tr>
-                                <td>API доступ</td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                            </tr>
-                            <tr>
-                                <td>История проверок</td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Командный доступ</td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                            </tr>
-                            <tr>
-                                <td>White-label</td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-check check-icon"></i></td>
-                            </tr>
-                            <tr>
-                                <td>SLA</td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td><i class="fas fa-times cross-icon"></i></td>
-                                <td>99.9%</td>
-                            </tr>
-                            <tr>
-                                <td>Поддержка</td>
-                                <td>Email</td>
-                                <td>Приоритетная</td>
-                                <td>24/7</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <!-- Модальное окно - Политика конфиденциальности / Условия использования -->
+    <div class="legal-modal" id="legalModal" hidden>
+        <div class="legal-modal-backdrop" data-legal-close></div>
+        <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle" aria-describedby="legalModalBody">
+            <button type="button" class="legal-modal-close" data-legal-close aria-label="Закрыть">&times;</button>
+            <h3 class="legal-modal-title" id="legalModalTitle"></h3>
+            <div class="legal-modal-body" id="legalModalBody"></div>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom" style="justify-content: center;">
-                <p>© 2025 PhishDet. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+    <template id="legal-privacy">
+        <h4>Какие данные мы собираем</h4>
+        <p>Почту при регистрации, ссылку для проверки, время запроса и IP-адрес для защиты от злоупотреблений.</p>
+        <h4>Как мы используем данные</h4>
+        <p>Для проверки ссылок, учёта лимитов подписки, поддержки и безопасности. Ссылки для проверки не передаются третьим лицам.</p>
+        <h4>Хранение и защита</h4>
+        <p>Данные хранятся на защищённых серверах в соответствии с законодательством. Доступ к ним есть только у сотрудников, которым это нужно для работы сервиса.</p>
+        <h4>Ваши права</h4>
+        <p>Вы можете запросить выгрузку или удаление своих данных в любой момент - напишите на privacy@phishdet.ru.</p>
+    </template>
 
+    <template id="legal-terms">
+        <h4>О сервисе</h4>
+        <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
+        <h4>Учётная запись и лимиты</h4>
+        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <h4>Подписки и отмена</h4>
+        <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
+        <h4>Запрещённое использование</h4>
+        <p>Нельзя использовать сервис для проверки ссылок с целью обхода защиты, рассылки спама или иных незаконных действий.</p>
+        <h4>Изменения условий</h4>
+        <p>Мы можем обновлять условия, уведомив вас на сайте. Продолжая пользоваться сервисом, вы принимаете новую редакцию.</p>
+    </template>
+
+    <script>
+        // Показать «Кабинет» вместо «Войти», если пользователь уже авторизован
+        (function () {
+            try {
+                if (localStorage.getItem('access_token')) {
+                    var l = document.getElementById('loginBtn');
+                    var d = document.getElementById('dashboardLink');
+                    if (l) l.style.display = 'none';
+                    if (d) d.style.display = 'inline-flex';
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <script src="js/main.js"></script>
     <script src="js/pricing.js"></script>
+    <script src="js/legal-modal.js"></script>
 </body>
 </html>

@@ -72,6 +72,18 @@ async def get_current_user(
     return user
 
 
+async def get_current_admin(
+        current_user: User = Depends(get_current_user)
+) -> User:
+    """Пускает дальше только администратора (модерация отзывов)."""
+    if not getattr(current_user, "is_admin", False):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Доступ только для администратора",
+        )
+    return current_user
+
+
 # Лимиты проверок по тарифам. None — без ограничений.
 # Единственный источник правды: синхронизирован с лендингом и ценами.
 # «free» — только стартовый пакет из 3 проверок на аккаунт (не подписка):

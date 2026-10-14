@@ -1,10 +1,10 @@
 /* =====================================================================
-   DOMAIN SLIDER — «движущаяся лента» доменов
+   DOMAIN SLIDER - «движущаяся лента» доменов
    ---------------------------------------------------------------------
    Две дорожки бегут навстречу друг другу:
-     верх — безопасные домены (зелёный), низ — фишинговые (красный).
+     верх - безопасные домены (зелёный), низ - фишинговые (красный).
    Бесшовный цикл: дорожка рендерится двумя одинаковыми половинами
-   и сдвигается на -50%. При наведении — пауза, клик подставляет
+   и сдвигается на -50%. При наведении - пауза, клик подставляет
    домен в поле проверки. Компонент тема-независимый (на переменных).
    ===================================================================== */
 
@@ -39,11 +39,11 @@
     align-items: center;
     width: max-content;
     will-change: transform;
-    animation: domainScrollLeft 46s linear infinite;
+    animation: domainScrollLeft 52s linear infinite;
 }
 
 .domain-track--reverse {
-    animation: domainScrollRight 52s linear infinite;
+    animation: domainScrollRight 58s linear infinite;
 }
 
 /* пауза, чтобы можно было спокойно прочитать/кликнуть */
@@ -133,7 +133,7 @@
     background: rgba(255, 77, 109, 0.13);
 }
 
-/* пульс-точка у угрозы — «живой» сигнал тревоги */
+/* пульс-точка у угрозы - «живой» сигнал тревоги */
 .domain-chip--threat .domain-chip-status i {
     animation: domainPulse 1.8s ease-in-out infinite;
 }
@@ -171,8 +171,8 @@
 /* --- Адаптив --- */
 @media (max-width: 768px) {
     .domain-slider-section { padding: 64px 0; }
-    .domain-track { animation-duration: 34s; }
-    .domain-track--reverse { animation-duration: 38s; }
+    .domain-track { animation-duration: 39s; }
+    .domain-track--reverse { animation-duration: 43s; }
     .domain-chip { padding: 11px 15px; min-height: 46px; font-size: 0.82rem; margin-right: 12px; }
     .domain-slider-hint { font-size: 0.68rem; }
 }

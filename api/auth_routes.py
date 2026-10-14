@@ -28,6 +28,7 @@ class UserResponse(BaseModel):
     email: str
     subscription_plan: str
     monthly_checks_count: int
+    is_admin: bool = False
 
     class Config:
         from_attributes = True

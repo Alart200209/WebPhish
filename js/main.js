@@ -105,7 +105,7 @@ revealElements.forEach(el => revealObserver.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        if (!href || href === '#' || href === '#!') return; // ссылки-заглушки — оставляем своему обработчику
+        if (!href || href === '#' || href === '#!') return; // ссылки-заглушки - оставляем своему обработчику
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
@@ -118,7 +118,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ===================================
-// МАГНИТНЫЕ КНОПКИ — кнопка мягко «тянется» к курсору
+// МАГНИТНЫЕ КНОПКИ - кнопка мягко «тянется» к курсору
 // (приём с сайтов-референсов; на тач-устройствах отключён)
 // ===================================
 (function initMagnetic() {
@@ -146,21 +146,33 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 })();
 
 // ===================================
-// SCRAMBLE-ДЕКОД — текст «раскодировывается» при появлении
+// SCRAMBLE-ДЕКОД - текст «раскодировывается» при появлении
 // (фишка blackwood.dev: символы перебираются до финального слова)
 // ===================================
 (function initScramble() {
     const els = document.querySelectorAll('[data-scramble]');
     if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    // Шифр — только латиница/цифры/символы, без иероглифов (философия бренда)
+    // Шифр - только латиница/цифры/символы, без иероглифов (философия бренда)
     const cipherChars = Array.from('01!<>-_\\/[]{}=+*^?#ABCDEFXYZKMNPRST');
 
     function scrambleTo(el, finalText) {
-        // поколение анимации — чтобы остановить старую цепочку при уходе из зоны видимости
+        // поколение анимации - чтобы остановить старую цепочку при уходе из зоны видимости
         const seq = (parseInt(el.dataset.scrambleSeq, 10) || 0) + 1;
         el.dataset.scrambleSeq = String(seq);
         el.dataset.scrambling = '1';
+
+        // Во время раскодировки случайные символы меняют ширину строки, и
+        // заголовок «падает» на вторую строку - это выглядит как лаг.
+        // Если финальный текст умещается в одну строку, на время анимации
+        // запрещаем перенос и фиксируем высоту: блок остаётся на месте.
+        el.textContent = finalText;
+        const cs = getComputedStyle(el);
+        let lineH = parseFloat(cs.lineHeight);
+        if (!lineH) lineH = parseFloat(cs.fontSize) * 1.2;
+        const rect = el.getBoundingClientRect();
+        if (rect.height <= lineH * 1.6) el.style.whiteSpace = 'nowrap';
+        el.style.minHeight = Math.round(rect.height) + 'px';
 
         const frame = [];
         const len = finalText.length;
@@ -174,7 +186,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         let tick = 0;
         const run = () => {
             if (!el.isConnected) return;
-            // анимацию прервали (уехали из зоны видимости) — цепочку останавливаем
+            // анимацию прервали (уехали из зоны видимости) - цепочку останавливаем
             if (parseInt(el.dataset.scrambleSeq, 10) !== seq) return;
             let out = '';
             let done = 0;
@@ -188,7 +200,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 } else { out += '&nbsp;'; }
             }
             el.innerHTML = out;
-            if (done === len) { el.dataset.scrambling = ''; return; }
+            if (done === len) {
+                el.dataset.scrambling = '';
+                el.style.whiteSpace = '';
+                el.style.minHeight = '';
+                return;
+            }
             tick++;
             requestAnimationFrame(run);
         };
@@ -199,7 +216,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         entries.forEach(entry => {
             const el = entry.target;
             if (entry.isIntersecting) {
-                // уже раскодируется — не запускаем второй раз
+                // уже раскодируется - не запускаем второй раз
                 if (el.dataset.scrambling === '1') return;
                 scrambleTo(el, el.dataset.scramble);
             } else {
@@ -208,6 +225,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 // эффект раскодировки сработал снова
                 el.dataset.scrambleSeq = String((parseInt(el.dataset.scrambleSeq, 10) || 0) + 1);
                 el.dataset.scrambling = '';
+                el.style.whiteSpace = '';
+                el.style.minHeight = '';
                 el.innerHTML = el.dataset.scramble;
             }
         });

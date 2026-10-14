@@ -34,7 +34,7 @@
     }, 300);
 })();
 
-// Межстраничные якоря (#free/#pro/#business) — плавный довод после загрузки
+// Межстраничные якоря (#free/#pro/#business) - плавный довод после загрузки
 (function smoothHashScroll() {
     const hash = window.location.hash;
     if (!hash || hash.length < 2) return;

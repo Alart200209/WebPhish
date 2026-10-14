@@ -1,19 +1,24 @@
 from fastapi import FastAPI, HTTPException, Request, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional
 from pathlib import Path
 from datetime import datetime, timedelta
 import os
+from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc
+from sqlalchemy import select, desc, update
 
-from .database import get_db, engine, Base
-from .models import User, UrlCheck
+from .database import get_db, engine, Base, async_session_maker
+from .models import User, UrlCheck, Review
 from .auth_routes import router as auth_router
 from .auth import (
     get_current_user,
+    get_current_admin,
+    get_password_hash,
+    verify_password,
     check_monthly_limit,
     increment_check_count,
     PLAN_LIMITS,
@@ -21,6 +26,12 @@ from .auth import (
     apply_trial_expiry,
 )
 from .payment import TinkoffPayment
+
+# Логин и пароль администратора живут в отдельном файле admin.env в корне
+# проекта. Он перекрывает общие переменные окружения (override=True),
+# чтобы правка файла всегда применялась при следующем запуске.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / "admin.env", override=True)
 
 app = FastAPI(
     title="PhishDet API",
@@ -43,6 +54,11 @@ payment_service = TinkoffPayment(
     terminal_key=TINKOFF_TERMINAL_KEY,
     secret_key=TINKOFF_SECRET_KEY
 )
+
+# Аккаунт модератора отзывов. Пароль по умолчанию - только для локальной
+# разработки, в продакшене задаётся через переменные окружения.
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@phishdet.ru")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "admin12345")
 
 
 class CheckUrlRequest(BaseModel):
@@ -96,7 +112,7 @@ async def check_url(
             "is_phishing": False,
             "risk_score": 0.15,
             "verdict": "Безопасно",
-            "details": ["Заглушка: ML-модель еще не подключена"]
+            "details": ["Заглушка - ML-модель еще не подключена"]
         }
 
     new_check = UrlCheck(
@@ -151,6 +167,129 @@ async def get_checks_history(
         }
         for check in checks
     ]
+
+
+class ReviewCreate(BaseModel):
+    name: Optional[str] = None
+    role: Optional[str] = None
+    text: str
+
+
+class ReviewOut(BaseModel):
+    id: int
+    name: Optional[str] = None
+    role: Optional[str] = None
+    text: str
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AdminReviewOut(ReviewOut):
+    is_published: bool = False
+
+
+class ReviewModerate(BaseModel):
+    is_published: bool
+
+
+def _clean_optional(value: Optional[str], limit: int) -> Optional[str]:
+    if value is None:
+        return None
+    cleaned = " ".join(value.split())
+    return cleaned[:limit] or None
+
+
+@app.get("/api/reviews", response_model=list[ReviewOut])
+async def list_reviews(
+        db: AsyncSession = Depends(get_db),
+        limit: int = 20
+):
+    """Публичная лента отзывов: последние опубликованные сверху."""
+    limit = max(1, min(limit, 50))
+    result = await db.execute(
+        select(Review)
+        .where(Review.is_published.is_(True))
+        .order_by(desc(Review.created_at))
+        .limit(limit)
+    )
+    return result.scalars().all()
+
+
+@app.post("/api/reviews", response_model=ReviewOut, status_code=status.HTTP_201_CREATED)
+async def create_review(
+        payload: ReviewCreate,
+        db: AsyncSession = Depends(get_db)
+):
+    """Принимает отзыв с формы. Публикуется только после проверки администратором."""
+    text = " ".join((payload.text or "").split())
+    if len(text) < 5:
+        raise HTTPException(status_code=400, detail="Отзыв слишком короткий")
+    if len(text) > 1000:
+        raise HTTPException(status_code=400, detail="Отзыв слишком длинный")
+
+    review = Review(
+        name=_clean_optional(payload.name, 60),
+        role=_clean_optional(payload.role, 60),
+        text=text,
+        is_published=False,
+    )
+    db.add(review)
+    await db.commit()
+    await db.refresh(review)
+    return review
+
+
+@app.get("/api/admin/reviews", response_model=list[AdminReviewOut])
+async def admin_list_reviews(
+        status_filter: str = "all",
+        _admin: User = Depends(get_current_admin),
+        db: AsyncSession = Depends(get_db),
+):
+    """Модерация отзывов: pending - на проверке, published - в журнале, all - всё."""
+    query = select(Review).order_by(desc(Review.created_at))
+    if status_filter == "pending":
+        query = query.where(Review.is_published.is_(False))
+    elif status_filter == "published":
+        query = query.where(Review.is_published.is_(True))
+
+    result = await db.execute(query)
+    return result.scalars().all()
+
+
+@app.patch("/api/admin/reviews/{review_id}", response_model=AdminReviewOut)
+async def admin_moderate_review(
+        review_id: int,
+        payload: ReviewModerate,
+        _admin: User = Depends(get_current_admin),
+        db: AsyncSession = Depends(get_db),
+):
+    """Одобрить отзыв (is_published=true) или снять с публикации (false)."""
+    review = await db.get(Review, review_id)
+    if review is None:
+        raise HTTPException(status_code=404, detail="Отзыв не найден")
+
+    review.is_published = payload.is_published
+    await db.commit()
+    await db.refresh(review)
+    return review
+
+
+@app.delete("/api/admin/reviews/{review_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def admin_delete_review(
+        review_id: int,
+        _admin: User = Depends(get_current_admin),
+        db: AsyncSession = Depends(get_db),
+):
+    """Удаляет отзыв безвозвратно."""
+    review = await db.get(Review, review_id)
+    if review is None:
+        raise HTTPException(status_code=404, detail="Отзыв не найден")
+
+    await db.delete(review)
+    await db.commit()
+    return None
 
 
 class PaymentCreateRequest(BaseModel):
@@ -292,6 +431,49 @@ async def startup():
                 await conn.execute(text(
                     "ALTER TABLE users ADD COLUMN trial_used BOOLEAN DEFAULT 0"
                 ))
+            if "is_admin" not in columns:
+                await conn.execute(text(
+                    "ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT 0"
+                ))
+
+    # Администратор задаётся файлом admin.env. При старте приводим учётную
+    # запись в соответствие: создаём, если её ещё нет, обновляем пароль,
+    # если он поменялся в файле, и держим ровно одного администратора.
+    if ADMIN_EMAIL:
+        async with async_session_maker() as session:
+            result = await session.execute(select(User).where(User.email == ADMIN_EMAIL))
+            admin = result.scalar_one_or_none()
+
+            if admin is None:
+                session.add(User(
+                    email=ADMIN_EMAIL,
+                    hashed_password=get_password_hash(ADMIN_PASSWORD or "admin12345"),
+                    is_admin=True,
+                    monthly_checks_count=0,
+                    last_check_reset=datetime.utcnow(),
+                ))
+                await session.commit()
+                print(f"👤 Создан администратор {ADMIN_EMAIL}")
+            else:
+                changed = False
+                if not admin.is_admin:
+                    admin.is_admin = True
+                    changed = True
+                if ADMIN_PASSWORD and not verify_password(ADMIN_PASSWORD, admin.hashed_password):
+                    admin.hashed_password = get_password_hash(ADMIN_PASSWORD)
+                    changed = True
+                if changed:
+                    await session.commit()
+                    print(f"🔑 Обновлён доступ администратора {ADMIN_EMAIL}")
+
+            # Администратор ровно один - тот, что указан в admin.env.
+            await session.execute(
+                update(User)
+                .where(User.email != ADMIN_EMAIL, User.is_admin.is_(True))
+                .values(is_admin=False)
+            )
+            await session.commit()
+
     print("✅ База данных инициализирована")
 
 
@@ -304,5 +486,13 @@ async def shutdown():
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR
 
+# Неизвестные /api/* отдают JSON (оформленную 404-страницу раздаёт StaticFiles).
+# Регистрируется до mount("/"), поэтому реальные API-ручки имеют приоритет.
+@app.api_route("/api/{_path:path}", methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"], include_in_schema=False)
+async def api_not_found(_path: str):
+    return JSONResponse({"detail": "Not Found"}, status_code=404)
+
+
+# StaticFiles с html=True сам отдаёт 404.html для несуществующих страниц.
 if STATIC_DIR.exists():
     app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")

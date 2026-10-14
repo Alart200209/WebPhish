@@ -1,5 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
     // ===================================
+    // НОМЕР ДЕЛА ПО ДАТЕ (МОСКВА)
+    // ===================================
+    const caseNo = document.getElementById('caseNo');
+    if (caseNo) {
+        try {
+            const msk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Moscow' }));
+            const y = msk.getFullYear();
+            const mm = String(msk.getMonth() + 1).padStart(2, '0');
+            const dd = String(msk.getDate()).padStart(2, '0');
+            caseNo.textContent = `дело № ${y}-${mm}${dd}`;
+        } catch (e) {
+            // leave the server-rendered fallback
+        }
+    }
+
+    // ===================================
     // АНИМАЦИЯ СЧЁТЧИКОВ СТАТИСТИКИ
     // ===================================
     const counters = document.querySelectorAll('.stat-value');
@@ -98,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // ПРОВЕРКА АВТОРИЗАЦИИ
             const currentToken = localStorage.getItem("access_token");
             if (!currentToken) {
-                showStatus("Создайте аккаунт: это займёт меньше минуты, и вы получите 3 бесплатные проверки. Перенаправляем...", "warning");
+                showStatus("Создайте аккаунт - это займёт меньше минуты, и вы получите 3 бесплатные проверки. Перенаправляем...", "warning");
                 sessionStorage.setItem("pending_url", url); // Сохраняем ссылку
 
                 setTimeout(() => {
@@ -159,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showQuotaStatus(data) {
         const remaining = data.checks_remaining;
 
-        // Пользователи Про/Бизнес — без лимита
+        // Пользователи Про/Бизнес - без лимита
         if (remaining === null || remaining === undefined || remaining >= 9999) {
             showStatus("Проверка завершена. Проверки без ограничений на вашем тарифе.", "success");
             return;
@@ -174,20 +190,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showUpgradeOffer(remaining) {
         if (!checkStatus) return;
+        checkStatus.className = "form-status is-warning";
+        checkStatus.style.display = "block";
         checkStatus.innerHTML = `
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
                 <span>Осталось ${remaining} ${remaining === 1 ? 'проверка' : 'проверки'} из ${FREE_STARTER_LIMIT}.
                 Проверки нужны чаще? На тарифе Про доступно 200 проверок в месяц.</span>
-                <a href="checkout.html?plan=pro" class="btn btn-primary" style="padding:8px 16px; min-height:38px; font-size:0.85rem;">Перейти на Про</a>
+                <a href="checkout.html?plan=pro" class="btn btn-verm btn-sm">Перейти на Про</a>
             </div>
         `;
-        checkStatus.style.display = "block";
-        checkStatus.style.padding = "12px";
-        checkStatus.style.borderRadius = "12px";
-        checkStatus.style.fontSize = "0.95rem";
-        checkStatus.style.background = "rgba(var(--accent-primary-rgb), 0.1)";
-        checkStatus.style.border = "1px solid rgba(var(--accent-primary-rgb), 0.35)";
-        checkStatus.style.color = "var(--text-primary)";
     }
 
     function renderLimitReached(detail) {
@@ -195,95 +206,64 @@ document.addEventListener("DOMContentLoaded", () => {
         const limit = detail.checks_limit ?? FREE_STARTER_LIMIT;
         showStatus(
             `Вы использовали все ${limit} бесплатные проверки (${used}/${limit}). ` +
-            `Чтобы проверять ссылки дальше, выберите тариф: Базовая (20 проверок) или Про (200 проверок).`,
+            `Чтобы проверять ссылки дальше, выберите тариф - Базовая (20 проверок) или Про (200 проверок).`,
             "warning"
         );
         if (!checkerResult) return;
-        checkerResult.className = "result-card result-warning";
+        checkerResult.className = "result-card result-danger";
         checkerResult.hidden = false;
-        checkerResult.style.cssText = "padding:20px; border-radius:var(--radius-md); margin-top:16px; border:1px solid rgba(var(--accent-primary-rgb), 0.3); border-left:3px solid var(--accent-primary); background:var(--bg-elevated); box-shadow:var(--shadow-sm);";
         checkerResult.innerHTML = `
-            <div style="font-weight:700; font-size:1.1rem; margin-bottom:8px; color:var(--text-primary);">Лимит бесплатных проверок исчерпан</div>
-            <p style="color:var(--text-secondary); font-size:0.95rem; margin-bottom:16px;">
-                После регистрации доступны ${limit} бесплатные проверки. Чтобы проверять ссылки дальше,
-                выберите подходящий тариф, отменить подписку можно в любой момент.
+            <div class="result-head">
+                <span class="stamp stamp-verm">лимит</span>
+                <div style="flex:1; min-width:180px;">
+                    <div class="result-verdict">Бесплатные проверки закончились</div>
+                </div>
+            </div>
+            <ul class="result-details">
+                <li>После регистрации доступны ${limit} бесплатные проверки в месяц, лимит обновляется.</li>
+                <li>Чтобы проверять ссылки дальше, выберите тариф - отменить подписку можно в любой момент.</li>
+            </ul>
+            <p style="margin-top:16px;">
+                <a href="checkout.html?plan=pro" class="btn btn-verm btn-sm">Перейти на тариф Про</a>
             </p>
-            <a href="checkout.html?plan=pro" class="btn btn-primary btn-arrow">Перейти на тариф Про</a>
-            <div class="result-title" hidden>Лимит бесплатных проверок исчерпан</div>
         `;
     }
 
     function showStatus(message, type) {
         if (!checkStatus) return;
-        checkStatus.innerHTML = message;
+        checkStatus.className = "form-status" + (type ? " is-" + type : "");
         checkStatus.style.display = "block";
-        checkStatus.style.padding = "12px";
-        checkStatus.style.borderRadius = "12px";
-        checkStatus.style.fontSize = "0.95rem";
-
-        if (type === "error") {
-            checkStatus.style.background = "rgba(239, 68, 68, 0.1)";
-            checkStatus.style.border = "1px solid rgba(239, 68, 68, 0.3)";
-            checkStatus.style.color = "var(--accent-danger, #ef4444)";
-        } else if (type === "warning") {
-            checkStatus.style.background = "rgba(245, 158, 11, 0.1)";
-            checkStatus.style.border = "1px solid rgba(245, 158, 11, 0.3)";
-            checkStatus.style.color = "var(--accent-warning, #f59e0b)";
-        } else if (type === "success") {
-            checkStatus.style.background = "rgba(16, 185, 129, 0.1)";
-            checkStatus.style.border = "1px solid rgba(16, 185, 129, 0.3)";
-            checkStatus.style.color = "var(--accent-success, #10b981)";
-        } else {
-            checkStatus.style.background = "rgba(var(--accent-primary-rgb), 0.1)";
-            checkStatus.style.border = "1px solid rgba(var(--accent-primary-rgb), 0.35)";
-            checkStatus.style.color = "var(--accent-primary)";
-        }
+        checkStatus.innerHTML = message;
     }
 
     function displayResult(data, url) {
-        const statusClass = data.is_phishing ? "result-danger" : (data.risk_score > 0.5 ? "result-warning" : "result-safe");
-        const icon = data.is_phishing ? "fa-exclamation-triangle" : (data.risk_score > 0.5 ? "fa-exclamation-circle" : "fa-check-circle");
-        const title = data.is_phishing ? "Высокий риск фишинга" : (data.risk_score > 0.5 ? "Требуется осторожность" : "Ссылка безопасна");
+        const isPhish = data.is_phishing;
+        const isWarn = !isPhish && data.risk_score > 0.5;
+        const statusClass = isPhish ? "result-danger" : (isWarn ? "result-warning" : "result-safe");
+        const stampClass = isPhish ? "stamp-verm" : (isWarn ? "stamp-amber" : "stamp-sage");
+        const badge = isPhish ? "фишинг" : (isWarn ? "под вопросом" : "чисто");
+        const title = isPhish ? "Высокий риск фишинга" : (isWarn ? "Есть на что посмотреть" : "Ссылка выглядит чистой");
 
         const detailsHtml = data.details && data.details.length > 0
-            ? `<ul style="margin-top: 12px; padding-left: 20px; color: var(--text-secondary); font-size: 0.9rem;">
-                ${data.details.map(d => `<li style="margin-bottom: 4px;">${d}</li>`).join('')}
-               </ul>`
+            ? `<ul class="result-details">${data.details.map(d => `<li>${d}</li>`).join('')}</ul>`
             : '';
-
-        const borderColor = statusClass === 'result-danger' ? 'rgba(239, 68, 68, 0.3)' :
-                           (statusClass === 'result-warning' ? 'rgba(245, 158, 11, 0.3)' : 'rgba(16, 185, 129, 0.3)');
-        const bgColor = statusClass === 'result-danger' ? 'rgba(239, 68, 68, 0.1)' :
-                       (statusClass === 'result-warning' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)');
-        const textColor = statusClass === 'result-danger' ? 'var(--accent-danger)' :
-                         (statusClass === 'result-warning' ? 'var(--accent-warning)' : 'var(--accent-success)');
 
         checkerResult.className = `result-card ${statusClass}`;
         checkerResult.hidden = false;
-        checkerResult.style.padding = "20px";
-        checkerResult.style.borderRadius = "var(--radius-md)";   /* ваби-саби геометрия: почти прямые углы */
-        checkerResult.style.marginTop = "16px";
-        checkerResult.style.border = `1px solid ${borderColor}`;
-        checkerResult.style.borderLeftWidth = "3px";             /* «корешок» как в книгах вадзёку */
-        checkerResult.style.background = "var(--bg-elevated)";
-        checkerResult.style.boxShadow = "var(--shadow-sm)";
-
         checkerResult.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap;">
-                <div style="width: 48px; height: 48px; border-radius: var(--radius-sm); background: ${bgColor}; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: ${textColor}; flex-shrink: 0;">
-                    <i class="fas ${icon}"></i>
+            <div class="result-head">
+                <span class="stamp ${stampClass}">${badge}</span>
+                <div style="flex: 1; min-width: 180px;">
+                    <div class="result-verdict">${title}</div>
+                    <div class="result-url">${url}</div>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-primary);">${title}</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); word-break: break-all; margin-top: 4px;">${url}</div>
-                </div>
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 500; color: ${textColor};">${Math.round(data.risk_score * 100)}%</div>
+                <div class="result-score">${Math.round(data.risk_score * 100)}%</div>
             </div>
             ${detailsHtml}
             <div class="result-title" hidden>${title}</div>
         `;
 
-        // Счётчик лимита — мягкий триггер к апгрейду, пока человек «в потоке»
+        // Счётчик лимита - мягкий триггер к апгрейду, пока человек «в потоке»
         if (typeof data.checks_remaining === "number") {
             const remaining = data.checks_remaining;
             const limitNote = document.createElement("p");
@@ -293,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 limitNote.innerHTML =
                     `Осталось ${remaining} бесплатных проверок. ` +
-                    `<a href="checkout.html?plan=pro" style="color:var(--accent-primary); font-weight:600;">Про: 200 проверок в месяц →</a>`;
+                    `<a href="checkout.html?plan=pro" style="color:var(--accent-primary); font-weight:600;">Про - 200 проверок в месяц →</a>`;
             }
             checkerResult.appendChild(limitNote);
         }
@@ -301,7 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // ===================================
 // ПЛАВНЫЙ ПЕРЕХОД К СЕКЦИИ ПРИ КЛИКЕ ПО ЯКОРЮ (межстраничный)
-// Если ссылка ведёт на другую страницу с #якорем — после загрузки
+// Если ссылка ведёт на другую страницу с #якорем - после загрузки
 // докручиваем до нужной секции мягко, а не «прыгаем»
 // ===================================
 (function smoothCrossPageAnchor() {
@@ -314,17 +294,18 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(() => {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
-    } catch (e) { /* невалидный селектор — игнорируем */ }
+    } catch (e) { /* невалидный селектор - игнорируем */ }
 })();
 
 // ===================================
 // ЭФФЕКТ «СЦЕНЫ» В СЕТКЕ ТАРИФОВ
-// Когда мышь входит в сетку — карточки под ней «загораются»,
+// Когда мышь входит в сетку - карточки под ней «загораются»,
 // остальные приглушаются (CSS-правило .pricing-grid.has-hover)
 // ===================================
 (function pricingGridScene() {
     const grid = document.getElementById('pricingGrid');
-    if (!grid || !window.matchMedia('(pointer: fine)').matches) return;
+    if (!grid || !grid.classList.contains('tilt-grid')) return; // 3D-наклон только для карточного варианта
+    if (!window.matchMedia('(pointer: fine)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     grid.addEventListener('mouseenter', () => grid.classList.add('has-hover'));
     grid.addEventListener('mouseleave', () => grid.classList.remove('has-hover'));
@@ -347,8 +328,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ===================================
 // ВЫБОР ТАРИФА КЛИКОМ
-// Если тариф выбран — красная подсветка закрепляется за ним и не
-// «переходит» при наведении/скролле. Пока выбор не сделан — красный
+// Если тариф выбран - красная подсветка закрепляется за ним и не
+// «переходит» при наведении/скролле. Пока выбор не сделан - красный
 // следует за курсором (обычное hover-поведение).
 // ===================================
 (function pricingSelect() {

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- PhishDet: «д» = защита, засечка-«хвост» = фишинговая ловля -->
-  <rect width="64" height="64" rx="14" fill="#0C0D10"/>
-  <circle cx="49" cy="15" r="4.5" fill="#E8442F"/>
-  <path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#F5A524" stroke-width="6.5" stroke-linecap="round"/>
+  <!-- PhishDet: знак на тёмном фоне - бумажный «д» и киноварная точка -->
+  <rect width="64" height="64" rx="14" fill="#15120d"/>
+  <circle cx="49" cy="15" r="4.5" fill="#d63a24"/>
+  <path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="#f5f0e5" stroke-width="6.5" stroke-linecap="round"/>
 </svg>

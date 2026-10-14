@@ -35,6 +35,12 @@ async function loadUserData() {
             userData.subscription_plan === 'free' ? 'Бесплатный' :
             userData.subscription_plan === 'pro' ? 'Про' : 'Бизнес';
 
+        // Администратору показываем ссылку на модерацию отзывов
+        const adminLink = document.getElementById('adminLink');
+        if (adminLink && userData.is_admin) {
+            adminLink.hidden = false;
+        }
+
         // Получаем лимит проверок
         const limitResponse = await fetch('/api/auth/check-limit', {
             headers: {
@@ -81,12 +87,9 @@ async function loadChecksHistory() {
         if (checks.length === 0) {
             checksList.innerHTML = `
                 <div class="empty-state">
-                    <i class="fas fa-inbox"></i>
-                    <p>У вас пока нет проверок</p>
-                    <a href="index.html" class="btn btn-primary" style="margin-top: 16px;">
-                        <i class="fas fa-search"></i>
-                        Проверить первую ссылку
-                    </a>
+                    <p class="hand">тут пока пусто</p>
+                    <p>Вы ещё ничего не проверяли. Начните с той самой подозрительной ссылки.</p>
+                    <a href="index.html#checker" class="btn btn-verm">Проверить ссылку</a>
                 </div>
             `;
             return;
@@ -123,10 +126,8 @@ async function loadChecksHistory() {
         checksList.innerHTML = checks.map(check => {
             const statusClass = check.is_phishing ? 'danger' :
                                check.risk_score > 0.5 ? 'warning' : 'safe';
-            const statusIcon = check.is_phishing ? 'fa-exclamation-triangle' :
-                              check.risk_score > 0.5 ? 'fa-exclamation-circle' : 'fa-check-circle';
-            const statusText = check.is_phishing ? 'Фишинг' :
-                              check.risk_score > 0.5 ? 'Подозрительно' : 'Безопасно';
+            const statusText = check.is_phishing ? 'фишинг' :
+                              check.risk_score > 0.5 ? 'подозрительно' : 'безопасно';
 
             const date = new Date(check.created_at);
             const dateStr = date.toLocaleDateString('ru-RU', {
@@ -138,14 +139,11 @@ async function loadChecksHistory() {
 
             return `
                 <div class="check-item">
-                    <div class="check-status ${statusClass}">
-                        <i class="fas ${statusIcon}"></i>
-                    </div>
+                    <div class="check-status ${statusClass}">${statusText}</div>
                     <div class="check-info">
                         <div class="check-url">${check.url}</div>
                         <div class="check-meta">
-                            <span><i class="fas fa-calendar"></i> ${dateStr}</span>
-                            <span><i class="fas fa-tag"></i> ${statusText}</span>
+                            <span>${dateStr}</span>
                         </div>
                     </div>
                     <div class="check-score">${Math.round(check.risk_score * 100)}%</div>

@@ -251,9 +251,9 @@
 
 .hero-centered .hero-title {
     font-size: clamp(2.75rem, 6.5vw, 5.25rem);
-    font-weight: 900;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
     margin-bottom: 28px;
 }
 
@@ -329,9 +329,9 @@
 
 .hero-title {
     font-size: clamp(2.75rem, 6.5vw, 5.25rem);
-    font-weight: 900;
-    line-height: 1.02;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
     margin-bottom: 28px;
 }
 
@@ -700,7 +700,7 @@
 =================================== */
 .section-header {
     text-align: center;
-    max-width: 700px;
+    max-width: 840px;
     margin: 0 auto 80px;
 }
 

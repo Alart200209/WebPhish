@@ -4,136 +4,190 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Вход — PhishDet</title>
-    <meta name="description" content="Войдите в свой аккаунт PhishDet для проверки ссылок">
+    <title>Вход - PhishDet</title>
+    <meta name="description" content="Вход и регистрация PhishDet. Аккаунт нужен, чтобы считать лимит проверок и хранить историю. Три проверки в месяц бесплатно, нужна только регистрация.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/auth.css">
-
-    <!-- ===== ВАРИАНТЫ ДИЗАЙНА: включите только ОДНУ тему (см. index.html) -->
-    <!-- <link rel="stylesheet" href="css/theme-b.css"> -->
-    <link rel="stylesheet" href="css/theme-c.css">
+    <link rel="stylesheet" href="css/editorial.css">
+    <link rel="stylesheet" href="css/editorial-pages.css">
 </head>
 <body>
+    <div class="scroll-progress" aria-hidden="true"><span id="scrollProgressBar"></span></div>
+
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <div class="header-inner">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon"><!-- LOGO A (активен). Варианты B и C — в index.html, строга та же. -->
-                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#E8442F"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></div>
+                <a href="index.html" class="logo" aria-label="PhishDet - на главную">
+                    <span class="logo-icon">
+                        <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg>
+                    </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-                <a href="index.html" class="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    На главную
-                </a>
+                <a href="index.html" class="back-link">На главную</a>
             </div>
         </div>
     </header>
 
-    <!-- Auth Container -->
-    <div class="auth-container">
-        <div class="auth-bg">
-            <div class="grid-bg"></div>
+    <main>
+        <div class="container auth-page">
+            <div class="auth-intro reveal">
+                <div class="fileline mono">
+                    <span>вход / регистрация</span>
+                    <span class="dot">●</span>
+                    <span>нужна только регистрация</span>
+                    <span class="dot">●</span>
+                    <span>3 проверки бесплатно</span>
+                </div>
+                <h1>Аккаунт нужен ровно для одного. <em>Считать ваши проверки.</em></h1>
+                <p>
+                    Никаких «создайте профиль, чтобы мы узнали вас получше». Регистрация - чтобы
+                    не сбрасывать лимит бесплатных проверок и показать историю за месяц.
+                    Сами ссылки разбирает наша модель.
+                </p>
+                <ul class="auth-perks">
+                    <li>три проверки в месяц - бесплатно, нужна только регистрация</li>
+                    <li>история проверок за месяц - в кабинете</li>
+                    <li>ссылку разбирает наша модель, а не готовый чёрный список</li>
+                    <li>ссылки не хранятся дольше, чем нужно для отчёта</li>
+                </ul>
+                <p class="manifest-note hand">одна почта - один человек, без «командных» аккаунтов</p>
+            </div>
+
+            <div class="auth-card reveal">
+                <div class="auth-header">
+                    <h2 class="auth-title">Вход и регистрация</h2>
+                    <p class="auth-subtitle">Всё в одном окне. Пароль не показываем даже себе.</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-tab="login">Вход</button>
+                    <button type="button" class="auth-tab" data-tab="register">Регистрация</button>
+                </div>
+
+                <!-- Вход -->
+                <form class="auth-form active" id="loginForm">
+                    <label class="field">
+                        <span class="lbl">Почта</span>
+                        <input type="email" class="auth-input" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Пароль</span>
+                        <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
+                    </label>
+                    <button type="submit" class="btn btn-verm auth-btn">Войти</button>
+                    <div class="auth-status" id="loginStatus"></div>
+                </form>
+
+                <!-- Регистрация -->
+                <form class="auth-form" id="registerForm">
+                    <label class="field">
+                        <span class="lbl">Почта</span>
+                        <input type="email" class="auth-input" id="registerEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Пароль</span>
+                        <input type="password" class="auth-input" id="registerPassword" placeholder="минимум 8 символов" autocomplete="new-password" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Повторите пароль</span>
+                        <input type="password" class="auth-input" id="registerPasswordConfirm" placeholder="ещё раз" autocomplete="new-password" required>
+                    </label>
+                    <button type="submit" class="btn btn-verm auth-btn">Создать аккаунт</button>
+                    <div class="auth-status" id="registerStatus"></div>
+                </form>
+            </div>
         </div>
 
-        <div class="auth-card">
-            <div class="auth-header">
-                <h1 class="auth-title">Добро пожаловать</h1>
-                <p class="auth-subtitle">Войдите или создайте аккаунт для проверки ссылок</p>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-brand-row">
+                    <a href="index.html" class="logo logo-lg" aria-label="PhishDet">
+                        <span class="logo-icon"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="49" cy="15" r="4.5" fill="#d63a24"/><path d="M40 11v32c-9 6-21 1-23-9 -2-11 6-21 16-21 3 0 5 .7 7 2" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round"/></svg></span>
+                        <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
+                    </a>
+                    <p class="footer-motto mono">не открывай, пока не проверил</p>
+                </div>
+
+                <div class="footer-grid">
+                    <div>
+                        <h4 class="footer-title">О сервисе</h4>
+                        <p>Наша модель разбирает адрес ссылки и показывает, куда он ведёт на самом деле - до того, как вы по нему перейдёте.</p>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Продукт</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#features">Возможности</a></li>
+                            <li><a href="index.html#how-it-works">Протокол</a></li>
+                            <li><a href="pricing.html">Тарифы</a></li>
+                            <li><a href="dashboard.html">Личный кабинет</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Компания</h4>
+                        <ul class="footer-links">
+                            <li><a href="mailto:hello@phishdet.ru">Контакты</a></li>
+                            <li><a href="mailto:sales@phishdet.ru">Для бизнеса</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">Поддержка</h4>
+                        <ul class="footer-links">
+                            <li><a href="index.html#faq">Мифы и вопросы</a></li>
+                            <li><a href="mailto:support@phishdet.ru">support@phishdet.ru</a></li>
+                            <li><a href="#" data-legal="privacy">Политика конфиденциальности</a></li>
+                            <li><a href="#" data-legal="terms">Условия использования</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2025 PhishDet. Все права защищены.</p>
+                    <p>PhishDet помогает отличить подозрительные ссылки, но не заменяет бдительность.</p>
+                </div>
             </div>
+        </footer>
+    </main>
 
-            <!-- Tabs -->
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login">Вход</button>
-                <button class="auth-tab" data-tab="register">Регистрация</button>
-            </div>
-
-            <!-- Login Form -->
-            <form class="auth-form active" id="loginForm">
-                <div class="auth-input-group">
-                    <label class="auth-label" for="loginEmail">Email</label>
-                    <input
-                        type="email"
-                        id="loginEmail"
-                        class="auth-input"
-                        placeholder="your@email.com"
-                        required
-                    >
-                </div>
-
-                <div class="auth-input-group">
-                    <label class="auth-label" for="loginPassword">Пароль</label>
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        class="auth-input"
-                        placeholder="••••••••"
-                        required
-                    >
-                </div>
-
-                <button type="submit" class="btn btn-primary auth-btn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Войти
-                </button>
-
-                <div class="auth-status" id="loginStatus"></div>
-            </form>
-
-            <!-- Register Form -->
-            <form class="auth-form" id="registerForm">
-                <div class="auth-input-group">
-                    <label class="auth-label" for="registerEmail">Email</label>
-                    <input
-                        type="email"
-                        id="registerEmail"
-                        class="auth-input"
-                        placeholder="your@email.com"
-                        required
-                    >
-                </div>
-
-                <div class="auth-input-group">
-                    <label class="auth-label" for="registerPassword">Пароль</label>
-                    <input
-                        type="password"
-                        id="registerPassword"
-                        class="auth-input"
-                        placeholder="Минимум 6 символов"
-                        minlength="6"
-                        required
-                    >
-                </div>
-
-                <div class="auth-input-group">
-                    <label class="auth-label" for="registerPasswordConfirm">Подтвердите пароль</label>
-                    <input
-                        type="password"
-                        id="registerPasswordConfirm"
-                        class="auth-input"
-                        placeholder="••••••••"
-                        minlength="6"
-                        required
-                    >
-                </div>
-
-                <button type="submit" class="btn btn-primary auth-btn">
-                    <i class="fas fa-user-plus"></i>
-                    Создать аккаунт
-                </button>
-
-                <div class="auth-status" id="registerStatus"></div>
-            </form>
+    <!-- Модальное окно - Политика конфиденциальности / Условия использования -->
+    <div class="legal-modal" id="legalModal" hidden>
+        <div class="legal-modal-backdrop" data-legal-close></div>
+        <div class="legal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle" aria-describedby="legalModalBody">
+            <button type="button" class="legal-modal-close" data-legal-close aria-label="Закрыть">&times;</button>
+            <h3 class="legal-modal-title" id="legalModalTitle"></h3>
+            <div class="legal-modal-body" id="legalModalBody"></div>
         </div>
     </div>
 
+    <template id="legal-privacy">
+        <h4>Какие данные мы собираем</h4>
+        <p>Почту при регистрации, ссылку для проверки, время запроса и IP-адрес для защиты от злоупотреблений.</p>
+        <h4>Как мы используем данные</h4>
+        <p>Для проверки ссылок, учёта лимитов подписки, поддержки и безопасности. Ссылки для проверки не передаются третьим лицам.</p>
+        <h4>Хранение и защита</h4>
+        <p>Данные хранятся на защищённых серверах в соответствии с законодательством. Доступ к ним есть только у сотрудников, которым это нужно для работы сервиса.</p>
+        <h4>Ваши права</h4>
+        <p>Вы можете запросить выгрузку или удаление своих данных в любой момент - напишите на privacy@phishdet.ru.</p>
+    </template>
+
+    <template id="legal-terms">
+        <h4>О сервисе</h4>
+        <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
+        <h4>Учётная запись и лимиты</h4>
+        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <h4>Подписки и отмена</h4>
+        <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
+        <h4>Запрещённое использование</h4>
+        <p>Нельзя использовать сервис для проверки ссылок с целью обхода защиты, рассылки спама или иных незаконных действий.</p>
+        <h4>Изменения условий</h4>
+        <p>Мы можем обновлять условия, уведомив вас на сайте. Продолжая пользоваться сервисом, вы принимаете новую редакцию.</p>
+    </template>
+
+    <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/legal-modal.js"></script>
 </body>
 </html>

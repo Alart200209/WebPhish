@@ -16,6 +16,9 @@ class User(Base):
     subscription_expires_at = Column(DateTime(timezone=True), nullable=True)
     trial_used = Column(Boolean, default=False)  # триал даём один раз на аккаунт
 
+    # Доступ к модерации отзывов (см. /api/admin/reviews)
+    is_admin = Column(Boolean, default=False)
+
     # Лимит проверок
     monthly_checks_count = Column(Integer, default=0)  # Сколько проверок в этом месяце
     last_check_reset = Column(DateTime(timezone=True),
@@ -37,3 +40,15 @@ class UrlCheck(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("User", back_populates="url_checks")
+
+
+class Review(Base):
+    __tablename__ = "reviews"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=True)   # как подписать автора (необязательно)
+    role = Column(String, nullable=True)   # кто он (необязательно)
+    text = Column(String, nullable=False)
+    # Отзывы публикуются только после проверки администратором
+    is_published = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())

@@ -29,3 +29,6 @@ Thumbs.db
 
 # База данных SQLite
 phishdet.db
+
+# Доступ администратора (модерация отзывов)
+admin.env

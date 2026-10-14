@@ -1,9 +1,9 @@
 // ===================================
-// DOMAIN SLIDER — движущаяся лента доменов
+// DOMAIN SLIDER - движущаяся лента доменов
 // -----------------------------------
-// Верхняя дорожка — безопасные домены, нижняя — фишинговые.
+// Верхняя дорожка - безопасные домены, нижняя - фишинговые.
 // Для бесшовного CSS-цикла дорожка рендерится двумя одинаковыми
-// половинами (каждая — набор, повторённый N раз), затем сдвигается
+// половинами (каждая - набор, повторённый N раз), затем сдвигается
 // на -50%. Клик по плашке подставляет домен в поле проверки.
 //
 // Обработчик клика навешивается один раз на дорожку (делегирование),
@@ -13,11 +13,11 @@
 (function domainSlider() {
     const root = document.querySelector('[data-domain-slider]');
     if (!root) return;
-    // дорожки лежат внутри root, а <template>-шаблоны — в самой секции,
+    // дорожки лежат внутри root, а <template>-шаблоны - в самой секции,
     // поэтому их ищем в общем контейнере
     const scope = root.closest('.domain-slider-section') || root;
 
-    // Примеры для демонстрации — реальные домены сервисов,
+    // Примеры для демонстрации - реальные домены сервисов,
     // фишинговые написаны по типичным приёмам подмены.
     const SAFE_DOMAINS = [
         'sberbank.ru',
@@ -50,7 +50,7 @@
     const safeTemplate = scope.querySelector('[data-template="safe"]');
     const threatTemplate = scope.querySelector('[data-template="threat"]');
 
-    // Сколько раз повторить набор в одной половине — чтобы перекрыть
+    // Сколько раз повторить набор в одной половине - чтобы перекрыть
     // ширину экрана при любой вёрстке.
     const REPEATS = 3;
 
@@ -63,7 +63,7 @@
         const chip = template.content.firstElementChild.cloneNode(true);
         chip.classList.add(`domain-chip--${kind}`);
 
-        // хост показываем основным цветом, хвост (путь) — приглушённо
+        // хост показываем основным цветом, хвост (путь) - приглушённо
         const slash = domain.indexOf('/');
         const host = slash === -1 ? domain : domain.slice(0, slash);
         const path = slash === -1 ? '' : domain.slice(slash);
@@ -73,7 +73,7 @@
         if (pathEl) pathEl.textContent = path;
 
         chip.dataset.url = fullUrl(domain);
-        chip.setAttribute('title', `${host} — подставить в поле проверки`);
+        chip.setAttribute('title', `${host} - подставить в поле проверки`);
         chip.setAttribute('aria-label', kind === 'safe'
             ? `Безопасный домен ${host}`
             : `Подозрительный домен ${host}`);
@@ -95,7 +95,7 @@
         // первая половина
         trackEl.appendChild(buildHalf(domains, kind, template));
 
-        // вторая половина — точная копия первой (для сдвига на -50%)
+        // вторая половина - точная копия первой (для сдвига на -50%)
         const clone = document.createDocumentFragment();
         Array.from(trackEl.children).forEach(node => clone.appendChild(node.cloneNode(true)));
         trackEl.appendChild(clone);
@@ -120,7 +120,7 @@
             checker.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         if (input) {
-            // фокус — после прокрутки, чтобы не «дёргался» скролл
+            // фокус - после прокрутки, чтобы не «дёргался» скролл
             setTimeout(() => input.focus({ preventScroll: true }), 450);
         }
     }

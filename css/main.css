@@ -44,6 +44,8 @@
     --radius-lg: 8px;
     --radius-xl: 10px;
 
+    --font-body: 'Golos Text', 'Jost', 'Futura', 'Century Gothic', sans-serif;
+    --font-display: 'Lora', Georgia, 'Times New Roman', serif;
     --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
     --transition-fast: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -70,7 +72,7 @@ html {
 }
 
 body {
-    font-family: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+    font-family: var(--font-body);
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
@@ -115,6 +117,7 @@ section {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.01em;
