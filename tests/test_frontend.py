@@ -159,15 +159,15 @@ class TestPricingPage:
 
     def test_plan_cards_present(self, page, server):
         page.goto(f"{BASE_URL}/pricing.html")
-        expect(page.locator("#free")).to_be_visible()
+        expect(page.locator("#basic")).to_be_visible()
         expect(page.locator("#pro")).to_be_visible()
-        expect(page.locator("#business")).to_be_visible()
+        expect(page.locator("#corporate")).to_be_visible()
 
     def test_plan_prices_correct(self, page, server):
         page.goto(f"{BASE_URL}/pricing.html")
-        expect(page.locator("#free .plan-price")).to_contain_text("0 ₽")
+        expect(page.locator("#basic .plan-price")).to_contain_text("99 ₽")
         expect(page.locator("#pro .plan-price")).to_contain_text("299 ₽")
-        expect(page.locator("#business .plan-price")).to_contain_text("1 990 ₽")
+        expect(page.locator("#corporate .plan-price")).to_contain_text("4 990 ₽")
 
     def test_checkout_buttons_link(self, page, server):
         page.goto(f"{BASE_URL}/pricing.html")
@@ -176,13 +176,13 @@ class TestPricingPage:
         assert "checkout.html" in href
         assert "plan=pro" in href
 
-    def test_free_plan_cta_goes_to_register_not_checkout(self, page, server):
-        """Бесплатный тариф не должен вести на оплату — только регистрация."""
+    def test_basic_plan_cta_goes_to_checkout(self, page, server):
+        """Тарифов три, все платные: «Базовая» ведёт на оплату, а не на регистрацию."""
         page.goto(f"{BASE_URL}/pricing.html")
-        free_button = page.locator("#free .plan-cta a")
-        href = free_button.get_attribute("href")
-        assert "auth.html" in href
-        assert "checkout" not in href
+        basic_button = page.locator("#basic .plan-cta a")
+        href = basic_button.get_attribute("href")
+        assert "checkout.html" in href
+        assert "plan=basic" in href
 
     def test_comparison_table_visible(self, page, server):
         page.goto(f"{BASE_URL}/pricing.html")

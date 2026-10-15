@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Оплата - PhishDet</title>
-    <meta name="description" content="Оформление подписки PhishDet. Безопасная оплата через Tinkoff Касса, данные карты нам не передаются.">
+    <title>Личный кабинет - PhishDet</title>
+    <meta name="description" content="Личный кабинет PhishDet - остаток проверок, находки и история за месяц.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,95 +27,85 @@
                     </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-                <a href="pricing.html" class="back-link">Назад к тарифам</a>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#checker" class="nav-link">Проверить ссылку</a>
+                    <a href="pricing.html" class="nav-link">Тарифы</a>
+                    <a href="index.html#features" class="nav-link">Возможности</a>
+                </nav>
+
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
     </header>
 
     <main>
-        <section class="checkout">
-            <div class="container">
-                <div class="checkout-grid">
-                    <div class="reveal">
-                        <h1 class="form-title">Оформление подписки</h1>
-
-                        <form id="paymentForm">
-                            <div class="form-section">
-                                <h2 class="form-section-title">Контакты для чека</h2>
-                                <div class="form-row">
-                                    <label class="field">
-                                        <span class="lbl">Имя</span>
-                                        <input type="text" id="firstName" placeholder="Иван" autocomplete="given-name" required>
-                                    </label>
-                                    <label class="field">
-                                        <span class="lbl">Фамилия</span>
-                                        <input type="text" id="lastName" placeholder="Петров" autocomplete="family-name" required>
-                                    </label>
-                                </div>
-                                <label class="field">
-                                    <span class="lbl">Почта для чека</span>
-                                    <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
-                                </label>
-                                <label class="field">
-                                    <span class="lbl">Телефон</span>
-                                    <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
-                                </label>
-                            </div>
-
-                            <div class="form-section">
-                                <h2 class="form-section-title">Способ оплаты</h2>
-                                <div class="pay-methods">
-                                    <label class="pay-method">
-                                        <input type="radio" name="paymentMethod" value="card" checked>
-                                        <span class="pay-method-content"><span class="mark"></span>Банковская карта</span>
-                                    </label>
-                                    <label class="pay-method">
-                                        <input type="radio" name="paymentMethod" value="sbp">
-                                        <span class="pay-method-content"><span class="mark"></span>СБП / QR-код</span>
-                                    </label>
-                                </div>
-                                <div class="security-notice">
-                                    <svg class="notice-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4.5" y="10.5" width="15" height="10" rx="1"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
-                                    <div>
-                                        <strong>Оплату принимает Tinkoff Касса</strong>
-                                        <p>Данные карты вводятся на защищённой странице банка - мы их не видим и не храним.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <label class="checkbox-group">
-                                <input type="checkbox" id="terms" required>
-                                <span>Согласен с <a href="#" data-legal="terms">условиями использования</a> и <a href="#" data-legal="privacy">политикой конфиденциальности</a>.</span>
-                            </label>
-
-                            <button type="submit" class="btn btn-verm submit-btn" id="submitBtn">Перейти к оплате</button>
-                            <div class="form-status" id="formStatus"></div>
-                        </form>
+        <div class="container dash">
+            <div class="dash-head reveal">
+                <div>
+                    <div class="fileline mono" style="display:flex;gap:14px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--rule-strong);color:var(--ink-2);">
+                        <span>личное дело</span>
+                        <span class="dot" style="color:var(--verm);">●</span>
+                        <span>статус - в работе</span>
                     </div>
-
-                    <aside class="summary">
-                        <div class="summary-title">Ваш заказ</div>
-                        <div class="summary-plan">
-                            <div class="summary-plan-icon" id="planIcon">-</div>
-                            <div class="summary-plan-info">
-                                <h4 id="planName">-</h4>
-                                <p id="planDescription">-</p>
-                            </div>
-                        </div>
-                        <div class="summary-divider"></div>
-                        <div class="summary-row"><span>Тариф</span><span id="planPrice">-</span></div>
-                        <div class="summary-row"><span>Списывается сейчас</span><span id="totalPrice">-</span></div>
-                        <div class="summary-features">
-                            <h5>что входит</h5>
-                            <ul id="planFeatures"></ul>
-                        </div>
-                        <div class="security-badge">
-                            <p>Подписка продлевается помесячно. Отменить можно в один клик в кабинете - оплаченный месяц останется активным.</p>
-                        </div>
-                    </aside>
+                    <h1 class="dash-welcome">Ваше <em>дело</em></h1>
+                    <p class="dash-plan">аккаунт - <strong id="userEmail">-</strong></p>
+                    <p class="dash-plan">тариф - <strong id="userPlan">-</strong></p>
+                    <p class="dash-plan" id="planExpiresRow" hidden>действует до - <strong id="planExpires">-</strong></p>
+                </div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+                    <a href="admin.html" class="logout-btn" id="adminLink" hidden>Модерация отзывов</a>
+                    <button class="logout-btn" id="logoutBtn">Выйти</button>
                 </div>
             </div>
-        </section>
+
+            <div class="verify-banner" id="verifyBanner" hidden>
+                <p>Подтвердите почту <strong id="verifyEmail"></strong> - без этого проверки и оплата недоступны. Ссылка пришла в письме при регистрации.</p>
+                <button type="button" class="logout-btn" id="resendVerifyBtn">Отправить письмо ещё раз</button>
+                <div class="auth-status" id="verifyStatus"></div>
+            </div>
+
+            <div class="tiles reveal">
+                <div class="tile">
+                    <div class="tile-label" id="checksLabel">проверок за месяц</div>
+                    <div class="tile-value"><span id="checksUsed">0</span> / <span id="checksLimit">3</span></div>
+                </div>
+                <div class="tile">
+                    <div class="tile-label">фишинг нашла модель</div>
+                    <div class="tile-value" id="threatsDetected">0</div>
+                </div>
+                <div class="tile">
+                    <div class="tile-label">последняя проверка</div>
+                    <div class="tile-value sm" id="lastCheck">-</div>
+                </div>
+            </div>
+
+            <h2 class="dash-section-title reveal">История проверок</h2>
+            <div class="checks-list" id="checksList"></div>
+
+            <section class="dash-security" id="security">
+                <h2 class="dash-section-title">Безопасность</h2>
+                <form class="security-form" id="changePasswordForm">
+                    <label class="field">
+                        <span class="lbl">Текущий пароль</span>
+                        <input type="password" id="currentPassword" autocomplete="current-password" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Новый пароль</span>
+                        <input type="password" id="newPassword" autocomplete="new-password" minlength="8" required>
+                        <span class="field-hint">От 8 символов, хотя бы одна буква и одна цифра. Входы на других устройствах закончатся.</span>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Повторите новый пароль</span>
+                        <input type="password" id="newPasswordConfirm" autocomplete="new-password" required>
+                    </label>
+                    <button type="submit" class="btn btn-verm">Сменить пароль</button>
+                    <div class="auth-status" id="changePasswordStatus"></div>
+                </form>
+            </section>
+        </div>
 
         <!-- Footer -->
         <footer class="footer">
@@ -167,26 +157,6 @@
         </footer>
     </main>
 
-    <!-- Модальное окно - успешное создание платежа -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <div class="modal-icon" aria-hidden="true">✓</div>
-            <h2>Платёж создан</h2>
-            <p>Осталось перейти на защищённую страницу оплаты Tinkoff Касса.</p>
-            <a href="#" id="redirectToPayment" class="btn btn-verm">Перейти к оплате</a>
-        </div>
-    </div>
-
-    <!-- Модальное окно - ошибка -->
-    <div class="modal" id="errorModal">
-        <div class="modal-content error">
-            <div class="modal-icon error" aria-hidden="true">!</div>
-            <h2>Не получилось</h2>
-            <p id="errorMessage">Не удалось создать платёж. Попробуйте позже.</p>
-            <button type="button" class="btn btn-ink" id="errorCloseBtn">Понятно</button>
-        </div>
-    </div>
-
     <!-- Модальное окно - Политика конфиденциальности / Условия использования -->
     <div class="legal-modal" id="legalModal" hidden>
         <div class="legal-modal-backdrop" data-legal-close></div>
@@ -212,7 +182,7 @@
         <h4>О сервисе</h4>
         <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
         <h4>Учётная запись и лимиты</h4>
-        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <p>После регистрации и подтверждения почты бесплатны 3 проверки - один раз на аккаунт, а не каждый месяц. Одна учётная запись предназначена для одного человека.</p>
         <h4>Подписки и отмена</h4>
         <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
         <h4>Запрещённое использование</h4>
@@ -222,13 +192,8 @@
     </template>
 
     <script src="js/main.js"></script>
-    <script src="js/checkout.js"></script>
+    <script src="js/password-rules.js"></script>
+    <script src="js/dashboard.js"></script>
     <script src="js/legal-modal.js"></script>
-    <script>
-        // Кнопка «Понятно» в модалке ошибки
-        document.getElementById('errorCloseBtn').addEventListener('click', function () {
-            document.getElementById('errorModal').classList.remove('active');
-        });
-    </script>
 </body>
 </html>

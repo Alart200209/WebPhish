@@ -144,8 +144,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (response.status === 429) {
                     const data = await response.json();
-                    renderLimitReached(data.detail || {});
+                    const detail = data.detail || {};
+                    // 429 бывает двух видов: кончились проверки по тарифу или слишком часто жмут кнопку
+                    if (detail.checks_limit !== undefined) {
+                        renderLimitReached(detail);
+                    } else {
+                        showStatus(detail.message || "Слишком много проверок подряд. Подождите минуту.", "warning");
+                    }
                     return;
+                }
+
+                if (response.status === 403) {
+                    const data = await response.json();
+                    if (data.detail && data.detail.code === "email_not_verified") {
+                        showStatus(
+                            "Сначала подтвердите почту - ссылка пришла в письме при регистрации. " +
+                            '<a href="dashboard.html">Отправить письмо ещё раз</a>',
+                            "warning"
+                        );
+                        return;
+                    }
+                    throw new Error("Нет доступа к проверке.");
                 }
 
                 if (!response.ok) {
@@ -220,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             </div>
             <ul class="result-details">
-                <li>После регистрации доступны ${limit} бесплатные проверки в месяц, лимит обновляется.</li>
+                <li>После регистрации доступны ${limit} бесплатные проверки - один раз на аккаунт.</li>
                 <li>Чтобы проверять ссылки дальше, выберите тариф - отменить подписку можно в любой момент.</li>
             </ul>
             <p style="margin-top:16px;">
@@ -269,10 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const limitNote = document.createElement("p");
             limitNote.style.cssText = "margin-top:14px; font-size:0.85rem; color:var(--text-muted);";
             if (remaining > 2) {
-                limitNote.textContent = `Осталось ${remaining} бесплатных проверок в этом месяце.`;
+                limitNote.textContent = `Осталось проверок: ${remaining}.`;
             } else {
                 limitNote.innerHTML =
-                    `Осталось ${remaining} бесплатных проверок. ` +
+                    `Осталось проверок: ${remaining}. ` +
                     `<a href="checkout.html?plan=pro" style="color:var(--accent-primary); font-weight:600;">Про - 200 проверок в месяц →</a>`;
             }
             checkerResult.appendChild(limitNote);

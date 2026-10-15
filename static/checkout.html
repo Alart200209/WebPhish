@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Вход - PhishDet</title>
-    <meta name="description" content="Вход и регистрация PhishDet. Аккаунт нужен, чтобы считать лимит проверок и хранить историю. Три проверки в месяц бесплатно, нужна только регистрация.">
+    <title>Оплата - PhishDet</title>
+    <meta name="description" content="Оформление подписки PhishDet. Безопасная оплата через ЮKassa, данные карты нам не передаются.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,80 +27,95 @@
                     </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-                <a href="index.html" class="back-link">На главную</a>
+                <a href="pricing.html" class="back-link">Назад к тарифам</a>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="container auth-page">
-            <div class="auth-intro reveal">
-                <div class="fileline mono">
-                    <span>вход / регистрация</span>
-                    <span class="dot">●</span>
-                    <span>нужна только регистрация</span>
-                    <span class="dot">●</span>
-                    <span>3 проверки бесплатно</span>
+        <section class="checkout">
+            <div class="container">
+                <div class="checkout-grid">
+                    <div class="reveal">
+                        <h1 class="form-title">Оформление подписки</h1>
+
+                        <form id="paymentForm">
+                            <div class="form-section">
+                                <h2 class="form-section-title">Контакты для чека</h2>
+                                <div class="form-row">
+                                    <label class="field">
+                                        <span class="lbl">Имя</span>
+                                        <input type="text" id="firstName" placeholder="Иван" autocomplete="given-name" required>
+                                    </label>
+                                    <label class="field">
+                                        <span class="lbl">Фамилия</span>
+                                        <input type="text" id="lastName" placeholder="Петров" autocomplete="family-name" required>
+                                    </label>
+                                </div>
+                                <label class="field">
+                                    <span class="lbl">Почта для чека</span>
+                                    <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+                                </label>
+                                <label class="field">
+                                    <span class="lbl">Телефон</span>
+                                    <input type="tel" id="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+                                </label>
+                            </div>
+
+                            <div class="form-section">
+                                <h2 class="form-section-title">Способ оплаты</h2>
+                                <div class="pay-methods">
+                                    <label class="pay-method">
+                                        <input type="radio" name="paymentMethod" value="card" checked>
+                                        <span class="pay-method-content"><span class="mark"></span>Банковская карта</span>
+                                    </label>
+                                    <label class="pay-method">
+                                        <input type="radio" name="paymentMethod" value="sbp">
+                                        <span class="pay-method-content"><span class="mark"></span>СБП / QR-код</span>
+                                    </label>
+                                </div>
+                                <div class="security-notice">
+                                    <svg class="notice-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4.5" y="10.5" width="15" height="10" rx="1"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
+                                    <div>
+                                        <strong>Оплату принимает ЮKassa</strong>
+                                        <p>Данные карты вводятся на защищённой странице банка - мы их не видим и не храним.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <label class="checkbox-group">
+                                <input type="checkbox" id="terms" required>
+                                <span>Согласен с <a href="#" data-legal="terms">условиями использования</a> и <a href="#" data-legal="privacy">политикой конфиденциальности</a>.</span>
+                            </label>
+
+                            <button type="submit" class="btn btn-verm submit-btn" id="submitBtn">Перейти к оплате</button>
+                            <div class="form-status" id="formStatus"></div>
+                        </form>
+                    </div>
+
+                    <aside class="summary">
+                        <div class="summary-title">Ваш заказ</div>
+                        <div class="summary-plan">
+                            <div class="summary-plan-icon" id="planIcon">-</div>
+                            <div class="summary-plan-info">
+                                <h4 id="planName">-</h4>
+                                <p id="planDescription">-</p>
+                            </div>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row"><span>Тариф</span><span id="planPrice">-</span></div>
+                        <div class="summary-row"><span>Списывается сейчас</span><span id="totalPrice">-</span></div>
+                        <div class="summary-features">
+                            <h5>что входит</h5>
+                            <ul id="planFeatures"></ul>
+                        </div>
+                        <div class="security-badge">
+                            <p>Подписка продлевается помесячно. Отменить можно в один клик в кабинете - оплаченный месяц останется активным.</p>
+                        </div>
+                    </aside>
                 </div>
-                <h1>Аккаунт нужен ровно для одного. <em>Считать ваши проверки.</em></h1>
-                <p>
-                    Никаких «создайте профиль, чтобы мы узнали вас получше». Регистрация - чтобы
-                    не сбрасывать лимит бесплатных проверок и показать историю за месяц.
-                    Сами ссылки разбирает наша модель.
-                </p>
-                <ul class="auth-perks">
-                    <li>три проверки в месяц - бесплатно, нужна только регистрация</li>
-                    <li>история проверок за месяц - в кабинете</li>
-                    <li>ссылку разбирает наша модель, а не готовый чёрный список</li>
-                    <li>ссылки не хранятся дольше, чем нужно для отчёта</li>
-                </ul>
-                <p class="manifest-note hand">одна почта - один человек, без «командных» аккаунтов</p>
             </div>
-
-            <div class="auth-card reveal">
-                <div class="auth-header">
-                    <h2 class="auth-title">Вход и регистрация</h2>
-                    <p class="auth-subtitle">Всё в одном окне. Пароль не показываем даже себе.</p>
-                </div>
-
-                <div class="auth-tabs">
-                    <button type="button" class="auth-tab active" data-tab="login">Вход</button>
-                    <button type="button" class="auth-tab" data-tab="register">Регистрация</button>
-                </div>
-
-                <!-- Вход -->
-                <form class="auth-form active" id="loginForm">
-                    <label class="field">
-                        <span class="lbl">Почта</span>
-                        <input type="email" class="auth-input" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
-                    </label>
-                    <label class="field">
-                        <span class="lbl">Пароль</span>
-                        <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
-                    </label>
-                    <button type="submit" class="btn btn-verm auth-btn">Войти</button>
-                    <div class="auth-status" id="loginStatus"></div>
-                </form>
-
-                <!-- Регистрация -->
-                <form class="auth-form" id="registerForm">
-                    <label class="field">
-                        <span class="lbl">Почта</span>
-                        <input type="email" class="auth-input" id="registerEmail" placeholder="you@example.com" autocomplete="email" required>
-                    </label>
-                    <label class="field">
-                        <span class="lbl">Пароль</span>
-                        <input type="password" class="auth-input" id="registerPassword" placeholder="минимум 8 символов" autocomplete="new-password" required>
-                    </label>
-                    <label class="field">
-                        <span class="lbl">Повторите пароль</span>
-                        <input type="password" class="auth-input" id="registerPasswordConfirm" placeholder="ещё раз" autocomplete="new-password" required>
-                    </label>
-                    <button type="submit" class="btn btn-verm auth-btn">Создать аккаунт</button>
-                    <div class="auth-status" id="registerStatus"></div>
-                </form>
-            </div>
-        </div>
+        </section>
 
         <!-- Footer -->
         <footer class="footer">
@@ -152,6 +167,26 @@
         </footer>
     </main>
 
+    <!-- Модальное окно - успешное создание платежа -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon" aria-hidden="true">✓</div>
+            <h2>Платёж создан</h2>
+            <p>Осталось перейти на защищённую страницу оплаты ЮKassa.</p>
+            <a href="#" id="redirectToPayment" class="btn btn-verm">Перейти к оплате</a>
+        </div>
+    </div>
+
+    <!-- Модальное окно - ошибка -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content error">
+            <div class="modal-icon error" aria-hidden="true">!</div>
+            <h2>Не получилось</h2>
+            <p id="errorMessage">Не удалось создать платёж. Попробуйте позже.</p>
+            <button type="button" class="btn btn-ink" id="errorCloseBtn">Понятно</button>
+        </div>
+    </div>
+
     <!-- Модальное окно - Политика конфиденциальности / Условия использования -->
     <div class="legal-modal" id="legalModal" hidden>
         <div class="legal-modal-backdrop" data-legal-close></div>
@@ -177,7 +212,7 @@
         <h4>О сервисе</h4>
         <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
         <h4>Учётная запись и лимиты</h4>
-        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <p>После регистрации и подтверждения почты бесплатны 3 проверки - один раз на аккаунт, а не каждый месяц. Одна учётная запись предназначена для одного человека.</p>
         <h4>Подписки и отмена</h4>
         <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
         <h4>Запрещённое использование</h4>
@@ -187,7 +222,14 @@
     </template>
 
     <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="js/password-rules.js"></script>
+    <script src="js/checkout.js"></script>
     <script src="js/legal-modal.js"></script>
+    <script>
+        // Кнопка «Понятно» в модалке ошибки
+        document.getElementById('errorCloseBtn').addEventListener('click', function () {
+            document.getElementById('errorModal').classList.remove('active');
+        });
+    </script>
 </body>
 </html>

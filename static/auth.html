@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <title>Личный кабинет - PhishDet</title>
-    <meta name="description" content="Личный кабинет PhishDet - остаток проверок, находки и история за месяц.">
+    <title>Вход - PhishDet</title>
+    <meta name="description" content="Вход и регистрация PhishDet. Аккаунт нужен, чтобы считать лимит проверок и хранить историю. 3 проверки бесплатно после регистрации.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,56 +27,94 @@
                     </span>
                     <span class="logo-word">Phish<span class="logo-word-accent">Det</span></span>
                 </a>
-
-                <nav class="nav" id="nav">
-                    <a href="index.html#checker" class="nav-link">Проверить ссылку</a>
-                    <a href="pricing.html" class="nav-link">Тарифы</a>
-                    <a href="index.html#features" class="nav-link">Возможности</a>
-                </nav>
-
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">
-                    <span></span><span></span><span></span>
-                </button>
+                <a href="index.html" class="back-link">На главную</a>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="container dash">
-            <div class="dash-head reveal">
-                <div>
-                    <div class="fileline mono" style="display:flex;gap:14px;flex-wrap:wrap;padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid var(--rule-strong);color:var(--ink-2);">
-                        <span>личное дело</span>
-                        <span class="dot" style="color:var(--verm);">●</span>
-                        <span>статус - в работе</span>
-                    </div>
-                    <h1 class="dash-welcome">Ваше <em>дело</em></h1>
-                    <p class="dash-plan">аккаунт - <strong id="userEmail">-</strong></p>
-                    <p class="dash-plan">тариф - <strong id="userPlan">-</strong></p>
+        <div class="container auth-page">
+            <div class="auth-intro reveal">
+                <div class="fileline mono">
+                    <span>вход / регистрация</span>
+                    <span class="dot">●</span>
+                    <span>нужна только регистрация</span>
+                    <span class="dot">●</span>
+                    <span>3 проверки бесплатно</span>
                 </div>
-                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-                    <a href="admin.html" class="logout-btn" id="adminLink" hidden>Модерация отзывов</a>
-                    <button class="logout-btn" id="logoutBtn">Выйти</button>
-                </div>
+                <h1>Аккаунт нужен ровно для одного. <em>Считать ваши проверки.</em></h1>
+                <p>
+                    Никаких «создайте профиль, чтобы мы узнали вас получше». Регистрация - чтобы
+                    не сбрасывать лимит бесплатных проверок и показать историю за месяц.
+                    Сами ссылки разбирает наша модель.
+                </p>
+                <ul class="auth-perks">
+                    <li>три проверки бесплатно - после регистрации и подтверждения почты</li>
+                    <li>история проверок за месяц - в кабинете</li>
+                    <li>ссылку разбирает наша модель, а не готовый чёрный список</li>
+                    <li>ссылки не хранятся дольше, чем нужно для отчёта</li>
+                </ul>
+                <p class="manifest-note hand">одна почта - один человек, без «командных» аккаунтов</p>
             </div>
 
-            <div class="tiles reveal">
-                <div class="tile">
-                    <div class="tile-label">проверок за месяц</div>
-                    <div class="tile-value"><span id="checksUsed">0</span> / <span id="checksLimit">3</span></div>
+            <div class="auth-card reveal">
+                <div class="auth-header">
+                    <h2 class="auth-title">Вход и регистрация</h2>
+                    <p class="auth-subtitle">Всё в одном окне. Пароль не показываем даже себе.</p>
                 </div>
-                <div class="tile">
-                    <div class="tile-label">фишинг нашла модель</div>
-                    <div class="tile-value" id="threatsDetected">0</div>
-                </div>
-                <div class="tile">
-                    <div class="tile-label">последняя проверка</div>
-                    <div class="tile-value sm" id="lastCheck">-</div>
-                </div>
-            </div>
 
-            <h2 class="dash-section-title reveal">История проверок</h2>
-            <div class="checks-list" id="checksList"></div>
+                <div class="auth-tabs">
+                    <button type="button" class="auth-tab active" data-tab="login">Вход</button>
+                    <button type="button" class="auth-tab" data-tab="register">Регистрация</button>
+                </div>
+
+                <!-- Вход -->
+                <form class="auth-form active" id="loginForm">
+                    <label class="field">
+                        <span class="lbl">Почта</span>
+                        <input type="email" class="auth-input" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Пароль</span>
+                        <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required>
+                    </label>
+                    <button type="submit" class="btn btn-verm auth-btn">Войти</button>
+                    <div class="auth-status" id="loginStatus"></div>
+                    <p class="auth-aside"><button type="button" class="auth-link" id="forgotLink">Забыли пароль?</button></p>
+                </form>
+
+                <!-- Восстановление пароля -->
+                <form class="auth-form" id="forgotForm">
+                    <p class="auth-form-lead">Пришлём на почту ссылку, по которой можно задать новый пароль. Ссылка действует 1 час.</p>
+                    <label class="field">
+                        <span class="lbl">Почта аккаунта</span>
+                        <input type="email" class="auth-input" id="forgotEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <button type="submit" class="btn btn-verm auth-btn">Прислать ссылку</button>
+                    <div class="auth-status" id="forgotStatus"></div>
+                    <p class="auth-aside"><button type="button" class="auth-link" id="backToLogin">Вспомнил - назад ко входу</button></p>
+                </form>
+
+                <!-- Регистрация -->
+                <form class="auth-form" id="registerForm">
+                    <label class="field">
+                        <span class="lbl">Почта</span>
+                        <input type="email" class="auth-input" id="registerEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Пароль</span>
+                        <input type="password" class="auth-input" id="registerPassword" placeholder="минимум 8 символов" autocomplete="new-password" minlength="8" required>
+                        <span class="field-hint">От 8 символов, хотя бы одна буква и одна цифра. Не повторяйте почту.</span>
+                    </label>
+                    <label class="field">
+                        <span class="lbl">Повторите пароль</span>
+                        <input type="password" class="auth-input" id="registerPasswordConfirm" placeholder="ещё раз" autocomplete="new-password" required>
+                    </label>
+                    <p class="field-hint">После регистрации придёт письмо - подтвердите почту, чтобы начать проверять ссылки.</p>
+                    <button type="submit" class="btn btn-verm auth-btn">Создать аккаунт</button>
+                    <div class="auth-status" id="registerStatus"></div>
+                </form>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -154,7 +192,7 @@
         <h4>О сервисе</h4>
         <p>PhishDet показывает, насколько ссылка похожа на фишинговую. Результат носит справочный характер и не заменяет антивирус или решение банка.</p>
         <h4>Учётная запись и лимиты</h4>
-        <p>После регистрации бесплатны 3 проверки, лимит обновляется каждый месяц. Одна учётная запись предназначена для одного человека.</p>
+        <p>После регистрации и подтверждения почты бесплатны 3 проверки - один раз на аккаунт, а не каждый месяц. Одна учётная запись предназначена для одного человека.</p>
         <h4>Подписки и отмена</h4>
         <p>Подписка оплачивается помесячно и отменяется в один клик в личном кабинете. Оплаченный период действует до конца.</p>
         <h4>Запрещённое использование</h4>
@@ -164,7 +202,8 @@
     </template>
 
     <script src="js/main.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/password-rules.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/legal-modal.js"></script>
 </body>
 </html>

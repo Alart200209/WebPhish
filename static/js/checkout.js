@@ -47,8 +47,8 @@ const urlParams = new URLSearchParams(window.location.search);
 // Старые ключи ссылок (personal/business) - маппим на новые тарифы
 const PLAN_ALIASES = { personal: 'basic', business: 'corporate' };
 const rawPlanKey = urlParams.get('plan') || 'basic';
-const planKey = PLAN_ALIASES[rawPlanKey] || rawPlanKey;
-const trial = false; // триалов нет: бесплатно - только 3 стартовые проверки после регистрации
+const aliasedPlanKey = PLAN_ALIASES[rawPlanKey] || rawPlanKey;
+const planKey = aliasedPlanKey in plans ? aliasedPlanKey : 'basic';
 
 // ===================================
 // АВТОРИЗАЦИЯ: оплата доступна только вошедшим пользователям.
@@ -60,13 +60,7 @@ if (!authToken) {
     window.location.replace(`auth.html?mode=login&redirect=${back}`);
 }
 
-// Бесплатный тариф не требует оплаты - сразу ведём на регистрацию
-if (planKey === 'free') {
-    const check = urlParams.get('check');
-    window.location.replace('auth.html?mode=register' + (check ? `&check=${encodeURIComponent(check)}` : ''));
-}
-
-const selectedPlan = plans[planKey] || plans.basic;
+const selectedPlan = plans[planKey];
 
 // ===================================
 // ОБНОВЛЯЕМ ИНФОРМАЦИЮ О ПЛАНЕ
@@ -75,7 +69,7 @@ document.getElementById('planName').textContent = selectedPlan.name;
 document.getElementById('planDescription').textContent = selectedPlan.description;
 document.getElementById('planIcon').textContent = selectedPlan.tag;
 
-const displayPrice = trial && selectedPlan.price > 0 ? 0 : selectedPlan.price;
+const displayPrice = selectedPlan.price;
 document.getElementById('planPrice').textContent = `${selectedPlan.price} ₽`;
 document.getElementById('totalPrice').textContent = `${displayPrice} ₽`;
 
@@ -130,7 +124,6 @@ paymentForm.addEventListener('submit', async (e) => {
         email: document.getElementById('email').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         plan: planKey,
-        trial: trial,
         paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value
     };
 
@@ -153,8 +146,7 @@ paymentForm.addEventListener('submit', async (e) => {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`
             },
             body: JSON.stringify({
-                amount: displayPrice * 100, // Tinkoff принимает в копейках
-                order_id: `phishdet_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                amount: displayPrice * 100, // в копейках, сервер сверяет с ценой тарифа
                 description: `Подписка ${selectedPlan.name}`,
                 customer: {
                     name: `${formData.firstName} ${formData.lastName}`,
@@ -162,15 +154,24 @@ paymentForm.addEventListener('submit', async (e) => {
                     phone: formData.phone
                 },
                 plan: planKey,
-                trial: trial,
                 payment_method: formData.paymentMethod
             })
         });
 
-        const data = await response.json();
+        if (response.status === 401) {
+            localStorage.removeItem('access_token');
+            const back = encodeURIComponent(window.location.pathname + window.location.search);
+            window.location.replace(`auth.html?mode=login&expired=1&redirect=${back}`);
+            return;
+        }
+
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-            throw new Error(data.detail || 'Ошибка создания платежа');
+            if (data.detail && data.detail.code === 'email_not_verified') {
+                throw new Error('Сначала подтвердите почту - ссылка пришла в письме при регистрации. Отправить письмо ещё раз можно в личном кабинете.');
+            }
+            throw new Error(window.PhishDetForms.errorText(data, 'Ошибка создания платежа'));
         }
 
         if (data.payment_url) {

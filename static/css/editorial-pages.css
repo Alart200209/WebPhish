@@ -131,6 +131,26 @@
 .auth-status.show { display: block; }
 .auth-status.error { border-left-color: var(--verm); }
 .auth-status.success { border-left-color: var(--sage); }
+.auth-aside { margin-top: 18px; text-align: center; }
+.auth-link { background: none; border: 0; padding: 0; font: inherit; font-size: 0.92rem; color: var(--ink-2); border-bottom: 1px solid var(--rule-strong); cursor: pointer; }
+.auth-link:hover { color: var(--ink); border-bottom-color: var(--verm); }
+.auth-form-lead { margin-bottom: 18px; color: var(--ink-2); font-size: 0.95rem; }
+.field-hint { display: block; margin-top: 8px; font-size: 0.82rem; color: var(--ink-3); }
+p.field-hint { margin: 0 0 14px; }
+
+/* Одиночная карточка: подтверждение почты, новый пароль, возврат с оплаты */
+.auth-page--single { grid-template-columns: minmax(0, 520px); justify-content: center; }
+.auth-card .auth-body { padding: 22px 26px 30px; }
+.auth-body p { color: var(--ink-2); }
+.auth-body p + p { margin-top: 12px; }
+.auth-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+
+/* Кабинет: плашка «подтвердите почту» и раздел «Безопасность» */
+.verify-banner { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; padding: 16px 20px; margin-bottom: 30px; border: 1.5px solid var(--verm); background: var(--tint-verm); }
+.verify-banner p { margin: 0; color: var(--ink); }
+.verify-banner .auth-status { flex-basis: 100%; margin-top: 0; }
+.dash-security { margin-top: 56px; }
+.security-form { max-width: 460px; padding-top: 22px; }
 
 /* --- ОПЛАТА ---------------------------------------------------------- */
 .checkout { padding: clamp(44px, 7vw, 84px) 0; }
